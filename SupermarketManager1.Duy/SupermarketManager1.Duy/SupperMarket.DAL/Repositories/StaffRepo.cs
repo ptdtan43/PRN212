@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SupperMarket.DAL.Repositories
 {
-    internal class StaffRepo
+    public class StaffRepo
     {
     }
 }

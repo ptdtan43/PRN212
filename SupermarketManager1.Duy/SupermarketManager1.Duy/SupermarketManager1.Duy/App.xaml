@@ -10,5 +10,13 @@
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="FontWeight" Value="ExtraBold"/>
         </Style>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="#ffef00"/>
+            <Setter Property="FontSize" Value="30"/>
+        </Style>
+        <Style x:Key="DetailLabel"  TargetType="Label">
+            <Setter Property="Foreground" Value="#ffef00"/>
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
     </Application.Resources>
 </Application>

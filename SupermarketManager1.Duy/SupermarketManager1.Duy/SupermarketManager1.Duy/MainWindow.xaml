@@ -14,7 +14,7 @@
                 <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="*"/>
                 <DataGridTextColumn Header="Warranty" Binding="{Binding Warranty}" Width="*"/>
                 <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
-                <DataGridTextColumn Header="Stock Quantity" Binding="{Binding Quantity}" Width="*"/>
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
                 <DataGridTextColumn Header="Publication Day" Binding="{Binding PublicationDay}" Width="*"/>
                 <DataGridTextColumn Header="Supplier Name" Binding="{Binding SupplierName}" Width="*"/>
                 <DataGridTextColumn Header="Category Id" Binding="{Binding CateId}" Width="*"/>

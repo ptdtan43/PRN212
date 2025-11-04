@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using SupperMarket.DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,22 +10,15 @@ namespace SupperMarket.DAL.Repositories
 {
     public class ProductRepo
     {
-        SupermarketManagerContext _ctx;
+        private SupermarketManagerContext _ctx;
         public List<Product> GetAll()
         {
-            using (_ctx = new SupermarketManagerContext())
-            {
-                return _ctx.Products.Include("Cate").ToList();
-            }
+            _ctx = new();
+            return _ctx.Products.Include("Cate").ToList();
+            
         }
-        public Product GetById(string id)
-        {
-            using (_ctx = new SupermarketManagerContext())
-            {
-                return _ctx.Products.Include("Cate").FirstOrDefault(p => p.ProductCode == id);
-            }
-        }
-        public void Add(Product obj)
+       
+        public void Create(Product obj)
         {
             _ctx = new();
             _ctx.Products.Add(obj);

@@ -9,19 +9,19 @@ namespace SupperMarket.BLL.Service
     public class ProductService
     {
         ProductRepo _repo= new();
-        public List<Product> GetAll()
+        public List<Product> GetAllProducts()
         {
             return _repo.GetAll();
         }
-        public void Add(Product obj)
+        public void AddProduct(Product obj)
         {
             _repo.Create(obj);
         }
-        public void Update(Product obj)
+        public void UpdateProduct(Product obj)
         {
             _repo.Update(obj);
         }
-        public void Delete(Product obj)
+        public void DeleteProduct(Product obj)
     {
             _repo.Delete(obj);
         }

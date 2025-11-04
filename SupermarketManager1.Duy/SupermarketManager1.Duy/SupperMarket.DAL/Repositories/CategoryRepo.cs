@@ -8,5 +8,6 @@ namespace SupperMarket.DAL.Repositories
 {
     public class CategoryRepo
     {
+
     }
 }

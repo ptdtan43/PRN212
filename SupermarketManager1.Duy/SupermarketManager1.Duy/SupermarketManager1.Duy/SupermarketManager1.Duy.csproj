@@ -9,7 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SupperMarket.BLL\SupperMarket.BLL.csproj" />
+    <ProjectReference Include="..\SupperMarket.BLL\SupperMarket.BLL.csproj">
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>
