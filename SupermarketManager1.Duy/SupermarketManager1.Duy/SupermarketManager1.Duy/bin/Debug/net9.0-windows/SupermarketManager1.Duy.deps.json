@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "SupermarketManager1.Duy/1.0.0": {
+        "runtime": {
+          "SupermarketManager1.Duy.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SupermarketManager1.Duy/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

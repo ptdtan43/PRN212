@@ -1,0 +1,11 @@
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.BLL\bin\Debug\net9.0\SupperMarket.BLL.deps.json
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.BLL\bin\Debug\net9.0\SupperMarket.BLL.dll
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.BLL\bin\Debug\net9.0\SupperMarket.BLL.pdb
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.BLL\obj\Debug\net9.0\SupperMarket.BLL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.BLL\obj\Debug\net9.0\SupperMarket.BLL.AssemblyInfoInputs.cache
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.BLL\obj\Debug\net9.0\SupperMarket.BLL.AssemblyInfo.cs
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.BLL\obj\Debug\net9.0\SupperMarket.BLL.csproj.CoreCompileInputs.cache
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.BLL\obj\Debug\net9.0\SupperMarket.BLL.dll
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.BLL\obj\Debug\net9.0\refint\SupperMarket.BLL.dll
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.BLL\obj\Debug\net9.0\SupperMarket.BLL.pdb
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.BLL\obj\Debug\net9.0\ref\SupperMarket.BLL.dll

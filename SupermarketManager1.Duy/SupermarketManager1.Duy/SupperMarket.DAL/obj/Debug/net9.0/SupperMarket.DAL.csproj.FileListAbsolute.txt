@@ -1,0 +1,14 @@
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.DAL\bin\Debug\net9.0\SupperMarket.DAL.deps.json
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.DAL\bin\Debug\net9.0\SupperMarket.DAL.runtimeconfig.json
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.DAL\bin\Debug\net9.0\SupperMarket.DAL.dll
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.DAL\bin\Debug\net9.0\SupperMarket.DAL.pdb
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.DAL\obj\Debug\net9.0\SupperMarket.DAL.csproj.AssemblyReference.cache
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.DAL\obj\Debug\net9.0\SupperMarket.DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.DAL\obj\Debug\net9.0\SupperMarket.DAL.AssemblyInfoInputs.cache
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.DAL\obj\Debug\net9.0\SupperMarket.DAL.AssemblyInfo.cs
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.DAL\obj\Debug\net9.0\SupperMarket.DAL.csproj.CoreCompileInputs.cache
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.DAL\obj\Debug\net9.0\SupperMarket.DAL.dll
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.DAL\obj\Debug\net9.0\refint\SupperMarket.DAL.dll
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.DAL\obj\Debug\net9.0\SupperMarket.DAL.pdb
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.DAL\obj\Debug\net9.0\SupperMarket.DAL.genruntimeconfig.cache
+C:\Users\USER\Desktop\PRN1\session6\SupermarketManager1.Duy\SupperMarket.DAL\obj\Debug\net9.0\ref\SupperMarket.DAL.dll
