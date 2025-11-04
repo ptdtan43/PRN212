@@ -16,9 +16,56 @@ namespace SupermarketManager1.Duy
     /// </summary>
     public partial class MainWindow : Window
     {
+        ProductService _service = new();
         public MainWindow()
         {
             InitializeComponent();
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            FillDataGrid(_service.GetAllProducts());
+        }
+
+        private void CreateButton_Click(object sender, RoutedEventArgs e)
+        {
+            DetailWindow detail = new();
+            detail.ShowDialog();
+            FillDataGrid(_service.GetAllProducts());
+        }
+
+       
+
+        private void QuitButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult answer = MessageBox.Show("Are you sure?", "Comfrim?", MessageBoxButton.YesNo);
+            if (answer == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
+        }
+        public void FillDataGrid(List<Product> data)
+        {
+            ProductListDataGrid.ItemsSource = null;
+            ProductListDataGrid.ItemsSource = data;
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            Product selected = ProductListDataGrid.SelectedItem as Product;
+            if (selected == null)
+            {
+                MessageBox.Show("Please choose a line to select", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            MessageBoxResult answer = MessageBox.Show("Are you sure?", "Comfirm", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (answer == MessageBoxResult.No)
+            {
+                return;
+            }
+           
+            //? Xóa dòng thật qua Service, 
+            _service.DeleteProduct(selected);
+            FillDataGrid(_service.GetAllProducts());
         }
     }
 }

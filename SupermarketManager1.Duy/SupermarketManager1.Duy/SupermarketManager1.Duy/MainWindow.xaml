@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SupermarketManager1.Duy"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+       Title="MainWindow" Height="450" Width="800" Background="#00bfff" Loaded="Window_Loaded">
     <Grid>
         <DataGrid x:Name="ProductListDataGrid" HorizontalAlignment="Left" Height="349" Margin="56,0,0,0" VerticalAlignment="Center" Width="543" AutoGenerateColumns="False">
             <DataGrid.Columns>
@@ -23,8 +23,8 @@
 
         </DataGrid>
         <Button x:Name="CreateButton" Content="Create" HorizontalAlignment="Left" Height="56" Margin="645,55,0,0" VerticalAlignment="Top" Width="120" Click="CreateButton_Click"/>
-        <Button x:Name="UpdateButton" Content="Update" HorizontalAlignment="Left" Height="56" Margin="645,142,0,0" VerticalAlignment="Top" Width="120" Click="UpdateButton_Click"/>
+        <Button x:Name="UpdateButton" Content="Update" HorizontalAlignment="Left" Height="56" Margin="645,142,0,0" VerticalAlignment="Top" Width="120" />
         <Button x:Name="DeleteButton" Content="Delete" HorizontalAlignment="Left" Height="56" Margin="645,229,0,0" VerticalAlignment="Top" Width="120" Click="DeleteButton_Click"/>
-        <Button x:Name="QuitButton" Content="Quit" HorizontalAlignment="Left" Height="56" Margin="645,322,0,0" VerticalAlignment="Top" Width="120" Click="QuitButton_Click"/>
+        <Button x:Name="QuitButton" Content="Quit" HorizontalAlignment="Left" Height="56" Margin="645,322,0,0" VerticalAlignment="Top" Width="120" Click="QuitButton_Click" />
     </Grid>
 </Window>
