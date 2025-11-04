@@ -19,9 +19,16 @@ namespace SupermarketManager1.Duy
     /// </summary>
     public partial class DetailWindow : Window
     {
+        public Product EditedOne { set; get; }
+        private Product _productService = new();
         public DetailWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

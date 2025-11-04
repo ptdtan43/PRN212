@@ -5,8 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SupermarketManager1.Duy"
         mc:Ignorable="d"
-        Title="DetailWindow" Height="450" Width="800">
-    <Grid>
+        Title="DetailWindow" Height="517" Width="800"  Background="#00bfff" Loaded="Window_Loaded">
+    <Grid Height="517" VerticalAlignment="Top">
+        <Label Content="Id"  Style="{StaticResource DetailLabel}" HorizontalAlignment="Left" Height="42" Margin="31,58,0,0" VerticalAlignment="Top" Width="131"/>
+        <Label Content="Name" Style="{StaticResource DetailLabel}" HorizontalAlignment="Left" Height="37" Margin="31,99,0,0" VerticalAlignment="Top" Width="131"/>
+        <Label Content="Price" Style="{StaticResource DetailLabel}" HorizontalAlignment="Left" Height="35" Margin="31,141,0,0"  VerticalAlignment="Top" Width="131"/>
+        <Label Content="Warranty " Style="{StaticResource DetailLabel}" HorizontalAlignment="Left" Height="87" Margin="31,186,0,0" VerticalAlignment="Top" Width="154"/>
+        <Label Content="Description" Style="{StaticResource DetailLabel}" HorizontalAlignment="Left" Height="61" Margin="31,230,0,0" VerticalAlignment="Top" Width="131"/>
+        <Label Content="Quantity" Style="{StaticResource DetailLabel}" HorizontalAlignment="Left" Height="52" Margin="31,302,0,0" VerticalAlignment="Top" Width="131"/>
+        <Label Content="Publication Day" Style="{StaticResource DetailLabel}" HorizontalAlignment="Left" Height="52" Margin="31,350,0,0" VerticalAlignment="Top" Width="131"/>
+        <Label Content="Supplier Name" Style="{StaticResource DetailLabel}" HorizontalAlignment="Left" Height="52" Margin="31,396,0,0" VerticalAlignment="Top" Width="131"/>
+        <Label Content="Category" Style="{StaticResource DetailLabel}" HorizontalAlignment="Left" Height="52" Margin="31,442,0,0" VerticalAlignment="Top" Width="131"/>
+        <TextBox x:Name="ProductIdTextBox" HorizontalAlignment="Center" Height="20" Margin="0,63,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="418"/>
+        <TextBox x:Name="ProductNameTextBox" HorizontalAlignment="Center" Height="20" Margin="0,113,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="420" RenderTransformOrigin="0.5,0.5">
+           
+        </TextBox>
+        <TextBox  x:Name="ProductPriceTextBox" HorizontalAlignment="Center" Height="20" Margin="0,153,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="420"/>
+        <TextBox x:Name="ProductWarrantyTextBox" HorizontalAlignment="Center" Height="20" Margin="0,193,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="420"/>
+        <TextBox  x:Name="ProductDescriptionTextBox" HorizontalAlignment="Center" Height="68" Margin="0,230,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="420"/>
+        <TextBox  x:Name="ProductQuantityTextBox" HorizontalAlignment="Center" Height="20" Margin="0,314,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="420"/>
         
+        <TextBox  x:Name="ProductPublicationDayTextBox" HorizontalAlignment="Center" Height="20" Margin="0,360,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="420"/>
+        <TextBox  x:Name="ProductSupplierNameTextBox" HorizontalAlignment="Center" Height="20" Margin="0,404,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="420"/>
+        <ComboBox x:Name="CategoryComboBox" HorizontalAlignment="Center" Height="20" Margin="0,452,0,0" VerticalAlignment="Top" Width="420"/>
     </Grid>
 </Window>
