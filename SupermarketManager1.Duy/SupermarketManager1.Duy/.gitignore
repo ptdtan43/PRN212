@@ -1,0 +1,29 @@
+# Build results
+bin/
+obj/
+*.exe
+*.dll
+*.pdb
+*.cache
+*.log
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# VS Code
+.vscode/
+
+# Visual Studio
+.vs/
+
+# NuGet packages
+*.nupkg
+packages/
+
+# Others
+*.dbmdl
+*.bak
+*.tmp

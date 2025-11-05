@@ -20,10 +20,10 @@
                 <DataGridTextColumn Header="Category Id" Binding="{Binding CateId}" Width="*"/>
                 <DataGridTextColumn Header="Category Name" Binding="{Binding Cate.CategoryName}" Width="*"/>
             </DataGrid.Columns>
-
+            
         </DataGrid>
         <Button x:Name="CreateButton" Content="Create" HorizontalAlignment="Left" Height="56" Margin="645,55,0,0" VerticalAlignment="Top" Width="120" Click="CreateButton_Click"/>
-        <Button x:Name="UpdateButton" Content="Update" HorizontalAlignment="Left" Height="56" Margin="645,142,0,0" VerticalAlignment="Top" Width="120" />
+        <Button x:Name="UpdateButton" Content="Update" HorizontalAlignment="Left" Height="56" Margin="645,142,0,0" VerticalAlignment="Top" Width="120" Click="UpdateButton_Click" />
         <Button x:Name="DeleteButton" Content="Delete" HorizontalAlignment="Left" Height="56" Margin="645,229,0,0" VerticalAlignment="Top" Width="120" Click="DeleteButton_Click"/>
         <Button x:Name="QuitButton" Content="Quit" HorizontalAlignment="Left" Height="56" Margin="645,322,0,0" VerticalAlignment="Top" Width="120" Click="QuitButton_Click" />
     </Grid>
