@@ -24,9 +24,12 @@
         <TextBox x:Name="ProductWarrantyTextBox" HorizontalAlignment="Center" Height="20" Margin="0,193,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="420"/>
         <TextBox  x:Name="ProductDescriptionTextBox" HorizontalAlignment="Center" Height="68" Margin="0,230,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="420"/>
         <TextBox  x:Name="ProductQuantityTextBox" HorizontalAlignment="Center" Height="20" Margin="0,314,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="420"/>
-        
+
         <TextBox  x:Name="ProductPublicationDayTextBox" HorizontalAlignment="Center" Height="20" Margin="0,360,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="420"/>
         <TextBox  x:Name="ProductSupplierNameTextBox" HorizontalAlignment="Center" Height="20" Margin="0,404,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="420"/>
         <ComboBox x:Name="CategoryComboBox" HorizontalAlignment="Center" Height="20" Margin="0,452,0,0" VerticalAlignment="Top" Width="420"/>
+        <Button x:Name="DetailWindowButton" Content="Save" HorizontalAlignment="Left" Height="45" Margin="656,63,0,0" VerticalAlignment="Top" Width="120" Click="DetailWindowButton_Click" />
+        <Button x:Name="QuitButton" Content="Quit" HorizontalAlignment="Left" Height="50" Margin="656,153,0,0" VerticalAlignment="Top" Width="120" Click="QuitButton_Click"/>
+        <Label x:Name="DetailWindowModeLabel" Content="Label" HorizontalAlignment="Left" Height="48" Margin="70,10,0,0" VerticalAlignment="Top" Width="540"/>
     </Grid>
 </Window>

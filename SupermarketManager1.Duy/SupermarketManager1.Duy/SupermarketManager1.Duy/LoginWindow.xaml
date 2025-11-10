@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SupermarketManager1.Duy"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="450" Width="800">
+        Title="LoginWindow" Height="450" Width="800"  Background="#00bfff">
     <Grid>
-        
+        <Label Content="Email" HorizontalAlignment="Left" Height="56" Margin="111,77,0,0" VerticalAlignment="Top" Width="120"  RenderTransformOrigin="0.325,-0.15"/>
+        <Label Content="Password" HorizontalAlignment="Left" Height="56" Margin="111,187,0,0" VerticalAlignment="Top" Width="160"  RenderTransformOrigin="0.325,-0.15"/>
+        <TextBox x:Name="EmailTextBox" HorizontalAlignment="Left" Margin="289,91,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="28" Width="370"/>
+        <TextBox x:Name="PasswordTextBox" HorizontalAlignment="Left" Margin="289,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Height="28" Width="370" />
+        <Button x:Name="LoginButton" Content="Login" HorizontalAlignment="Left" Height="52" Margin="111,296,0,0" VerticalAlignment="Top" Width="204" Click="LoginButton_Click"/>
+        <Button x:Name="QuitButton" Content="Quit" HorizontalAlignment="Left" Height="52" Margin="455,296,0,0" VerticalAlignment="Top" Width="204"/>
     </Grid>
 </Window>

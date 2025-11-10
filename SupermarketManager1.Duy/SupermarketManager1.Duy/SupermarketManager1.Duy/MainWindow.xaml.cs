@@ -83,5 +83,6 @@ namespace SupermarketManager1.Duy
            
             FillDataGrid(_service.GetAllProducts());
         }
+
     }
 }

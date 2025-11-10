@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SupperMarket.DAL.Models;
+using SupperMarket.DAL.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +24,7 @@ namespace SupperMarket.BLL.Service
             _repo.Update(obj);
         }
         public void DeleteProduct(Product obj)
-    {
+        {
             _repo.Delete(obj);
         }
     }

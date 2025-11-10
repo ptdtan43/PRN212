@@ -23,5 +23,11 @@ namespace SupermarketManager1.Duy
         {
             InitializeComponent();
         }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
+
 }
