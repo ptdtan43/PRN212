@@ -1,0 +1,256 @@
+-- ===================================
+-- FULL DATABASE SCHEMA
+-- Supermarket Management System
+-- ===================================
+Drop database if exists SupermarketDB3;
+Create database SupermarketDB3;
+GO
+Use SupermarketDB3; 
+Go
+
+-- 1. Bảng Category (Danh mục sản phẩm)
+CREATE TABLE Categories (
+    CategoryId INT PRIMARY KEY IDENTITY(1,1),
+    CategoryName NVARCHAR(255) NOT NULL
+);
+
+-- 2. Bảng Product (Sản phẩm)
+CREATE TABLE Products (
+    ProductCode NVARCHAR(50) PRIMARY KEY,
+    NameP NVARCHAR(255) NOT NULL,
+    CateId INT NULL,
+    Price DECIMAL(18,2) NULL,
+    SupplierName NVARCHAR(255) NULL,
+    PublicationDay DATE NULL,
+    Warranty NVARCHAR(255) NULL,
+    Description NVARCHAR(MAX) NULL,
+    CONSTRAINT FK_Product_Category FOREIGN KEY (CateId) REFERENCES Categories(CategoryId)
+);
+
+-- 3. Bảng Staff (Nhân viên)
+CREATE TABLE Staffs (
+    StaffId INT PRIMARY KEY IDENTITY(1,1),
+    Role NVARCHAR(50) NULL,        -- 'Manager' hoặc 'Staff'
+    Username NVARCHAR(100) NOT NULL UNIQUE,
+    Password NVARCHAR(255) NOT NULL
+);
+
+-- 4. Bảng Warehouse (Kho/Cửa hàng)
+CREATE TABLE Warehouses (
+    WarehouseId INT PRIMARY KEY IDENTITY(1,1),
+    WarehouseName NVARCHAR(255) NOT NULL,
+    Type NVARCHAR(50) NOT NULL,    -- 'Central' (Kho chính) hoặc 'Store' (Cửa hàng)
+    Address NVARCHAR(500) NULL
+);
+
+-- 5. Bảng Inventory (Tồn kho) - ĐÃ XÓA MinQuantity
+CREATE TABLE Inventories (
+    InventoryId INT PRIMARY KEY IDENTITY(1,1),
+    WarehouseId INT NOT NULL,
+    ProductCode NVARCHAR(50) NOT NULL,
+    Quantity INT NOT NULL DEFAULT 0,
+    -- ĐÃ XÓA: MinQuantity INT NOT NULL DEFAULT 0,
+    CONSTRAINT FK_Inventory_Warehouse FOREIGN KEY (WarehouseId) REFERENCES Warehouses(WarehouseId),
+    CONSTRAINT FK_Inventory_Product FOREIGN KEY (ProductCode) REFERENCES Products(ProductCode),
+    CONSTRAINT UQ_Warehouse_Product UNIQUE (WarehouseId, ProductCode)
+    -- Đảm bảo mỗi sản phẩm chỉ có 1 dòng trong 1 kho
+);
+
+-- 6. Bảng Sale (Lịch sử bán hàng)
+CREATE TABLE Sales (
+    SaleId INT PRIMARY KEY IDENTITY(1,1),
+    StaffId INT NOT NULL,
+    ProductCode NVARCHAR(50) NOT NULL,
+    QuantitySold INT NULL,
+    SaleDate DATETIME NULL,
+    CONSTRAINT FK_Sale_Staff FOREIGN KEY (StaffId) REFERENCES Staffs(StaffId),
+    CONSTRAINT FK_Sale_Product FOREIGN KEY (ProductCode) REFERENCES Products(ProductCode)
+);
+
+-- ===================================
+-- DỮ LIỆU MẪU (SAMPLE DATA)
+-- ===================================
+
+-- Insert Categories
+INSERT INTO Categories (CategoryName) VALUES
+(N'Điện tử'),
+(N'Thời trang'),
+(N'Thực phẩm'),
+(N'Đồ gia dụng');
+
+-- Insert Products
+INSERT INTO Products (ProductCode, NameP, CateId, Price, SupplierName, Warranty, Description) VALUES
+('P001', N'Áo thun nam', 2, 150000, N'Nhà cung cấp A', N'6 tháng', N'Áo thun cotton cao cấp'),
+('P002', N'Quần jean nữ', 2, 350000, N'Nhà cung cấp B', N'1 năm', N'Quần jean co giãn'),
+('P003', N'Giày sneaker', 2, 500000, N'Nhà cung cấp C', N'1 năm', N'Giày thể thao'),
+('P004', N'Túi xách', 2, 250000, N'Nhà cung cấp D', N'6 tháng', N'Túi xách da'),
+('P005', N'Laptop Dell', 1, 15000000, N'Dell Vietnam', N'2 năm', N'Laptop văn phòng'),
+('P006', N'Tai nghe Bluetooth', 1, 500000, N'Sony', N'1 năm', N'Tai nghe không dây'),
+('P007', N'Gạo ST25', 3, 25000, N'Nông trại XYZ', N'Không', N'Gạo thơm Sóc Trăng'),
+('P008', N'Nồi cơm điện', 4, 800000, N'Panasonic', N'2 năm', N'Nồi cơm điện tử');
+
+-- Insert Warehouses
+INSERT INTO Warehouses (WarehouseName, Type, Address) VALUES
+(N'Kho Trung Tâm', 'Central', N'123 Đường Nguyễn Văn Cừ, Quận 1, TP.HCM'),
+(N'Cửa hàng Chi nhánh 1', 'Store', N'456 Đường Lê Lợi, Quận 3, TP.HCM'),
+(N'Cửa hàng Chi nhánh 2', 'Store', N'789 Đường Võ Văn Tần, Quận 5, TP.HCM');
+
+-- Insert Inventory (Tồn kho) - ĐÃ XÓA MinQuantity
+-- Kho Trung Tâm (WarehouseId = 1)
+INSERT INTO Inventories (WarehouseId, ProductCode, Quantity) VALUES
+(1, 'P001', 500),   -- Áo thun: 500 cái
+(1, 'P002', 300),   -- Quần jean: 300 cái
+(1, 'P003', 200),   -- Giày: 200 đôi
+(1, 'P004', 150),   -- Túi xách: 150 cái
+(1, 'P005', 50),     -- Laptop: 50 cái
+(1, 'P006', 100),   -- Tai nghe: 100 cái
+(1, 'P007', 1000), -- Gạo: 1000 kg
+(1, 'P008', 80);    -- Nồi cơm: 80 cái
+
+-- Cửa hàng Chi nhánh 1 (WarehouseId = 2)
+INSERT INTO Inventories (WarehouseId, ProductCode, Quantity) VALUES
+(2, 'P001', 50),    -- Áo thun: 50 cái
+(2, 'P002', 30),     -- Quần jean: 30 cái
+(2, 'P003', 20),     -- Giày: 20 đôi
+(2, 'P007', 100);   -- Gạo: 100 kg
+
+-- Cửa hàng Chi nhánh 2 (WarehouseId = 3)
+INSERT INTO Inventories (WarehouseId, ProductCode, Quantity) VALUES
+(3, 'P001', 40),    -- Áo thun: 40 cái
+(3, 'P005', 5),      -- Laptop: 5 cái
+(3, 'P006', 15);     -- Tai nghe: 15 cái
+
+-- Insert Staffs
+INSERT INTO Staffs (Role, Username, Password) VALUES
+('Manager', 'admin', '123456'),
+('Staff', 'staff1', '123456'),
+('Staff', 'staff2', '123456');
+
+-- ===================================
+-- INDEXES (Tối ưu hiệu suất)
+-- ===================================
+
+-- Index cho tìm kiếm sản phẩm theo tên
+CREATE INDEX IX_Product_Name ON Products(NameP);
+
+-- Index cho tìm kiếm inventory theo kho
+CREATE INDEX IX_Inventory_Warehouse ON Inventories(WarehouseId);
+
+-- Index cho tìm kiếm sales theo staff và date
+CREATE INDEX IX_Sale_StaffDate ON Sales(StaffId, SaleDate);
+
+-- ===================================
+-- QUERIES MẪU (Kiểm tra dữ liệu)
+-- ===================================
+
+-- 1. Xem tất cả sản phẩm
+SELECT * FROM Products;
+
+-- 2. Xem tồn kho tại Kho Trung Tâm
+SELECT 
+    w.WarehouseName,
+    p.ProductCode,
+    p.NameP AS [Tên sản phẩm],
+    c.CategoryName AS [Danh mục],
+    i.Quantity AS [Tồn kho],
+    p.Price AS [Giá bán]
+FROM Inventories i
+JOIN Warehouses w ON i.WarehouseId = w.WarehouseId
+JOIN Products p ON i.ProductCode = p.ProductCode
+LEFT JOIN Categories c ON p.CateId = c.CategoryId
+WHERE w.WarehouseId = 1
+ORDER BY p.NameP;
+
+-- 3. Xem tồn kho tại tất cả các cửa hàng
+SELECT 
+    w.WarehouseName AS [Kho],
+    p.ProductCode AS [Mã SP],
+    p.NameP AS [Tên SP],
+    i.Quantity AS [SL],
+    p.Price AS [Giá]
+FROM Inventories i
+JOIN Warehouses w ON i.WarehouseId = w.WarehouseId
+JOIN Products p ON i.ProductCode = p.ProductCode
+WHERE w.Type = 'Store'
+ORDER BY w.WarehouseName, p.NameP;
+
+-- 4. So sánh tồn kho giữa các kho
+SELECT 
+    p.ProductCode,
+    p.NameP,
+    SUM(CASE WHEN w.Type = 'Central' THEN i.Quantity ELSE 0 END) AS [Kho TT],
+    SUM(CASE WHEN w.Type = 'Store' THEN i.Quantity ELSE 0 END) AS [Tổng Store]
+FROM Products p
+LEFT JOIN Inventories i ON p.ProductCode = i.ProductCode
+LEFT JOIN Warehouses w ON i.WarehouseId = w.WarehouseId
+GROUP BY p.ProductCode, p.NameP
+ORDER BY p.NameP;
+
+-- 5. ĐÃ XÓA QUERY CẢNH BÁO HẾT HÀNG (vì phụ thuộc MinQuantity)
+
+-- ===================================
+-- STORED PROCEDURES (Optional)
+-- ===================================
+GO
+-- SP: Chuyển hàng giữa 2 kho
+CREATE PROCEDURE sp_TransferStock
+    @FromWarehouseId INT,
+    @ToWarehouseId INT,
+    @ProductCode NVARCHAR(50),
+    @Quantity INT,
+    @Success BIT OUTPUT,
+    @Message NVARCHAR(500) OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        -- Kiểm tra kho nguồn có đủ hàng không
+        DECLARE @CurrentStock INT;
+        SELECT @CurrentStock = Quantity 
+        FROM Inventories 
+        WHERE WarehouseId = @FromWarehouseId AND ProductCode = @ProductCode;
+        
+        IF @CurrentStock IS NULL OR @CurrentStock < @Quantity
+        BEGIN
+            SET @Success = 0;
+            SET @Message = N'Không đủ hàng trong kho nguồn';
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+        
+        -- Trừ kho nguồn
+        UPDATE Inventories 
+        SET Quantity = Quantity - @Quantity
+        WHERE WarehouseId = @FromWarehouseId AND ProductCode = @ProductCode;
+        
+        -- Cộng kho đích
+        IF EXISTS (SELECT 1 FROM Inventories WHERE WarehouseId = @ToWarehouseId AND ProductCode = @ProductCode)
+        BEGIN
+            UPDATE Inventories 
+            SET Quantity = Quantity + @Quantity
+            WHERE WarehouseId = @ToWarehouseId AND ProductCode = @ProductCode;
+        END
+        ELSE
+        BEGIN
+            INSERT INTO Inventories (WarehouseId, ProductCode, Quantity)
+            VALUES (@ToWarehouseId, @ProductCode, @Quantity);
+        END
+        
+        COMMIT TRANSACTION;
+        SET @Success = 1;
+        SET @Message = N'Chuyển kho thành công';
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        SET @Success = 0;
+        SET @Message = ERROR_MESSAGE();
+    END CATCH
+END;
+GO
+
+-- Test SP
+-- DECLARE @Success BIT, @Message NVARCHAR(500);
+-- EXEC sp_TransferStock 1, 2, 'P001', 10, @Success OUTPUT, @Message OUTPUT;
+-- SELECT @Success AS Success, @Message AS Message;
