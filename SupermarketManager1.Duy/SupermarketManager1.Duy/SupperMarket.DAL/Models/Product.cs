@@ -17,13 +17,13 @@ public partial class Product
 
     public DateOnly? PublicationDay { get; set; }
 
-    public int? Quantity { get; set; }
-
     public string? Warranty { get; set; }
 
     public string? Description { get; set; }
 
     public virtual Category? Cate { get; set; }
+
+    public virtual ICollection<Inventory> Inventories { get; set; } = new List<Inventory>();
 
     public virtual ICollection<Sale> Sales { get; set; } = new List<Sale>();
 }

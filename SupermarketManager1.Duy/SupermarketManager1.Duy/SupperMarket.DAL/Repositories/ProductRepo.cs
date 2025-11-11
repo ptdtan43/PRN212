@@ -10,7 +10,7 @@ namespace SupperMarket.DAL.Repositories
 {
     public class ProductRepo
     {
-        private SupermarketManagerContext _ctx;
+        private SupermarketDb3Context _ctx;
         public List<Product> GetAll()
         {
             _ctx = new();

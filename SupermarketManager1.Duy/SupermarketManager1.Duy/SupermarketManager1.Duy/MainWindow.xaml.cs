@@ -35,7 +35,7 @@ namespace SupermarketManager1.Duy
             FillDataGrid(_service.GetAllProducts());
         }
 
-       
+
 
         private void QuitButton_Click(object sender, RoutedEventArgs e)
         {
@@ -76,13 +76,17 @@ namespace SupermarketManager1.Duy
                 MessageBox.Show("Please selected before updating", "Select one", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            
+
             DetailWindow detail = new();
             detail.EditedOne = selected;
             detail.ShowDialog();
-           
+
             FillDataGrid(_service.GetAllProducts());
         }
-
+        private void ManageWarehouseButton_Click(object sender, RoutedEventArgs e)
+        {
+            WarehouseManagementWindow warehouseWindow = new WarehouseManagementWindow();
+            warehouseWindow.ShowDialog();
+        }
     }
 }
