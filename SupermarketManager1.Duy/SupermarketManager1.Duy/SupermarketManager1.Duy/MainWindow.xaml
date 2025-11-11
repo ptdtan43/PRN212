@@ -5,26 +5,71 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SupermarketManager1.Duy"
         mc:Ignorable="d"
-       Title="MainWindow" Height="450" Width="800" Background="#00bfff" Loaded="Window_Loaded">
-    <Grid>
-        <DataGrid x:Name="ProductListDataGrid" HorizontalAlignment="Left" Height="349" Margin="56,0,0,0" VerticalAlignment="Center" Width="543" AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Product ID" Binding="{Binding ProductCode}" Width="*"/>
-                <DataGridTextColumn Header="Product Name" Binding="{Binding NameP}" Width="*"/>
-                <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="*"/>
-                <DataGridTextColumn Header="Warranty" Binding="{Binding Warranty}" Width="*"/>
-                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
-                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
-                <DataGridTextColumn Header="Publication Day" Binding="{Binding PublicationDay}" Width="*"/>
-                <DataGridTextColumn Header="Supplier Name" Binding="{Binding SupplierName}" Width="*"/>
-                <DataGridTextColumn Header="Category Id" Binding="{Binding CateId}" Width="*"/>
-                <DataGridTextColumn Header="Category Name" Binding="{Binding Cate.CategoryName}" Width="*"/>
-            </DataGrid.Columns>
-            
-        </DataGrid>
-        <Button x:Name="CreateButton" Content="Create" HorizontalAlignment="Left" Height="56" Margin="645,55,0,0" VerticalAlignment="Top" Width="120" Click="CreateButton_Click"/>
-        <Button x:Name="UpdateButton" Content="Update" HorizontalAlignment="Left" Height="56" Margin="645,142,0,0" VerticalAlignment="Top" Width="120" Click="UpdateButton_Click" />
-        <Button x:Name="DeleteButton" Content="Delete" HorizontalAlignment="Left" Height="56" Margin="645,229,0,0" VerticalAlignment="Top" Width="120" Click="DeleteButton_Click"/>
-        <Button x:Name="QuitButton" Content="Quit" HorizontalAlignment="Left" Height="56" Margin="645,322,0,0" VerticalAlignment="Top" Width="120" Click="QuitButton_Click" />
+       Title="Admin Dashboard - Product Management" Height="600" Width="1000" Loaded="Window_Loaded">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Admin Dashboard - Product Management" Grid.Column="0"/>
+            <Label x:Name="WelcomeLabel" Content="Welcome, " Grid.Column="1" FontSize="16" VerticalAlignment="Bottom"/>
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="0,10,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="🔍 Search:" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0"/>
+
+
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <DataGrid x:Name="ProductListDataGrid" Grid.Column="0" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Product ID" Binding="{Binding ProductCode}" Width="*"/>
+                        <DataGridTextColumn Header="Product Name" Binding="{Binding NameP}" Width="*"/>
+                        <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="*"/>
+                        <DataGridTextColumn Header="Warranty" Binding="{Binding Warranty}" Width="*"/>
+                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
+                        <!-- BỎ cột Quantity -->
+                        <DataGridTextColumn Header="Publication Day" Binding="{Binding PublicationDay}" Width="*"/>
+                        <DataGridTextColumn Header="Supplier Name" Binding="{Binding SupplierName}" Width="*"/>
+                        <DataGridTextColumn Header="Category Id" Binding="{Binding CateId}" Width="*"/>
+                        <DataGridTextColumn Header="Category Name" Binding="{Binding Cate.CategoryName}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <StackPanel Grid.Column="1" Margin="10,0,0,0" Width="200" VerticalAlignment="Top">
+                    <Button x:Name="CreateButton" Content="Create Product" Height="50" Margin="0,0,0,5" Click="CreateButton_Click"/>
+                    <Button x:Name="UpdateButton" Content="Update Product" Height="50" Margin="0,5,0,5" Click="UpdateButton_Click" />
+                    <Button x:Name="DeleteButton" Content="Delete Product" Height="50" Margin="0,5,0,5" Click="DeleteButton_Click"/>
+                    <Separator Margin="0,10"/>
+                    <!-- THÊM button mới -->
+                    <Button x:Name="ManageWarehouseButton" Content="📦 Quản lý Kho" Height="50" Margin="0,5,0,5" Click="ManageWarehouseButton_Click" Background="#FF9800" Foreground="White" FontWeight="Bold"/>
+                    <Separator Margin="0,10"/>
+
+                </StackPanel>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

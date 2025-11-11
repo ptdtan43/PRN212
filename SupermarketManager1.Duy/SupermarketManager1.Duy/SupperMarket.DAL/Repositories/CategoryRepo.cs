@@ -9,7 +9,7 @@ namespace SupperMarket.DAL.Repositories
 {
     public class CategoryRepo
     {
-        private SupermarketManagerContext _cxt;
+        private SupermarketDb3Context _cxt;
         public List<Category> GetAll()
         {
             _cxt = new();

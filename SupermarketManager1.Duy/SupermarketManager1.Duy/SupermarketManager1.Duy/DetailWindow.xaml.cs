@@ -3,16 +3,12 @@ using SupperMarket.DAL.Models;
 using System;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace SupermarketManager1.Duy
 {
-    /// <summary>
-    /// Interaction logic for DetailWindow.xaml
-    /// </summary>
     public partial class DetailWindow : Window
     {
-        public Product EditedOne { set; get; }
+        public Product? EditedOne { set; get; }
         private ProductService _productService = new();
         private CategoryService _categoryService = new();
 
@@ -36,9 +32,10 @@ namespace SupermarketManager1.Duy
                 CategoryComboBox.SelectedValue = EditedOne.CateId;
                 ProductPriceTextBox.Text = EditedOne.Price.ToString();
                 ProductSupplierNameTextBox.Text = EditedOne.SupplierName;
-                ProductQuantityTextBox.Text = EditedOne.Quantity.ToString();
+                // BỎ: ProductQuantityTextBox.Text = EditedOne.Quantity.ToString();
                 ProductWarrantyTextBox.Text = EditedOne.Warranty;
                 ProductDescriptionTextBox.Text = EditedOne.Description;
+                ProductPublicationDayTextBox.Text = EditedOne.PublicationDay?.ToString("yyyy-MM-dd") ?? "";
             }
             else
             {
@@ -51,6 +48,15 @@ namespace SupermarketManager1.Duy
             if (!CheckValidate())
                 return;
 
+            DateOnly? publicationDay = null;
+            if (!string.IsNullOrWhiteSpace(ProductPublicationDayTextBox.Text))
+            {
+                if (DateOnly.TryParse(ProductPublicationDayTextBox.Text, out DateOnly parsedDate))
+                {
+                    publicationDay = parsedDate;
+                }
+            }
+
             Product obj = new()
             {
                 ProductCode = ProductIdTextBox.Text,
@@ -58,9 +64,10 @@ namespace SupermarketManager1.Duy
                 CateId = (int?)CategoryComboBox.SelectedValue,
                 Price = decimal.Parse(ProductPriceTextBox.Text),
                 SupplierName = ProductSupplierNameTextBox.Text,
-                Quantity = int.Parse(ProductQuantityTextBox.Text),
+                // BỎ: Quantity = int.Parse(ProductQuantityTextBox.Text),
                 Warranty = ProductWarrantyTextBox.Text,
-                Description = ProductDescriptionTextBox.Text
+                Description = ProductDescriptionTextBox.Text,
+                PublicationDay = publicationDay
             };
 
             if (EditedOne == null)
@@ -109,24 +116,18 @@ namespace SupermarketManager1.Duy
                 return false;
             }
 
-            if (!int.TryParse(ProductQuantityTextBox.Text, out int quantity) || quantity < 0)
-            {
-                MessageBox.Show("Quantity must be a non-negative integer!", "Validation", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
+            // BỎ validation cho Quantity
 
             return true;
         }
 
         private void QuitButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult answer = MessageBox.Show("Are you sure?", "Comfrim?", MessageBoxButton.YesNo);
+            MessageBoxResult answer = MessageBox.Show("Are you sure?", "Confirm?", MessageBoxButton.YesNo);
             if (answer == MessageBoxResult.Yes)
             {
                 this.Close();
             }
         }
-
-        
     }
 }

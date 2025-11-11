@@ -1,0 +1,40 @@
+﻿<Window x:Class="SupermarketManager1.Duy.AdjustQuantityWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Điều chỉnh số lượng" Height="392" Width="532" 
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="Window_Loaded">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="📝 ĐIỀU CHỈNH SỐ LƯỢNG TỒN KHO" Grid.Row="0" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,5">
+            <Label Content="Mã sản phẩm:" Width="201"/>
+            <Label x:Name="ProductCodeLabel" FontWeight="Bold"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,5">
+            <Label Content="Tồn kho hiện tại:" Width="120"/>
+            <Label x:Name="CurrentQuantityLabel" FontWeight="Bold" Foreground="Blue"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,15">
+            <Label Content="Số lượng mới:" Width="120"/>
+            <TextBox x:Name="NewQuantityTextBox" Width="150" FontSize="16" VerticalContentAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+            <Button Content="💾 Lưu" Width="100" Height="35" Margin="5" Click="SaveButton_Click" Background="#4CAF50" Foreground="White" FontWeight="Bold"/>
+            <Button Content="❌ Hủy" Width="100" Height="35" Margin="5" Click="CancelButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
+
+<!-- AdjustQuantityWindow.xaml.cs -->
