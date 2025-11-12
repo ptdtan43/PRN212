@@ -7,7 +7,7 @@ public partial class Sale
 {
     public int SaleId { get; set; }
 
-    public int StaffId { get; set; }
+    public int AccountId { get; set; }
 
     public string ProductCode { get; set; } = null!;
 
@@ -15,7 +15,7 @@ public partial class Sale
 
     public DateTime? SaleDate { get; set; }
 
-    public virtual Product ProductCodeNavigation { get; set; } = null!;
+    public virtual Account Account { get; set; } = null!;
 
-    public virtual Staff Staff { get; set; } = null!;
+    public virtual Product ProductCodeNavigation { get; set; } = null!;
 }

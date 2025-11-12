@@ -16,15 +16,17 @@ public partial class SupermarketDb3Context : DbContext
     {
     }
 
+    public virtual DbSet<Account> Accounts { get; set; }
+
     public virtual DbSet<Category> Categories { get; set; }
 
     public virtual DbSet<Inventory> Inventories { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
 
-    public virtual DbSet<Sale> Sales { get; set; }
+    public virtual DbSet<Role> Roles { get; set; }
 
-    public virtual DbSet<Staff> Staffs { get; set; }
+    public virtual DbSet<Sale> Sales { get; set; }
 
     public virtual DbSet<Warehouse> Warehouses { get; set; }
     private string GetConnectionString()
@@ -38,21 +40,46 @@ public partial class SupermarketDb3Context : DbContext
         return strConn;
     }
 
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer(GetConnectionString());
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Account>(entity =>
+        {
+            entity.HasKey(e => e.AccountId).HasName("PK__Accounts__349DA5A6A26653B2");
+
+            entity.HasIndex(e => e.Username, "UQ__Accounts__536C85E415A3515F").IsUnique();
+
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Email).HasMaxLength(255);
+            entity.Property(e => e.FullName).HasMaxLength(255);
+            entity.Property(e => e.Password).HasMaxLength(255);
+            entity.Property(e => e.PhoneNumber).HasMaxLength(50);
+            entity.Property(e => e.Status)
+                .HasMaxLength(50)
+                .HasDefaultValue("Active");
+            entity.Property(e => e.Username).HasMaxLength(100);
+
+            entity.HasOne(d => d.Role).WithMany(p => p.Accounts)
+                .HasForeignKey(d => d.RoleId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Account_Role");
+        });
+
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A0B7CB913CD");
+            entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A0BCAB2A668");
 
             entity.Property(e => e.CategoryName).HasMaxLength(255);
         });
 
         modelBuilder.Entity<Inventory>(entity =>
         {
-            entity.HasKey(e => e.InventoryId).HasName("PK__Inventor__F5FDE6B3E9F35511");
+            entity.HasKey(e => e.InventoryId).HasName("PK__Inventor__F5FDE6B3E2058EE4");
 
             entity.HasIndex(e => e.WarehouseId, "IX_Inventory_Warehouse");
 
@@ -73,7 +100,7 @@ public partial class SupermarketDb3Context : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.ProductCode).HasName("PK__Products__2F4E024ED8C1A48C");
+            entity.HasKey(e => e.ProductCode).HasName("PK__Products__2F4E024EB265D8C5");
 
             entity.HasIndex(e => e.NameP, "IX_Product_Name");
 
@@ -88,40 +115,38 @@ public partial class SupermarketDb3Context : DbContext
                 .HasConstraintName("FK_Product_Category");
         });
 
+        modelBuilder.Entity<Role>(entity =>
+        {
+            entity.HasKey(e => e.RoleId).HasName("PK__Roles__8AFACE1A54217374");
+
+            entity.HasIndex(e => e.RoleName, "UQ__Roles__8A2B61604CEC34CE").IsUnique();
+
+            entity.Property(e => e.RoleName).HasMaxLength(50);
+        });
+
         modelBuilder.Entity<Sale>(entity =>
         {
-            entity.HasKey(e => e.SaleId).HasName("PK__Sales__1EE3C3FFF46C9B96");
+            entity.HasKey(e => e.SaleId).HasName("PK__Sales__1EE3C3FF9179F090");
 
-            entity.HasIndex(e => new { e.StaffId, e.SaleDate }, "IX_Sale_StaffDate");
+            entity.HasIndex(e => new { e.AccountId, e.SaleDate }, "IX_Sale_AccountDate");
 
             entity.Property(e => e.ProductCode).HasMaxLength(50);
             entity.Property(e => e.SaleDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Account).WithMany(p => p.Sales)
+                .HasForeignKey(d => d.AccountId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Sale_Account");
 
             entity.HasOne(d => d.ProductCodeNavigation).WithMany(p => p.Sales)
                 .HasForeignKey(d => d.ProductCode)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Sale_Product");
-
-            entity.HasOne(d => d.Staff).WithMany(p => p.Sales)
-                .HasForeignKey(d => d.StaffId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Sale_Staff");
-        });
-
-        modelBuilder.Entity<Staff>(entity =>
-        {
-            entity.HasKey(e => e.StaffId).HasName("PK__Staffs__96D4AB1745332A85");
-
-            entity.HasIndex(e => e.Username, "UQ__Staffs__536C85E4D1FA75B1").IsUnique();
-
-            entity.Property(e => e.Password).HasMaxLength(255);
-            entity.Property(e => e.Role).HasMaxLength(50);
-            entity.Property(e => e.Username).HasMaxLength(100);
         });
 
         modelBuilder.Entity<Warehouse>(entity =>
         {
-            entity.HasKey(e => e.WarehouseId).HasName("PK__Warehous__2608AFF94C4B3253");
+            entity.HasKey(e => e.WarehouseId).HasName("PK__Warehous__2608AFF962D1F120");
 
             entity.Property(e => e.Address).HasMaxLength(500);
             entity.Property(e => e.Type).HasMaxLength(50);
