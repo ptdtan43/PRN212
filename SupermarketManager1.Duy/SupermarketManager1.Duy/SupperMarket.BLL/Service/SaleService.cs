@@ -1,4 +1,5 @@
-﻿using SupperMarket.DAL.Models;
+﻿using ClosedXML.Excel;
+using SupperMarket.DAL.Models;
 using SupperMarket.DAL.Repositories;
 using System;
 using System.Collections.Generic;
@@ -105,6 +106,49 @@ namespace SupperMarket.BLL.Service
         {
             var sales = _repo.GetByDate(date);
             return sales.Sum(s => s.TotalAmount);
+        }
+
+        public string ExportSalesToExcel(string filePath)
+        {
+            var sales = _repo.GetAll();
+            if (sales == null || !sales.Any())
+                throw new Exception("Không có dữ liệu bán hàng để xuất!");
+
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Doanh thu");
+
+                // Header
+                worksheet.Cell(1, 1).Value = "Mã hóa đơn";
+                worksheet.Cell(1, 2).Value = "Nhân viên";
+                worksheet.Cell(1, 3).Value = "Kho hàng";
+                worksheet.Cell(1, 4).Value = "Sản phẩm";
+                worksheet.Cell(1, 5).Value = "Số lượng";
+                worksheet.Cell(1, 6).Value = "Đơn giá";
+                worksheet.Cell(1, 7).Value = "Tổng tiền";
+                worksheet.Cell(1, 8).Value = "Ngày bán";
+
+                // Ghi dữ liệu
+                int row = 2;
+                foreach (var s in sales)
+                {
+                    worksheet.Cell(row, 1).Value = s.SaleId;
+                    worksheet.Cell(row, 2).Value = s.Account?.FullName;
+                    worksheet.Cell(row, 3).Value = s.Warehouse?.WarehouseName;
+                    worksheet.Cell(row, 4).Value = s.ProductCode;
+                    worksheet.Cell(row, 5).Value = s.QuantitySold;
+                    worksheet.Cell(row, 6).Value = s.UnitPrice;
+                    worksheet.Cell(row, 7).Value = s.TotalAmount;
+                    worksheet.Cell(row, 8).Value = s.SaleDate.ToString("dd/MM/yyyy HH:mm");
+                    row++;
+                }
+
+                worksheet.Columns().AdjustToContents();
+
+                workbook.SaveAs(filePath);
+            }
+
+            return filePath;
         }
     }
 }

@@ -1,3 +1,4 @@
+using Microsoft.Win32;
 using SupperMarket.BLL.Service;
 using SupperMarket.DAL.Models;
 using System;
@@ -179,6 +180,33 @@ namespace SupermarketManager1.Duy
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void ExportButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var service = new SaleService();
+                SaveFileDialog saveDialog = new SaveFileDialog
+                {
+                    Filter = "Excel Files|*.xlsx",
+                    Title = "Chọn nơi lưu file Excel",
+                    FileName = "DoanhThu.xlsx"
+                };
+
+                if (saveDialog.ShowDialog() == true)
+                {
+                    string filePath = saveDialog.FileName;
+                    service.ExportSalesToExcel(filePath);
+                    MessageBox.Show("Xuất file Excel thành công!\n" + filePath, "Thành công",
+                                    MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi xuất Excel: " + ex.Message, "Lỗi",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
