@@ -49,21 +49,21 @@ namespace SupperMarket.BLL.Service
         {
             _repo.Delete(warehouse);
         }
-    }
 
+        // Alias methods for backward compatibility (if needed)
         public void CreateStore(Warehouse store)
         {
-            _repo.Create(store);
+            CreateWarehouse(store);
         }
 
         public void UpdateStore(Warehouse store) 
         { 
-            _repo.Update(store); 
+            UpdateWarehouse(store); 
         }
 
         public void DeleteStore(Warehouse store) 
         {
-            _repo.Delete(store); 
+            DeleteWarehouse(store); 
         }
     }
 }

@@ -26,20 +26,21 @@ namespace SupermarketManager1.Duy
             InitializeComponent();
         }
 
-        public Warehouse EditedOne { get; set; }
+        public Warehouse? EditedOne { get; set; }
         private WarehouseService _ws = new();
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!CheckValidation)
+            if (!CheckValidation())
                 return;
 
-            Warehouse? warehouse = new() { };
-
-            warehouse.WarehouseId = int.Parse(IdWarehouseTextBox.Text);
-            warehouse.WarehouseName = NameWarehouseTextBox.Text;
-            warehouse.Type = TypeWarehouseTextBox.Text;
-            warehouse.Address = AddressWarehouseTextBox.Text;
+            Warehouse warehouse = new()
+            {
+                WarehouseId = int.Parse(IdWarehouseTextBox.Text),
+                WarehouseName = NameWarehouseTextBox.Text ?? "",
+                Type = TypeWarehouseTextBox.Text ?? "",
+                Address = AddressWarehouseTextBox.Text
+            };
 
             if (EditedOne == null)
             {
@@ -47,8 +48,11 @@ namespace SupermarketManager1.Duy
             }
             else
             {
+                warehouse.WarehouseId = EditedOne.WarehouseId; // Giữ nguyên ID khi update
                 _ws.UpdateStore(warehouse);
             }
+            
+            Close();
         }
 
         private void QuitButton_Click(object sender, RoutedEventArgs e)

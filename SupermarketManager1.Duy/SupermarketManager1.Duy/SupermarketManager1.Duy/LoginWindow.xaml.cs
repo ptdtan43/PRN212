@@ -66,13 +66,20 @@ namespace SupermarketManager1.Duy
             this.Hide();
 
             // Mở MainWindow theo Role
-            Window mainWindow = account.Role.RoleName switch
+            Window? mainWindow = account.Role.RoleName switch
             {
                 "Admin" => new AdminMainWindow(),
                 "Manager" => new ManagerMainWindow(),
                 "Staff" => new StaffMainWindow(),
-                _ => new MainWindow()
+                _ => null // Không có Role nào khác
             };
+
+            if (mainWindow == null)
+            {
+                MessageBox.Show("Vai trò không hợp lệ! Vui lòng liên hệ quản trị viên.", 
+                    "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
             mainWindow.Show();
             this.Close();
