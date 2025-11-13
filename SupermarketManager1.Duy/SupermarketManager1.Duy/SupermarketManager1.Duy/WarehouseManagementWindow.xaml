@@ -39,12 +39,18 @@
                       DisplayMemberPath="WarehouseName"
                       SelectedValuePath="WarehouseId"/>
 
-            <DataGrid x:Name="InventoryDataGrid" Grid.Row="2" 
-                      Style="{StaticResource MaterialDesignDataGrid}"
-                      HeadersVisibility="Column"
-                      IsReadOnly="True" CanUserAddRows="False"
-                      GridLinesVisibility="None" RowHeaderWidth="0"
-                      AutoGenerateColumns="False">
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <DataGrid x:Name="InventoryDataGrid" Grid.Row="0" 
+                          Style="{StaticResource MaterialDesignDataGrid}"
+                          HeadersVisibility="Column"
+                          IsReadOnly="True" CanUserAddRows="False"
+                          GridLinesVisibility="None" RowHeaderWidth="0"
+                          AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Mã SP" Binding="{Binding ProductCode}" Width="100"/>
                     <DataGridTextColumn Header="Tên sản phẩm" Binding="{Binding Product.NameP}" Width="*"/>
@@ -86,7 +92,14 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
-            </DataGrid>
+                </DataGrid>
+
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+                    <Button Content="Đóng" Width="100" Height="40" 
+                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                            Click="CloseButton_Click"/>
+                </StackPanel>
+            </Grid>
         </Grid>
     </materialDesign:Card>
 </Window>

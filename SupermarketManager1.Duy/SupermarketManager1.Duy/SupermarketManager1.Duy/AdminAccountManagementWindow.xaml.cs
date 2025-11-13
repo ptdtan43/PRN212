@@ -144,5 +144,10 @@ namespace SupermarketManager1.Duy
         {
             // Có thể thêm logic khi chọn account
         }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

@@ -69,12 +69,12 @@ public partial class SupermarketDb3Context : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Account_Role");
 
-            // ⭐ MỚI: Relationship Account → Warehouse
+            
             entity.HasOne(d => d.Warehouse).WithMany(p => p.Accounts)
                 .HasForeignKey(d => d.WarehouseId)
                 .HasConstraintName("FK_Account_Warehouse");
 
-            // ⭐ MỚI: Index cho WarehouseId
+            
             entity.HasIndex(e => e.WarehouseId, "IX_Account_Warehouse");
         });
 
@@ -116,8 +116,6 @@ public partial class SupermarketDb3Context : DbContext
             entity.Property(e => e.NameP).HasMaxLength(255);
             entity.Property(e => e.Price)
                 .HasColumnType("decimal(18, 2)");
-                // ⭐ BỎ HasDefaultValue vì Price là nullable decimal
-                // Nếu muốn set default, dùng: .HasDefaultValue(0m) nhưng không cần thiết cho nullable
             entity.Property(e => e.SupplierName).HasMaxLength(255);
             entity.Property(e => e.Warranty).HasMaxLength(255);
 
@@ -154,23 +152,20 @@ public partial class SupermarketDb3Context : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Sale_Product");
 
-            // ⭐ MỚI: Relationship Sale → Warehouse
+
             entity.HasOne(d => d.Warehouse).WithMany(p => p.Sales)
                 .HasForeignKey(d => d.WarehouseId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Sale_Warehouse");
 
-            // ⭐ MỚI: Properties cho Sales
             entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.SaleDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
 
-            // ⭐ MỚI: Index cho WarehouseId và SaleDate
             entity.HasIndex(e => new { e.WarehouseId, e.SaleDate }, "IX_Sale_WarehouseDate");
 
-            // ⭐ QUAN TRỌNG: Tắt OUTPUT clause để tương thích với trigger
             entity.ToTable(tb => tb.HasTrigger("trg_AfterSale_UpdateInventory"));
         });
 
@@ -182,7 +177,6 @@ public partial class SupermarketDb3Context : DbContext
             entity.Property(e => e.Type).HasMaxLength(50);
             entity.Property(e => e.WarehouseName).HasMaxLength(255);
 
-            // ⭐ MỚI: Relationship Warehouse → Manager (Account)
             entity.HasOne(d => d.Manager).WithMany()
                 .HasForeignKey(d => d.ManagerId)
                 .HasConstraintName("FK_Warehouse_Manager");

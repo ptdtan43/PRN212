@@ -266,6 +266,24 @@ namespace SupermarketManager1.Duy
                 LoadAvailableProducts();
             }
         }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Kiểm tra nếu có sản phẩm trong giỏ hàng
+            if (_cart.Count > 0)
+            {
+                MessageBoxResult result = MessageBox.Show(
+                    "Bạn có sản phẩm trong giỏ hàng.\nBạn có chắc muốn đóng cửa sổ này?",
+                    "Xác nhận",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result != MessageBoxResult.Yes)
+                    return;
+            }
+
+            this.Close();
+        }
     }
 }
 

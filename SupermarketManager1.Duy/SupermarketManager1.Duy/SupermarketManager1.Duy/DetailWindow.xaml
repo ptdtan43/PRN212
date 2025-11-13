@@ -58,10 +58,10 @@
                          Height="100" TextWrapping="Wrap" AcceptsReturn="True"
                          VerticalScrollBarVisibility="Auto"/>
 
-                <TextBox x:Name="ProductPublicationDayTextBox"
-                         materialDesign:HintAssist.Hint="Ngày xuất bản (YYYY-MM-DD)"
-                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                         Margin="0,0,0,15"/>
+                <DatePicker x:Name="ProductPublicationDayDatePicker"
+                           materialDesign:HintAssist.Hint="Ngày xuất bản"
+                           Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                           Margin="0,0,0,15"/>
 
                 <TextBox x:Name="ProductSupplierNameTextBox"
                          materialDesign:HintAssist.Hint="Nhà cung cấp"

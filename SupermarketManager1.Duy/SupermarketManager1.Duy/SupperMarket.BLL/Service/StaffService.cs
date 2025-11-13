@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SupperMarket.BLL.Service
 {
-    internal class StaffService
+    public class StaffService
     {
     }
 }

@@ -13,15 +13,16 @@
         FontFamily="{materialDesign:MaterialDesignFont}"
         
         mc:Ignorable="d"
-        Title="Quản lý Tài khoản" Height="700" Width="1200" Loaded="Window_Loaded"
+        Title="Quản lý Tài khoản" Height="682" Width="1200" Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen">
 
-    <materialDesign:Card Padding="20" Margin="10">
+    <materialDesign:Card Padding="20" Margin="10,10,10,50">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
@@ -118,6 +119,12 @@
                     <DataGridTextColumn Header="Ngày tạo" Binding="{Binding CreatedAt, StringFormat={}{0:dd/MM/yyyy}}" Width="120"/>
                 </DataGrid.Columns>
             </DataGrid>
+
+            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+                <Button Content="Đóng" Width="100" Height="40" 
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        Click="CloseButton_Click"/>
+            </StackPanel>
         </Grid>
     </materialDesign:Card>
 </Window>

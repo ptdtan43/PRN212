@@ -33,10 +33,18 @@ namespace SupermarketManager1.Duy
                 CategoryComboBox.SelectedValue = EditedOne.CateId;
                 ProductPriceTextBox.Text = EditedOne.Price?.ToString() ?? "0";
                 ProductSupplierNameTextBox.Text = EditedOne.SupplierName;
-                // BỎ: ProductQuantityTextBox.Text = EditedOne.Quantity.ToString();
                 ProductWarrantyTextBox.Text = EditedOne.Warranty;
                 ProductDescriptionTextBox.Text = EditedOne.Description;
-                ProductPublicationDayTextBox.Text = EditedOne.PublicationDay?.ToString("yyyy-MM-dd") ?? "";
+                if (EditedOne.PublicationDay.HasValue)
+                {
+                    ProductPublicationDayDatePicker.SelectedDate = new DateTime(EditedOne.PublicationDay.Value.Year, 
+                                                                                EditedOne.PublicationDay.Value.Month, 
+                                                                                EditedOne.PublicationDay.Value.Day);
+                }
+                else
+                {
+                    ProductPublicationDayDatePicker.SelectedDate = null;
+                }
             }
             else
             {
@@ -54,12 +62,10 @@ namespace SupermarketManager1.Duy
                 return;
 
             DateOnly? publicationDay = null;
-            if (!string.IsNullOrWhiteSpace(ProductPublicationDayTextBox.Text))
+            if (ProductPublicationDayDatePicker.SelectedDate.HasValue)
             {
-                if (DateOnly.TryParse(ProductPublicationDayTextBox.Text, out DateOnly parsedDate))
-                {
-                    publicationDay = parsedDate;
-                }
+                var selectedDate = ProductPublicationDayDatePicker.SelectedDate.Value;
+                publicationDay = new DateOnly(selectedDate.Year, selectedDate.Month, selectedDate.Day);
             }
 
             decimal? price = null;
@@ -75,7 +81,6 @@ namespace SupermarketManager1.Duy
                 CateId = (int?)CategoryComboBox.SelectedValue,
                 Price = price,
                 SupplierName = string.IsNullOrWhiteSpace(ProductSupplierNameTextBox.Text) ? null : ProductSupplierNameTextBox.Text,
-                // BỎ: Quantity = int.Parse(ProductQuantityTextBox.Text),
                 Warranty = string.IsNullOrWhiteSpace(ProductWarrantyTextBox.Text) ? null : ProductWarrantyTextBox.Text,
                 Description = string.IsNullOrWhiteSpace(ProductDescriptionTextBox.Text) ? null : ProductDescriptionTextBox.Text,
                 PublicationDay = publicationDay

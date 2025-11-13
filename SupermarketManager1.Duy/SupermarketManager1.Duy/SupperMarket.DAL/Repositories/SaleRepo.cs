@@ -31,7 +31,7 @@ namespace SupperMarket.DAL.Repositories
                     connection.Open();
                 }
                 
-                // ⭐ QUAN TRỌNG: Dùng transaction để đảm bảo atomicity với trigger
+                // Dùng transaction để đảm bảo atomicity với trigger
                 using (var transaction = connection.BeginTransaction())
                 {
                     try
