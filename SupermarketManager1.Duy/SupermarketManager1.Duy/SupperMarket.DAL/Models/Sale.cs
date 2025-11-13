@@ -9,21 +9,21 @@ public partial class Sale
 
     public int AccountId { get; set; }
 
-    public int WarehouseId { get; set; }  // ⭐ MỚI: Bán từ kho nào
+    public int WarehouseId { get; set; }  // Bán từ kho nào
 
     public string ProductCode { get; set; } = null!;
 
-    public int QuantitySold { get; set; }  // ⭐ SỬA: NOT NULL
+    public int QuantitySold { get; set; }  // NOT NULL
 
-    public decimal UnitPrice { get; set; }  // ⭐ MỚI: Giá tại thời điểm bán
+    public decimal UnitPrice { get; set; }  // Giá tại thời điểm bán
 
-    public decimal TotalAmount { get; set; }  // ⭐ MỚI: Tổng tiền = QuantitySold × UnitPrice
+    public decimal TotalAmount { get; set; }  //  Tổng tiền = QuantitySold × UnitPrice
 
-    public DateTime SaleDate { get; set; }  // ⭐ SỬA: NOT NULL
+    public DateTime SaleDate { get; set; }  // NOT NULL
 
     public virtual Account Account { get; set; } = null!;
 
-    public virtual Warehouse Warehouse { get; set; } = null!;  // ⭐ MỚI: Navigation property
+    public virtual Warehouse Warehouse { get; set; } = null!;  // Navigation property
 
     public virtual Product ProductCodeNavigation { get; set; } = null!;
 }

@@ -121,12 +121,12 @@ namespace SupermarketManager1.Duy
             {
                 if (selectedRole.RoleName == "Manager" || selectedRole.RoleName == "Staff")
                 {
-                    // WarehouseLabel.Visibility = Visibility.Visible; // Không có trong XAML
+                    
                     WarehouseComboBox.Visibility = Visibility.Visible;
                 }
                 else // Admin
                 {
-                    // WarehouseLabel.Visibility = Visibility.Collapsed; // Không có trong XAML
+                    
                     WarehouseComboBox.Visibility = Visibility.Collapsed;
                     WarehouseComboBox.SelectedValue = null;
                 }

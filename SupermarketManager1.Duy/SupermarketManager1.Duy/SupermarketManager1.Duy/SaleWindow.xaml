@@ -153,6 +153,9 @@
                 <Button Content="Xóa giỏ hàng" Width="120" Height="40" Margin="0,0,10,0" 
                         Style="{StaticResource MaterialDesignOutlinedButton}"
                         Click="ClearCartButton_Click"/>
+                <Button Content="Đóng" Width="100" Height="40" Margin="0,0,10,0"
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        Click="CloseButton_Click"/>
                 <Button Content="Thanh toán" Width="120" Height="40" 
                         Style="{StaticResource MaterialDesignRaisedButton}"
                         Click="CheckoutButton_Click" 
