@@ -59,10 +59,17 @@
                     </DataGrid.Columns>
                 </DataGrid>
 
+<<<<<<< HEAD
                 <StackPanel Grid.Column="1" Margin="10,0,0,0" Width="200" VerticalAlignment="Top">
                     <Button x:Name="CreateButton" Content="Tạo" Height="50" Margin="0,0,0,5" Click="CreateButton_Click"/>
                     <Button x:Name="UpdateButton" Content="Sửa" Height="50" Margin="0,5,0,5" Click="UpdateButton_Click" />
                     <Button x:Name="DeleteButton" Content="Xóa" Height="50" Margin="0,5,0,5" Click="DeleteButton_Click"/>
+=======
+                <StackPanel Grid.Column="1" Margin="10,0,0,0" Width="200" VerticalAlignment="Top" Height="355">
+                    <Button x:Name="CreateButton" Content="Create Product" Height="50" Margin="0,0,0,5" Click="CreateButton_Click"/>
+                    <Button x:Name="UpdateButton" Content="Update Product" Height="50" Margin="0,5,0,5" Click="UpdateButton_Click" />
+                    <Button x:Name="DeleteButton" Content="Delete Product" Height="50" Margin="0,5,0,5" Click="DeleteButton_Click"/>
+>>>>>>> c0936afcafe978701fdfea162dfa0bfa4686ef9a
                     <Separator Margin="0,10"/>
                     <Button x:Name="ManageWarehouseButton" Content="Quản lý Kho" Height="50" Margin="0,5,0,5" Click="ManageWarehouseButton_Click" Background="#FF9800" Foreground="White" FontWeight="Bold"/>
                     <Separator Margin="0,10"/>
