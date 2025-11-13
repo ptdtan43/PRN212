@@ -26,9 +26,8 @@ namespace SupermarketManager1.Duy
             if (ManagerComboBox == null || TypeComboBox == null)
                 return;
 
-            // Load danh sách Manager (chỉ những account có Role = Manager)
-            var managers = _accountService.GetAccountsByRole(2); // RoleId = 2 là Manager
-            ManagerComboBox.ItemsSource = managers;
+            // Load danh sách Manager
+            LoadManagers();
 
             if (IsEditMode)
             {
@@ -43,6 +42,34 @@ namespace SupermarketManager1.Duy
                 {
                     ManagerComboBox.Visibility = Visibility.Visible;
                 }
+            }
+        }
+
+        private void LoadManagers()
+        {
+            // Lấy tất cả Manager (RoleId = 2)
+            var allManagers = _accountService.GetAccountsByRole(2); // RoleId = 2 là Manager
+
+            if (IsEditMode)
+            {
+                // Khi edit: hiển thị tất cả manager (để có thể xem manager hiện tại)
+                ManagerComboBox.ItemsSource = allManagers;
+            }
+            else
+            {
+                // Khi tạo mới: chỉ hiển thị những manager chưa quản lý cửa hàng nào
+                var allWarehouses = _warehouseService.GetAllWarehouses();
+                var managersWithStore = allWarehouses
+                    .Where(w => w.Type == "Store" && w.ManagerId.HasValue)
+                    .Select(w => w.ManagerId!.Value)
+                    .ToList();
+
+                // Chỉ lấy những manager chưa quản lý cửa hàng nào
+                var availableManagers = allManagers
+                    .Where(m => !managersWithStore.Contains(m.AccountId))
+                    .ToList();
+
+                ManagerComboBox.ItemsSource = availableManagers;
             }
         }
 
@@ -96,6 +123,11 @@ namespace SupermarketManager1.Duy
                 {
                     // ManagerLabel.Visibility = Visibility.Visible; // Không có trong XAML
                     ManagerComboBox.Visibility = Visibility.Visible;
+                    // Reload danh sách manager khi chọn Store (để đảm bảo chỉ hiển thị manager chưa có cửa hàng)
+                    if (!IsEditMode)
+                    {
+                        LoadManagers();
+                    }
                 }
                 else // Central
                 {
@@ -172,7 +204,20 @@ namespace SupermarketManager1.Duy
                 }
                 else
                 {
+                    // Tạo cửa hàng mới
                     _warehouseService.CreateWarehouse(warehouse);
+                    
+                    // ⭐ Nếu là Store và có Manager, cập nhật WarehouseId cho Manager
+                    if (warehouse.Type == "Store" && warehouse.ManagerId.HasValue)
+                    {
+                        var manager = _accountService.GetAccountById(warehouse.ManagerId.Value);
+                        if (manager != null)
+                        {
+                            manager.WarehouseId = warehouse.WarehouseId; // WarehouseId được tạo sau khi SaveChanges
+                            _accountService.UpdateAccount(manager);
+                        }
+                    }
+                    
                     MessageBox.Show("Warehouse created successfully!", "Success", 
                         MessageBoxButton.OK, MessageBoxImage.Information);
                 }

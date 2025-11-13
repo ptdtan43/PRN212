@@ -105,8 +105,7 @@ namespace SupermarketManager1.Duy
             }
 
             // Load Warehouses (chỉ Store, không có Central)
-            var stores = _warehouseService.GetStores();
-            WarehouseComboBox.ItemsSource = stores;
+            LoadWarehouses();
         }
 
         private void LoadAccountData()
@@ -177,20 +176,79 @@ namespace SupermarketManager1.Duy
 
         private void RoleComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Hiển thị Warehouse dropdown nếu chọn Manager hoặc Staff
+            // Hiển thị Warehouse dropdown tùy theo role
             if (RoleComboBox.SelectedItem is Role selectedRole)
             {
-                if (selectedRole.RoleName == "Manager" || selectedRole.RoleName == "Staff")
+                if (selectedRole.RoleName == "Manager")
                 {
-                    
+                    // ⭐ Khi tạo mới Manager: ẩn Store (vì Manager không bắt buộc phải chọn cửa hàng)
+                    // Khi edit Manager: hiển thị Store (để có thể xem/sửa cửa hàng)
+                    if (IsEditMode)
+                    {
+                        WarehouseComboBox.Visibility = Visibility.Visible;
+                        LoadWarehouses();
+                    }
+                    else
+                    {
+                        // Tạo mới Manager: ẩn Store
+                        WarehouseComboBox.Visibility = Visibility.Collapsed;
+                        WarehouseComboBox.SelectedValue = null;
+                    }
+                }
+                else if (selectedRole.RoleName == "Staff")
+                {
+                    // Staff luôn phải chọn cửa hàng
                     WarehouseComboBox.Visibility = Visibility.Visible;
+                    LoadWarehouses();
                 }
                 else // Admin
                 {
-                    
                     WarehouseComboBox.Visibility = Visibility.Collapsed;
                     WarehouseComboBox.SelectedValue = null;
                 }
+            }
+        }
+
+        private void LoadWarehouses()
+        {
+            // Kiểm tra role hiện tại
+            if (RoleComboBox.SelectedItem is Role selectedRole)
+            {
+                if (selectedRole.RoleName == "Manager")
+                {
+                    // Nếu là Manager: chỉ hiển thị những cửa hàng chưa có manager
+                    var allStores = _warehouseService.GetStores();
+
+                    // Nếu đang edit Manager và Manager đã có cửa hàng, hiển thị tất cả (để có thể xem cửa hàng hiện tại)
+                    if (IsEditMode && EditedAccount != null && EditedAccount.WarehouseId.HasValue)
+                    {
+                        // Hiển thị tất cả cửa hàng, nhưng loại trừ những cửa hàng đã có manager khác
+                        var availableStores = allStores
+                            .Where(s => !s.ManagerId.HasValue || s.ManagerId.Value == EditedAccount.AccountId)
+                            .ToList();
+                        WarehouseComboBox.ItemsSource = availableStores;
+                    }
+                    else
+                    {
+                        // Chỉ hiển thị những cửa hàng chưa có manager (hoặc có thể để trống)
+                        var availableStores = allStores
+                            .Where(s => !s.ManagerId.HasValue)
+                            .ToList();
+                        WarehouseComboBox.ItemsSource = availableStores;
+                    }
+                }
+                else if (selectedRole.RoleName == "Staff")
+                {
+                    // Nếu là Staff: hiển thị tất cả cửa hàng
+                    var stores = _warehouseService.GetStores();
+                    WarehouseComboBox.ItemsSource = stores;
+                }
+            }
+            else
+            {
+                // Nếu chưa chọn role, hiển thị tất cả cửa hàng
+                var stores = _warehouseService.GetStores();
+                WarehouseComboBox.ItemsSource = stores;
             }
         }
 
@@ -511,9 +569,11 @@ namespace SupermarketManager1.Duy
             // ========== VALIDATE WAREHOUSE (nếu là Manager hoặc Staff) ==========
             if (RoleComboBox.SelectedItem is Role role && (role.RoleName == "Manager" || role.RoleName == "Staff"))
             {
-                if (WarehouseComboBox.SelectedItem == null)
+                // ⭐ Manager không bắt buộc phải chọn cửa hàng khi tạo mới (có thể tạo manager chưa gán cửa hàng)
+                // Staff thì bắt buộc phải chọn cửa hàng
+                if (role.RoleName == "Staff" && WarehouseComboBox.SelectedItem == null)
                 {
-                    MessageBox.Show("Please select Store for " + role.RoleName + "!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Please select Store for Staff!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     WarehouseComboBox.Focus();
                     return false;
                 }

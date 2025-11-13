@@ -75,7 +75,25 @@ namespace SupperMarket.DAL.Repositories
         public void Update(Account account)
         {
             _ctx = new();
-            _ctx.Accounts.Update(account);
+            // Load lại entity từ database để đảm bảo Entity Framework track đúng
+            var existingAccount = _ctx.Accounts.FirstOrDefault(a => a.AccountId == account.AccountId);
+            if (existingAccount == null)
+            {
+                throw new Exception($"Account with ID {account.AccountId} not found!");
+            }
+
+            // Cập nhật tất cả các properties
+            existingAccount.Username = account.Username;
+            existingAccount.Password = account.Password;
+            existingAccount.FullName = account.FullName;
+            existingAccount.DateOfBirth = account.DateOfBirth;
+            existingAccount.Email = account.Email;
+            existingAccount.PhoneNumber = account.PhoneNumber;
+            existingAccount.RoleId = account.RoleId;
+            existingAccount.WarehouseId = account.WarehouseId;
+            existingAccount.Status = account.Status;
+            existingAccount.CreatedAt = account.CreatedAt;
+
             _ctx.SaveChanges();
         }
 
