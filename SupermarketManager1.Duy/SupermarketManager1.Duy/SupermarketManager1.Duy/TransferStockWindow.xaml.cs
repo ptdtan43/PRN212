@@ -30,11 +30,16 @@ namespace SupermarketManager1.Duy
         private void LoadWarehouses()
         {
             List<Warehouse> warehouses;
-            
+
             // Phân quyền: Admin thấy tất cả, Manager chỉ chuyển từ Kho Trung Tâm
             if (CurrentUser.IsAdmin)
             {
                 warehouses = _warehouseService.GetAllWarehouses();
+
+                // ToWarehouse should be selectable for Admin (all warehouses except the currently selected From)
+                ToWarehouseComboBox.ItemsSource = warehouses;
+                ToWarehouseComboBox.IsEnabled = true;
+                ToWarehouseComboBox.SelectedItem = null;
             }
             else if (CurrentUser.IsManager)
             {
@@ -45,7 +50,7 @@ namespace SupermarketManager1.Duy
                 {
                     warehouses.Add(centralWarehouse);
                 }
-                
+
                 // Kho đích chỉ là Store của Manager
                 if (CurrentUser.WarehouseId.HasValue)
                 {
@@ -56,12 +61,24 @@ namespace SupermarketManager1.Duy
                         ToWarehouseComboBox.SelectedItem = managerStore;
                         ToWarehouseComboBox.IsEnabled = false; // Không cho chọn kho khác
                     }
+                    else
+                    {
+                        // No manager store found - disable and clear
+                        ToWarehouseComboBox.ItemsSource = null;
+                        ToWarehouseComboBox.IsEnabled = false;
+                    }
+                }
+                else
+                {
+                    // Manager but no WarehouseId - disable To combobox
+                    ToWarehouseComboBox.ItemsSource = null;
+                    ToWarehouseComboBox.IsEnabled = false;
                 }
             }
             else
             {
                 // Staff không có quyền chuyển kho
-                MessageBox.Show("Bạn không có quyền chuyển kho!", "Lỗi", 
+                MessageBox.Show("Bạn không có quyền chuyển kho!", "Lỗi",
                     MessageBoxButton.OK, MessageBoxImage.Error);
                 this.Close();
                 return;
@@ -71,12 +88,23 @@ namespace SupermarketManager1.Duy
             if (warehouses.Count > 0)
             {
                 FromWarehouseComboBox.SelectedItem = warehouses[0];
+                // Ensure ToWarehouse list excludes selected From by default for Admin
+                UpdateToWarehouseOptions((Warehouse)FromWarehouseComboBox.SelectedItem);
+            }
+            else
+            {
+                FromWarehouseComboBox.SelectedItem = null;
             }
         }
 
         private void FromWarehouseComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // When From changes we must refresh available products AND update To list (so user can't pick same warehouse)
             LoadProducts();
+            if (FromWarehouseComboBox.SelectedItem is Warehouse fromWarehouse)
+            {
+                UpdateToWarehouseOptions(fromWarehouse);
+            }
         }
 
         private void ToWarehouseComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -87,10 +115,31 @@ namespace SupermarketManager1.Duy
             {
                 if (fromWarehouse.WarehouseId == toWarehouse.WarehouseId)
                 {
-                    MessageBox.Show("Kho nguồn và kho đích không được trùng nhau!", "Lỗi", 
+                    MessageBox.Show("Kho nguồn và kho đích không được trùng nhau!", "Lỗi",
                         MessageBoxButton.OK, MessageBoxImage.Warning);
                     ToWarehouseComboBox.SelectedItem = null;
                 }
+            }
+        }
+
+        // Ensure ToWarehouseComboBox contains valid targets given a selected From warehouse.
+        private void UpdateToWarehouseOptions(Warehouse fromWarehouse)
+        {
+            // If To combobox is disabled (Manager fixed store) do nothing
+            if (ToWarehouseComboBox.IsEnabled == false)
+                return;
+
+            // Get all warehouses and exclude the selected From
+            var all = _warehouseService.GetAllWarehouses() ?? new List<Warehouse>();
+            var targets = all.Where(w => w.WarehouseId != fromWarehouse.WarehouseId).ToList();
+
+            ToWarehouseComboBox.ItemsSource = targets;
+
+            // If previously selected To is now invalid, clear it
+            if (ToWarehouseComboBox.SelectedItem is Warehouse selected &&
+                targets.All(t => t.WarehouseId != selected.WarehouseId))
+            {
+                ToWarehouseComboBox.SelectedItem = null;
             }
         }
 
@@ -104,6 +153,12 @@ namespace SupermarketManager1.Duy
 
                 ProductComboBox.ItemsSource = _availableProducts;
                 ProductComboBox.SelectedItem = null;
+                StockInfoLabel.Text = "Tồn kho: 0";
+            }
+            else
+            {
+                _availableProducts.Clear();
+                ProductComboBox.ItemsSource = null;
                 StockInfoLabel.Text = "Tồn kho: 0";
             }
         }
@@ -158,7 +213,7 @@ namespace SupermarketManager1.Duy
             // Kiểm tra tồn kho
             if (quantity > selectedInventory.Quantity)
             {
-                MessageBox.Show($"Không đủ hàng! Tồn kho: {selectedInventory.Quantity}", "Lỗi", 
+                MessageBox.Show($"Không đủ hàng! Tồn kho: {selectedInventory.Quantity}", "Lỗi",
                     MessageBoxButton.OK, MessageBoxImage.Error);
                 QuantityTextBox.Focus();
                 QuantityTextBox.SelectAll();
@@ -187,16 +242,16 @@ namespace SupermarketManager1.Duy
 
             if (success)
             {
-                MessageBox.Show("Chuyển kho thành công!", "Thành công", 
+                MessageBox.Show("Chuyển kho thành công!", "Thành công",
                     MessageBoxButton.OK, MessageBoxImage.Information);
-                
+
                 // Reload products
                 LoadProducts();
                 QuantityTextBox.Text = "1";
             }
             else
             {
-                MessageBox.Show("Chuyển kho thất bại! Vui lòng kiểm tra lại.", "Lỗi", 
+                MessageBox.Show("Chuyển kho thất bại! Vui lòng kiểm tra lại.", "Lỗi",
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
