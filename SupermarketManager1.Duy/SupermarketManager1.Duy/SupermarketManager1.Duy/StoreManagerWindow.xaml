@@ -1,0 +1,24 @@
+﻿<Window x:Class="SupermarketManager1.Duy.StoreManagerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SupermarketManager1.Duy"
+        mc:Ignorable="d"
+        Title="StoreManagerWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <Grid>
+        <Label Content="Manager Store" HorizontalAlignment="Left" Height="66" Margin="49,10,0,0" VerticalAlignment="Top" Width="324" FontSize="40" FontWeight="ExtraBold"/>
+        <DataGrid x:Name="StoreGrid" HorizontalAlignment="Left" Height="295" Margin="49,99,0,0" VerticalAlignment="Top" Width="562" AutoGenerateColumns="False" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Width="30" Binding="{Binding WarehouseId}" />
+                <DataGridTextColumn Header="Warehouse Name" Width="150" Binding="{Binding WarehouseName}"/>
+                <DataGridTextColumn Header="Type" Width="60" Binding="{Binding Type}"/>
+                <DataGridTextColumn Header="Address" Width="350" Binding="{Binding Address}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="CreateButton" Content="Create" HorizontalAlignment="Left" Height="60" Margin="650,99,0,0" VerticalAlignment="Top" Width="111" Click="CreateButton_Click"/>
+        <Button x:Name="UpdateButton" Content="Update" HorizontalAlignment="Left" Height="60" Margin="650,175,0,0" VerticalAlignment="Top" Width="111" Click="UpdateButton_Click"/>
+        <Button x:Name="DeleteButton" Content="Delete" HorizontalAlignment="Left" Height="60" Margin="650,257,0,0" VerticalAlignment="Top" Width="111" Click="DeleteButton_Click"/>
+        <Button x:Name="QuitButton" Content="Quit" HorizontalAlignment="Left" Height="60" Margin="650,335,0,0" VerticalAlignment="Top" Width="111" Click="QuitButton_Click"/>
+    </Grid>
+</Window>

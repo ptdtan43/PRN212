@@ -59,7 +59,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
 
-                <StackPanel Grid.Column="1" Margin="10,0,0,0" Width="200" VerticalAlignment="Top">
+                <StackPanel Grid.Column="1" Margin="10,0,0,0" Width="200" VerticalAlignment="Top" Height="355">
                     <Button x:Name="CreateButton" Content="Create Product" Height="50" Margin="0,0,0,5" Click="CreateButton_Click"/>
                     <Button x:Name="UpdateButton" Content="Update Product" Height="50" Margin="0,5,0,5" Click="UpdateButton_Click" />
                     <Button x:Name="DeleteButton" Content="Delete Product" Height="50" Margin="0,5,0,5" Click="DeleteButton_Click"/>

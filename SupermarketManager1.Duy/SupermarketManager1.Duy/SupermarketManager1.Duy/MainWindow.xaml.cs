@@ -88,5 +88,11 @@ namespace SupermarketManager1.Duy
             WarehouseManagementWindow warehouseWindow = new WarehouseManagementWindow();
             warehouseWindow.ShowDialog();
         }
+
+        private void ManageStoreButton_Click(object sender, RoutedEventArgs e)
+        {
+            StoreManagerWindow sm = new();
+            sm.ShowDialog();
+        }
     }
 }

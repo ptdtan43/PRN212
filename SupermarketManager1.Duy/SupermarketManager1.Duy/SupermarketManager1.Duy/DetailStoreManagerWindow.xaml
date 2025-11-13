@@ -1,0 +1,23 @@
+﻿<Window x:Class="SupermarketManager1.Duy.DetailStoreManagerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SupermarketManager1.Duy"
+        mc:Ignorable="d"
+        Title="DetailStoreManagerWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <Grid>
+        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Left" Height="75" Margin="622,72,0,0" VerticalAlignment="Top" Width="115" Click="SaveButton_Click"/>
+        <Button x:Name="QuitButton" Content="Quit" HorizontalAlignment="Left" Height="75" Margin="622,179,0,0" VerticalAlignment="Top" Width="115" Click="QuitButton_Click"/>
+        <Label Content="Id" HorizontalAlignment="Left" Height="45" Margin="39,106,0,0" VerticalAlignment="Top" Width="129" FontWeight="Bold"/>
+        <TextBox x:Name="IdWarehouseTextBox" HorizontalAlignment="Left" Height="45" Margin="204,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="196" FontSize="20"/>
+        <Label Content="Name" HorizontalAlignment="Left" Height="60" Margin="39,179,0,0" VerticalAlignment="Top" Width="129" FontWeight="Bold"/>
+        <TextBox x:Name="NameWarehouseTextBox" HorizontalAlignment="Left" Height="45" Margin="204,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" FontSize="20"/>
+        <Label Content="Type" HorizontalAlignment="Left" Height="57" Margin="39,254,0,0" VerticalAlignment="Top" Width="129" FontWeight="Bold"/>
+        <TextBox x:Name="TypeWarehouseTextBox" HorizontalAlignment="Left" Height="45" Margin="204,254,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="342" FontSize="20"/>
+        <Label Content="Address" HorizontalAlignment="Left" Height="60" Margin="39,331,0,0" VerticalAlignment="Top" Width="129" FontWeight="Bold"/>
+        <TextBox x:Name="AddressWarehouseTextBox" HorizontalAlignment="Left" Height="80" Margin="204,331,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" FontSize="20"/>
+        <Label x:Name="DetailLabel" Content="Create | Update Warehouse" HorizontalAlignment="Left" Height="70" Margin="39,30,0,0" VerticalAlignment="Top" Width="451" FontWeight="ExtraBold"/>
+
+    </Grid>
+</Window>
