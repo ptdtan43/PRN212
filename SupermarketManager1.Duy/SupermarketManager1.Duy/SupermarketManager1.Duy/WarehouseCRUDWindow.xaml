@@ -12,7 +12,7 @@
         FontFamily="{materialDesign:MaterialDesignFont}"
         
         mc:Ignorable="d"
-        Title="Quản lý Kho/Cửa hàng" Height="711" Width="1200" Loaded="Window_Loaded"
+        Title="Warehouse/Store Management" Height="711" Width="1200" Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen">
 
     <materialDesign:Card Padding="20" Margin="10">
@@ -26,7 +26,7 @@
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
                 
-                <TextBlock Text="QUẢN LÝ KHO/CỬA HÀNG" 
+                <TextBlock Text="WAREHOUSE/STORE MANAGEMENT" 
                            FontSize="24" FontWeight="Bold" 
                            VerticalAlignment="Center"
                            Foreground="{DynamicResource PrimaryHueMidBrush}"/>
@@ -37,7 +37,7 @@
                         Click="CreateButton_Click" Width="120" Height="40" Margin="0,0,10,0">
                     <StackPanel Orientation="Horizontal">
                         
-                        <TextBlock Text="Tạo mới"/>
+                        <TextBlock Text="Create"/>
                     </StackPanel>
                 </Button>
 
@@ -45,7 +45,7 @@
                         Click="UpdateButton_Click" Width="100" Height="40" Margin="0,0,10,0">
                     <StackPanel Orientation="Horizontal">
                         
-                        <TextBlock Text="Sửa"/>
+                        <TextBlock Text="Edit"/>
                     </StackPanel>
                 </Button>
 
@@ -54,7 +54,7 @@
                         Background="Red" BorderBrush="Red">
                     <StackPanel Orientation="Horizontal">
                         
-                        <TextBlock Text="Xóa"/>
+                        <TextBlock Text="Delete"/>
                     </StackPanel>
                 </Button>
             </StackPanel>
@@ -69,8 +69,8 @@
                       AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding WarehouseId}" Width="50"/>
-                    <DataGridTextColumn Header="Tên kho" Binding="{Binding WarehouseName}" Width="*"/>
-                    <DataGridTextColumn Header="Loại" Binding="{Binding Type}" Width="100">
+                    <DataGridTextColumn Header="Warehouse Name" Binding="{Binding WarehouseName}" Width="*"/>
+                    <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="100">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Style.Triggers>
@@ -85,14 +85,14 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Địa chỉ" Binding="{Binding Address}" Width="*"/>
+                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="*"/>
                     <DataGridTextColumn Header="Manager" Binding="{Binding Manager.FullName}" Width="*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="FontStyle" Value="Italic"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding Manager}" Value="{x:Null}">
-                                        <Setter Property="Text" Value="(Chưa có)"/>
+                                        <Setter Property="Text" Value="(Not assigned)"/>
                                         <Setter Property="Foreground" Value="Gray"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -103,7 +103,7 @@
             </DataGrid>
 
             <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
-                <Button Content="Đóng" Width="100" Height="40" 
+                <Button Content="Close" Width="100" Height="40" 
                         Style="{StaticResource MaterialDesignOutlinedButton}"
                         Click="CloseButton_Click"/>
             </StackPanel>

@@ -13,8 +13,8 @@ namespace SupermarketManager1.Duy
         {
             if (CurrentUser.IsLoggedIn)
             {
-                string storeName = CurrentUser.Account?.Warehouse?.WarehouseName ?? "Cửa hàng";
-                WelcomeLabel.Text = $"Xin chào, {CurrentUser.Account?.FullName} - {storeName}";
+                string storeName = CurrentUser.Account?.Warehouse?.WarehouseName ?? "Store";
+                WelcomeLabel.Text = $"Hello, {CurrentUser.Account?.FullName} - {storeName}";
             }
         }
 
@@ -32,8 +32,8 @@ namespace SupermarketManager1.Duy
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Bạn có chắc muốn đăng xuất?", 
-                "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to logout?",
+                "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question);
             
             if (result == MessageBoxResult.Yes)
             {

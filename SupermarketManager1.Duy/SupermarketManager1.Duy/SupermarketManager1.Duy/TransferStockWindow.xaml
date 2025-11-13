@@ -12,7 +12,7 @@
         FontFamily="{materialDesign:MaterialDesignFont}"
         
         mc:Ignorable="d"
-        Title="Chuyển kho" 
+        Title="Transfer Stock" 
         Height="538" Width="700" 
         SizeToContent="Height"
         Loaded="Window_Loaded"
@@ -28,7 +28,7 @@
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,25">
                
-                <TextBlock Text="CHUYỂN KHO" 
+                <TextBlock Text="TRANSFER STOCK" 
                            FontSize="24" FontWeight="Bold" 
                            VerticalAlignment="Center"
                            Foreground="{DynamicResource PrimaryHueMidBrush}"/>
@@ -36,25 +36,25 @@
 
             <StackPanel Grid.Row="1">
                 <ComboBox x:Name="FromWarehouseComboBox" Margin="0,0,0,15"
-                          materialDesign:HintAssist.Hint="Kho nguồn *"
+                          materialDesign:HintAssist.Hint="Source Warehouse *"
                           Style="{StaticResource MaterialDesignOutlinedComboBox}"
                           DisplayMemberPath="WarehouseName" SelectedValuePath="WarehouseId"
                           SelectionChanged="FromWarehouseComboBox_SelectionChanged"/>
 
                 <ComboBox x:Name="ToWarehouseComboBox" Margin="0,0,0,15"
-                          materialDesign:HintAssist.Hint="Kho đích *"
+                          materialDesign:HintAssist.Hint="Destination Warehouse *"
                           Style="{StaticResource MaterialDesignOutlinedComboBox}"
                           DisplayMemberPath="WarehouseName" SelectedValuePath="WarehouseId"
                           SelectionChanged="ToWarehouseComboBox_SelectionChanged"/>
 
                 <ComboBox x:Name="ProductComboBox" Margin="0,0,0,15"
-                          materialDesign:HintAssist.Hint="Sản phẩm *"
+                          materialDesign:HintAssist.Hint="Product *"
                           Style="{StaticResource MaterialDesignOutlinedComboBox}"
                           DisplayMemberPath="Product.NameP" 
                           SelectedValuePath="ProductCode"
                           SelectionChanged="ProductComboBox_SelectionChanged"/>
 
-                <TextBlock x:Name="StockInfoLabel" Text="Tồn kho: 0" 
+                <TextBlock x:Name="StockInfoLabel" Text="Stock: 0" 
                            FontWeight="Bold" Foreground="Green" Margin="5,0,0,15"
                            FontSize="16"/>
 
@@ -65,11 +65,11 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBox x:Name="QuantityTextBox" Grid.Column="0" Text="1"
-                             materialDesign:HintAssist.Hint="Số lượng chuyển *"
+                             materialDesign:HintAssist.Hint="Transfer Quantity *"
                              Style="{StaticResource MaterialDesignOutlinedTextBox}"
                              PreviewTextInput="QuantityTextBox_PreviewTextInput"/>
 
-                    <Button Content="Chuyển" Grid.Column="1" Width="100" Height="48" Margin="10,-5,0,0"
+                    <Button Content="Transfer" Grid.Column="1" Width="100" Height="48" Margin="10,-5,0,0"
                             Style="{StaticResource MaterialDesignRaisedButton}"
                             Click="TransferButton_Click" 
                             FontWeight="Bold"/>
@@ -77,7 +77,7 @@
             </StackPanel>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-                <Button Content="Đóng" Width="100" Height="40" 
+                <Button Content="Close" Width="100" Height="40" 
                         Style="{StaticResource MaterialDesignOutlinedButton}"
                         Click="CloseButton_Click"/>
             </StackPanel>

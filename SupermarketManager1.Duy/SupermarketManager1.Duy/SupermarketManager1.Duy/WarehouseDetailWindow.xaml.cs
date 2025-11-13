@@ -32,12 +32,12 @@ namespace SupermarketManager1.Duy
 
             if (IsEditMode)
             {
-                TitleLabel.Text = "Sửa thông tin kho/cửa hàng";
+                TitleLabel.Text = "Edit Warehouse/Store Information";
                 LoadWarehouseData();
             }
             else
             {
-                TitleLabel.Text = "Tạo kho/cửa hàng mới";
+                TitleLabel.Text = "Create New Warehouse/Store";
                 // Khi tạo mới, nếu mặc định chọn "Cửa hàng" thì hiển thị ManagerComboBox
                 if (TypeComboBox.SelectedItem is ComboBoxItem selectedItem && selectedItem.Tag is string type && type == "Store")
                 {
@@ -134,13 +134,13 @@ namespace SupermarketManager1.Duy
                 if (IsEditMode)
                 {
                     _warehouseService.UpdateWarehouse(warehouse);
-                    MessageBox.Show("Cập nhật kho thành công!", "Thành công", 
+                    MessageBox.Show("Warehouse updated successfully!", "Success", 
                         MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
                     _warehouseService.CreateWarehouse(warehouse);
-                    MessageBox.Show("Tạo kho thành công!", "Thành công", 
+                    MessageBox.Show("Warehouse created successfully!", "Success", 
                         MessageBoxButton.OK, MessageBoxImage.Information);
                 }
 
@@ -149,7 +149,7 @@ namespace SupermarketManager1.Duy
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", 
+                MessageBox.Show($"Error: {ex.Message}", "Error", 
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -159,7 +159,7 @@ namespace SupermarketManager1.Duy
             // Warehouse Name
             if (string.IsNullOrWhiteSpace(WarehouseNameTextBox.Text))
             {
-                MessageBox.Show("Vui lòng nhập Tên kho/cửa hàng!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please enter Warehouse/Store Name!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 WarehouseNameTextBox.Focus();
                 return false;
             }
@@ -167,7 +167,7 @@ namespace SupermarketManager1.Duy
             // Type
             if (TypeComboBox.SelectedItem == null)
             {
-                MessageBox.Show("Vui lòng chọn Loại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please select Type!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
 
@@ -176,7 +176,7 @@ namespace SupermarketManager1.Duy
             {
                 if (type == "Store" && ManagerComboBox.SelectedItem == null)
                 {
-                    MessageBox.Show("Vui lòng chọn Manager cho Store!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Please select Manager for Store!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
                 }
             }

@@ -20,7 +20,7 @@ namespace SupermarketManager1.Duy
         {
             if (CurrentUser.IsLoggedIn)
             {
-                WelcomeLabel.Text = $"Xin chào, {CurrentUser.Account?.FullName} (Admin)";
+                WelcomeLabel.Text = $"Hello, {CurrentUser.Account?.FullName} (Admin)";
             }
             LoadProducts();
         }
@@ -39,7 +39,7 @@ namespace SupermarketManager1.Duy
 
         private void QuitButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult answer = MessageBox.Show("Bạn có chắc chắn muốn thoát?", "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult answer = MessageBox.Show("Are you sure you want to exit?", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (answer == MessageBoxResult.Yes)
             {
                 Application.Current.Shutdown();
@@ -57,14 +57,14 @@ namespace SupermarketManager1.Duy
             Product? selected = ProductListDataGrid.SelectedItem as Product;
             if (selected == null)
             {
-                MessageBox.Show("Vui lòng chọn sản phẩm cần xóa!", "Thông báo", 
+                MessageBox.Show("Please select a product to delete!", "Notification", 
                     MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             MessageBoxResult answer = MessageBox.Show(
-                $"Bạn có chắc muốn xóa sản phẩm:\n\nMã: {selected.ProductCode}\nTên: {selected.NameP}?",
-                "Xác nhận xóa", 
+                $"Are you sure you want to delete the product:\n\nCode: {selected.ProductCode}\nName: {selected.NameP}?",
+                "Confirm Delete", 
                 MessageBoxButton.YesNo, 
                 MessageBoxImage.Question);
             
@@ -76,7 +76,7 @@ namespace SupermarketManager1.Duy
             try
             {
                 _service.DeleteProduct(selected);
-                MessageBox.Show("Xóa sản phẩm thành công!", "Thành công", 
+                MessageBox.Show("Product deleted successfully!", "Success", 
                     MessageBoxButton.OK, MessageBoxImage.Information);
                 FillDataGrid(_service.GetAllProducts());
             }
@@ -87,8 +87,8 @@ namespace SupermarketManager1.Duy
                 {
                     // Hỏi người dùng có muốn xóa cả tồn kho không
                     MessageBoxResult deleteInventory = MessageBox.Show(
-                        ex.Message + "\n\nBạn có muốn xóa cả tồn kho của sản phẩm này?",
-                        "Xác nhận xóa tồn kho",
+                        ex.Message + "\n\nDo you want to delete the inventory of this product as well?",
+                        "Confirm Delete Inventory",
                         MessageBoxButton.YesNo,
                         MessageBoxImage.Question);
 
@@ -97,13 +97,13 @@ namespace SupermarketManager1.Duy
                         try
                         {
                             _service.DeleteProduct(selected, deleteInventory: true);
-                            MessageBox.Show("Xóa sản phẩm và tồn kho thành công!", "Thành công", 
+                            MessageBox.Show("Product and inventory deleted successfully!", "Success", 
                                 MessageBoxButton.OK, MessageBoxImage.Information);
                             FillDataGrid(_service.GetAllProducts());
                         }
                         catch (Exception ex2)
                         {
-                            MessageBox.Show($"Lỗi khi xóa sản phẩm: {ex2.Message}", "Lỗi", 
+                            MessageBox.Show($"Error deleting product: {ex2.Message}", "Error", 
                                 MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
@@ -111,13 +111,13 @@ namespace SupermarketManager1.Duy
                 else
                 {
                     // Lỗi khác (ví dụ: có lịch sử bán hàng)
-                    MessageBox.Show(ex.Message, "Không thể xóa", 
+                    MessageBox.Show(ex.Message, "Cannot Delete", 
                         MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi xóa sản phẩm: {ex.Message}", "Lỗi", 
+                MessageBox.Show($"Error deleting product: {ex.Message}", "Error", 
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -127,7 +127,7 @@ namespace SupermarketManager1.Duy
             Product? selected = ProductListDataGrid.SelectedItem as Product;
             if (selected == null)
             {
-                MessageBox.Show("Vui lòng chọn sản phẩm cần sửa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please select a product to edit!", "Notification", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -190,8 +190,8 @@ namespace SupermarketManager1.Duy
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Bạn có chắc muốn đăng xuất?", 
-                "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to logout?",
+                "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question);
             
             if (result == MessageBoxResult.Yes)
             {

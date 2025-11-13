@@ -34,6 +34,15 @@ namespace SupperMarket.DAL.Repositories
             return _ctx.Warehouses.FirstOrDefault(w => w.Type == "Central");
         }
 
+        public List<Warehouse> GetCentralWarehouses()
+        {
+            _ctx = new();
+            return _ctx.Warehouses
+                .Include(w => w.Manager)
+                .Where(w => w.Type == "Central")
+                .ToList();
+        }
+
         public List<Warehouse> GetStores()
         {
             _ctx = new();

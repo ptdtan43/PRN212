@@ -86,7 +86,7 @@ namespace SupermarketManager1.Duy
             Account? selected = AccountDataGrid.SelectedItem as Account;
             if (selected == null)
             {
-                MessageBox.Show("Vui lòng chọn tài khoản cần sửa!", "Thông báo", 
+                MessageBox.Show("Please select an account to edit!", "Notification", 
                     MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
@@ -104,7 +104,7 @@ namespace SupermarketManager1.Duy
             Account? selected = AccountDataGrid.SelectedItem as Account;
             if (selected == null)
             {
-                MessageBox.Show("Vui lòng chọn tài khoản cần xóa!", "Thông báo", 
+                MessageBox.Show("Please select an account to delete!", "Notification", 
                     MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
@@ -112,14 +112,14 @@ namespace SupermarketManager1.Duy
             // Không cho xóa chính mình
             if (CurrentUser.IsLoggedIn && selected.AccountId == CurrentUser.Account?.AccountId)
             {
-                MessageBox.Show("Không thể xóa tài khoản đang đăng nhập!", "Lỗi", 
+                MessageBox.Show("Cannot delete the currently logged-in account!", "Error", 
                     MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             MessageBoxResult confirm = MessageBox.Show(
-                $"Bạn có chắc muốn xóa tài khoản:\n\nUsername: {selected.Username}\nHọ tên: {selected.FullName}?",
-                "Xác nhận xóa",
+                $"Are you sure you want to delete the account:\n\nUsername: {selected.Username}\nFull Name: {selected.FullName}?",
+                "Confirm Delete",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Question);
 
@@ -128,13 +128,13 @@ namespace SupermarketManager1.Duy
                 try
                 {
                     _accountService.DeleteAccount(selected);
-                    MessageBox.Show("Xóa tài khoản thành công!", "Thành công", 
+                    MessageBox.Show("Account deleted successfully!", "Success", 
                         MessageBoxButton.OK, MessageBoxImage.Information);
                     LoadAccounts();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Lỗi khi xóa tài khoản: {ex.Message}", "Lỗi", 
+                    MessageBox.Show($"Error deleting account: {ex.Message}", "Error", 
                         MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }

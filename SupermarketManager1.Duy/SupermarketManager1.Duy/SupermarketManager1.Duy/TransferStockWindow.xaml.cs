@@ -38,13 +38,8 @@ namespace SupermarketManager1.Duy
             }
             else if (CurrentUser.IsManager)
             {
-                // Manager chỉ có thể chuyển từ Kho Trung Tâm → Store của mình
-                var centralWarehouse = _warehouseService.GetCentralWarehouse();
-                warehouses = new List<Warehouse>();
-                if (centralWarehouse != null)
-                {
-                    warehouses.Add(centralWarehouse);
-                }
+                // Manager có thể chuyển từ bất kỳ Kho Trung Tâm nào → Store của mình
+                warehouses = _warehouseService.GetCentralWarehouses();
                 
                 // Kho đích chỉ là Store của Manager
                 if (CurrentUser.WarehouseId.HasValue)
@@ -61,7 +56,7 @@ namespace SupermarketManager1.Duy
             else
             {
                 // Staff không có quyền chuyển kho
-                MessageBox.Show("Bạn không có quyền chuyển kho!", "Lỗi", 
+                MessageBox.Show("You do not have permission to transfer stock!", "Error", 
                     MessageBoxButton.OK, MessageBoxImage.Error);
                 this.Close();
                 return;
@@ -87,7 +82,7 @@ namespace SupermarketManager1.Duy
             {
                 if (fromWarehouse.WarehouseId == toWarehouse.WarehouseId)
                 {
-                    MessageBox.Show("Kho nguồn và kho đích không được trùng nhau!", "Lỗi", 
+                    MessageBox.Show("Source warehouse and destination warehouse cannot be the same!", "Error", 
                         MessageBoxButton.OK, MessageBoxImage.Warning);
                     ToWarehouseComboBox.SelectedItem = null;
                 }
@@ -104,7 +99,7 @@ namespace SupermarketManager1.Duy
 
                 ProductComboBox.ItemsSource = _availableProducts;
                 ProductComboBox.SelectedItem = null;
-                StockInfoLabel.Text = "Tồn kho: 0";
+                StockInfoLabel.Text = "Stock: 0";
             }
         }
 
@@ -112,7 +107,7 @@ namespace SupermarketManager1.Duy
         {
             if (ProductComboBox.SelectedItem is Inventory selected)
             {
-                StockInfoLabel.Text = $"Tồn kho: {selected.Quantity}";
+                StockInfoLabel.Text = $"Stock: {selected.Quantity}";
                 QuantityTextBox.Text = "1";
             }
         }
@@ -128,25 +123,25 @@ namespace SupermarketManager1.Duy
             // Validation
             if (FromWarehouseComboBox.SelectedItem == null)
             {
-                MessageBox.Show("Vui lòng chọn kho nguồn!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please select source warehouse!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             if (ToWarehouseComboBox.SelectedItem == null)
             {
-                MessageBox.Show("Vui lòng chọn kho đích!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please select destination warehouse!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             if (ProductComboBox.SelectedItem == null)
             {
-                MessageBox.Show("Vui lòng chọn sản phẩm!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please select a product!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             if (!int.TryParse(QuantityTextBox.Text, out int quantity) || quantity <= 0)
             {
-                MessageBox.Show("Vui lòng nhập số lượng hợp lệ!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please enter a valid quantity!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 QuantityTextBox.Focus();
                 return;
             }
@@ -158,7 +153,7 @@ namespace SupermarketManager1.Duy
             // Kiểm tra tồn kho
             if (quantity > selectedInventory.Quantity)
             {
-                MessageBox.Show($"Không đủ hàng! Tồn kho: {selectedInventory.Quantity}", "Lỗi", 
+                MessageBox.Show($"Insufficient stock! Stock: {selectedInventory.Quantity}", "Error", 
                     MessageBoxButton.OK, MessageBoxImage.Error);
                 QuantityTextBox.Focus();
                 QuantityTextBox.SelectAll();
@@ -167,11 +162,11 @@ namespace SupermarketManager1.Duy
 
             // Xác nhận
             MessageBoxResult confirm = MessageBox.Show(
-                $"Chuyển {quantity} {selectedInventory.Product?.NameP}\n" +
-                $"Từ: {fromWarehouse.WarehouseName}\n" +
-                $"Đến: {toWarehouse.WarehouseName}\n\n" +
-                $"Xác nhận chuyển kho?",
-                "Xác nhận",
+                $"Transfer {quantity} {selectedInventory.Product?.NameP}\n" +
+                $"From: {fromWarehouse.WarehouseName}\n" +
+                $"To: {toWarehouse.WarehouseName}\n\n" +
+                $"Confirm stock transfer?",
+                "Confirm",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Question);
 
@@ -187,7 +182,7 @@ namespace SupermarketManager1.Duy
 
             if (success)
             {
-                MessageBox.Show("Chuyển kho thành công!", "Thành công", 
+                MessageBox.Show("Stock transfer successful!", "Success", 
                     MessageBoxButton.OK, MessageBoxImage.Information);
                 
                 // Reload products
@@ -196,7 +191,7 @@ namespace SupermarketManager1.Duy
             }
             else
             {
-                MessageBox.Show("Chuyển kho thất bại! Vui lòng kiểm tra lại.", "Lỗi", 
+                MessageBox.Show("Stock transfer failed! Please check again.", "Error", 
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

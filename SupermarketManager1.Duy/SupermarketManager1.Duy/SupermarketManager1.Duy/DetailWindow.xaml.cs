@@ -25,7 +25,7 @@ namespace SupermarketManager1.Duy
 
             if (EditedOne != null)
             {
-                DetailWindowModeLabel.Text = "Sửa thông tin sản phẩm";
+                DetailWindowModeLabel.Text = "Edit Product Information";
                 ProductIdTextBox.IsReadOnly = true; // Không cho sửa ProductCode khi edit
                 ProductIdTextBox.IsEnabled = false;
                 ProductIdTextBox.Text = EditedOne.ProductCode;
@@ -48,7 +48,7 @@ namespace SupermarketManager1.Duy
             }
             else
             {
-                DetailWindowModeLabel.Text = "Thêm sản phẩm mới";
+                DetailWindowModeLabel.Text = "Add New Product";
                 ProductIdTextBox.IsReadOnly = false; // Cho phép nhập khi tạo mới
                 ProductIdTextBox.IsEnabled = true;
                 ProductIdTextBox.Clear();
@@ -98,42 +98,42 @@ namespace SupermarketManager1.Duy
         {
             if (string.IsNullOrWhiteSpace(ProductIdTextBox.Text))
             {
-                MessageBox.Show("Vui lòng nhập Mã sản phẩm!", "Lỗi xác thực", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please enter Product Code!", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 ProductIdTextBox.Focus();
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(ProductNameTextBox.Text))
             {
-                MessageBox.Show("Vui lòng nhập Tên sản phẩm!", "Lỗi xác thực", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please enter Product Name!", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 ProductNameTextBox.Focus();
                 return false;
             }
 
             if (ProductNameTextBox.Text.Length < 3 || ProductNameTextBox.Text.Length > 100)
             {
-                MessageBox.Show("Tên sản phẩm phải có từ 3 đến 100 ký tự!", "Lỗi xác thực", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Product Name must be between 3 and 100 characters!", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 ProductNameTextBox.Focus();
                 return false;
             }
 
             if (Regex.IsMatch(ProductNameTextBox.Text, @"[\$\%\^\@]"))
             {
-                MessageBox.Show("Tên sản phẩm không được chứa ký tự đặc biệt như $, %, ^, @.", "Lỗi xác thực", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Product Name cannot contain special characters such as $, %, ^, @.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 ProductNameTextBox.Focus();
                 return false;
             }
 
             if (CategoryComboBox.SelectedItem == null)
             {
-                MessageBox.Show("Vui lòng chọn Danh mục!", "Lỗi xác thực", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please select Category!", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 CategoryComboBox.Focus();
                 return false;
             }
 
             if (!decimal.TryParse(ProductPriceTextBox.Text, out decimal price) || price < 0)
             {
-                MessageBox.Show("Giá phải là số lớn hơn hoặc bằng 0!", "Lỗi xác thực", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Price must be a number greater than or equal to 0!", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 ProductPriceTextBox.Focus();
                 return false;
             }
@@ -145,7 +145,7 @@ namespace SupermarketManager1.Duy
 
         private void QuitButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult answer = MessageBox.Show("Bạn có chắc chắn muốn thoát?", "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult answer = MessageBox.Show("Are you sure you want to exit?", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (answer == MessageBoxResult.Yes)
             {
                 this.Close();

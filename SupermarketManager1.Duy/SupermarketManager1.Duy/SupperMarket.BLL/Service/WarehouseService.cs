@@ -27,6 +27,11 @@ namespace SupperMarket.BLL.Service
             return _repo.GetCentralWarehouse();
         }
 
+        public List<Warehouse> GetCentralWarehouses()
+        {
+            return _repo.GetCentralWarehouses();
+        }
+
         public List<Warehouse> GetStores()
         {
             return _repo.GetStores();

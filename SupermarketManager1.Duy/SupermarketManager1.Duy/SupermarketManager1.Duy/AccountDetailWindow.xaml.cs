@@ -29,22 +29,32 @@ namespace SupermarketManager1.Duy
             // Load Roles
             var allRoles = _roleService.GetAllRoles();
             
+            // Manager chỉ được chọn Staff hoặc Manager, không được chọn Admin
+            List<Role> availableRoles;
+            if (CurrentUser.IsManager)
+            {
+                // Manager chỉ thấy Manager và Staff
+                availableRoles = allRoles.Where(r => r.RoleName == "Manager" || r.RoleName == "Staff").ToList();
+            }
+            else
+            {
+                // Admin: khi edit thấy tất cả, khi create không thấy Admin
+                availableRoles = IsEditMode ? allRoles : allRoles.Where(r => r.RoleName != "Admin").ToList();
+            }
+            
             if (IsEditMode)
             {
-                // Khi edit: hiển thị tất cả Roles (bao gồm Admin)
-                RoleComboBox.ItemsSource = allRoles;
-                TitleLabel.Text = "Sửa thông tin tài khoản";
+                RoleComboBox.ItemsSource = availableRoles;
+                TitleLabel.Text = "Edit Account Information";
                 LoadAccountData();
                 // Cho phép sửa trạng thái khi edit
                 StatusComboBox.IsEnabled = true;
             }
             else
             {
-                // ⭐ Khi tạo mới: Loại bỏ Role "Admin" - chỉ cho phép tạo Manager hoặc Staff
-                var rolesWithoutAdmin = allRoles.Where(r => r.RoleName != "Admin").ToList();
-                RoleComboBox.ItemsSource = rolesWithoutAdmin;
+                RoleComboBox.ItemsSource = availableRoles;
                 
-                TitleLabel.Text = "Tạo tài khoản mới";
+                TitleLabel.Text = "Create New Account";
                 
                 // ⭐ Set trạng thái mặc định là "Active" và disable khi tạo mới
                 foreach (ComboBoxItem item in StatusComboBox.Items)
@@ -60,9 +70,9 @@ namespace SupermarketManager1.Duy
                 // Set mặc định nếu có
                 if (DefaultRoleId.HasValue)
                 {
-                    // Chỉ set nếu không phải Admin
-                    var defaultRole = allRoles.FirstOrDefault(r => r.RoleId == DefaultRoleId.Value);
-                    if (defaultRole != null && defaultRole.RoleName != "Admin")
+                    // Chỉ set nếu role đó có trong danh sách available
+                    var defaultRole = availableRoles.FirstOrDefault(r => r.RoleId == DefaultRoleId.Value);
+                    if (defaultRole != null)
                     {
                         RoleComboBox.SelectedValue = DefaultRoleId.Value;
                     }
@@ -207,13 +217,13 @@ namespace SupermarketManager1.Duy
                 if (IsEditMode)
                 {
                     _accountService.UpdateAccount(account);
-                    MessageBox.Show("Cập nhật tài khoản thành công!", "Thành công", 
+                    MessageBox.Show("Account updated successfully!", "Success", 
                         MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
                     _accountService.CreateAccount(account);
-                    MessageBox.Show("Tạo tài khoản thành công!", "Thành công", 
+                    MessageBox.Show("Account created successfully!", "Success", 
                         MessageBoxButton.OK, MessageBoxImage.Information);
                 }
 
@@ -222,7 +232,7 @@ namespace SupermarketManager1.Duy
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", 
+                MessageBox.Show($"Error: {ex.Message}", "Error", 
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -236,7 +246,7 @@ namespace SupermarketManager1.Duy
                 
                 if (string.IsNullOrWhiteSpace(username))
                 {
-                    MessageBox.Show("Vui lòng nhập Username!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Please enter Username!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     UsernameTextBox.Focus();
                     return false;
                 }
@@ -244,14 +254,14 @@ namespace SupermarketManager1.Duy
                 // Username: 3-50 ký tự, chỉ chữ, số, gạch dưới, không có khoảng trắng
                 if (username.Length < 3 || username.Length > 50)
                 {
-                    MessageBox.Show("Username phải có từ 3 đến 50 ký tự!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Username must be between 3 and 50 characters!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     UsernameTextBox.Focus();
                     return false;
                 }
 
                 if (!Regex.IsMatch(username, @"^[a-zA-Z0-9_]+$"))
                 {
-                    MessageBox.Show("Username chỉ được chứa chữ cái, số và dấu gạch dưới (_)!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Username can only contain letters, numbers and underscore (_)!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     UsernameTextBox.Focus();
                     return false;
                 }
@@ -260,7 +270,7 @@ namespace SupermarketManager1.Duy
                 var existing = _accountService.GetByUsername(username);
                 if (existing != null)
                 {
-                    MessageBox.Show("Username đã tồn tại! Vui lòng chọn username khác.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Username already exists! Please choose another username.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     UsernameTextBox.Focus();
                     return false;
                 }
@@ -273,7 +283,7 @@ namespace SupermarketManager1.Duy
             {
                 if (string.IsNullOrWhiteSpace(password))
                 {
-                    MessageBox.Show("Vui lòng nhập Password!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Please enter Password!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     PasswordTextBox.Focus();
                     return false;
                 }
@@ -284,7 +294,7 @@ namespace SupermarketManager1.Duy
             {
                 if (password.Length < 6 || password.Length > 50)
                 {
-                    MessageBox.Show("Password phải có từ 6 đến 50 ký tự!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Password must be between 6 and 50 characters!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     PasswordTextBox.Focus();
                     return false;
                 }
@@ -292,7 +302,7 @@ namespace SupermarketManager1.Duy
                 // Password không được chứa khoảng trắng
                 if (password.Contains(" "))
                 {
-                    MessageBox.Show("Password không được chứa khoảng trắng!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Password cannot contain spaces!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     PasswordTextBox.Focus();
                     return false;
                 }
@@ -303,14 +313,14 @@ namespace SupermarketManager1.Duy
             
             if (string.IsNullOrWhiteSpace(fullName))
             {
-                MessageBox.Show("Vui lòng nhập Họ tên!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please enter Full Name!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 FullNameTextBox.Focus();
                 return false;
             }
 
             if (fullName.Length < 2 || fullName.Length > 255)
             {
-                MessageBox.Show("Họ tên phải có từ 2 đến 255 ký tự!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Full Name must be between 2 and 255 characters!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 FullNameTextBox.Focus();
                 return false;
             }
@@ -318,7 +328,7 @@ namespace SupermarketManager1.Duy
             // Họ tên không được chỉ có số hoặc ký tự đặc biệt
             if (Regex.IsMatch(fullName, @"^[0-9\s\W]+$"))
             {
-                MessageBox.Show("Họ tên không hợp lệ! Vui lòng nhập họ tên đầy đủ.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Invalid Full Name! Please enter a valid full name.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 FullNameTextBox.Focus();
                 return false;
             }
@@ -331,14 +341,14 @@ namespace SupermarketManager1.Duy
                 // Email format validation (cải thiện regex)
                 if (!Regex.IsMatch(email, @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"))
                 {
-                    MessageBox.Show("Email không hợp lệ! Ví dụ: example@email.com", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Invalid email! Example: example@email.com", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     EmailTextBox.Focus();
                     return false;
                 }
 
                 if (email.Length > 255)
                 {
-                    MessageBox.Show("Email không được vượt quá 255 ký tự!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Email cannot exceed 255 characters!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     EmailTextBox.Focus();
                     return false;
                 }
@@ -355,14 +365,14 @@ namespace SupermarketManager1.Duy
                 
                 if (!Regex.IsMatch(phoneDigits, phonePattern))
                 {
-                    MessageBox.Show("Số điện thoại không hợp lệ! Vui lòng nhập số điện thoại Việt Nam (10-11 số).\nVí dụ: 0901234567 hoặc +84901234567", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Invalid phone number! Please enter a Vietnamese phone number (10-11 digits).\nExample: 0901234567 or +84901234567", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     PhoneNumberTextBox.Focus();
                     return false;
                 }
 
                 if (phoneDigits.Length > 50)
                 {
-                    MessageBox.Show("Số điện thoại không được vượt quá 50 ký tự!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Phone number cannot exceed 50 characters!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     PhoneNumberTextBox.Focus();
                     return false;
                 }
@@ -382,7 +392,7 @@ namespace SupermarketManager1.Duy
                 // Không được là tương lai
                 if (selectedDate > today)
                 {
-                    MessageBox.Show("Ngày sinh không được là tương lai!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Date of birth cannot be in the future!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     DateOfBirthDatePicker.Focus();
                     return false;
                 }
@@ -390,14 +400,14 @@ namespace SupermarketManager1.Duy
                 // Tuổi hợp lý: ít nhất 16 tuổi, không quá 100 tuổi
                 if (age < 16)
                 {
-                    MessageBox.Show("Người dùng phải ít nhất 16 tuổi!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("User must be at least 16 years old!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     DateOfBirthDatePicker.Focus();
                     return false;
                 }
 
                 if (age > 100)
                 {
-                    MessageBox.Show("Ngày sinh không hợp lệ! Tuổi không được vượt quá 100.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Invalid date of birth! Age cannot exceed 100.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     DateOfBirthDatePicker.Focus();
                     return false;
                 }
@@ -406,7 +416,7 @@ namespace SupermarketManager1.Duy
             // ========== VALIDATE ROLE ==========
             if (RoleComboBox.SelectedItem == null)
             {
-                MessageBox.Show("Vui lòng chọn Vai trò!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please select Role!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 RoleComboBox.Focus();
                 return false;
             }
@@ -414,7 +424,7 @@ namespace SupermarketManager1.Duy
             // ⭐ QUAN TRỌNG: Không cho phép tạo thêm Admin
             if (!IsEditMode && RoleComboBox.SelectedItem is Role selectedRole && selectedRole.RoleName == "Admin")
             {
-                MessageBox.Show("Hệ thống chỉ cho phép có 1 Admin duy nhất!\nKhông thể tạo thêm tài khoản Admin.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("System only allows 1 Admin!\nCannot create additional Admin accounts.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 RoleComboBox.Focus();
                 return false;
             }
@@ -429,7 +439,7 @@ namespace SupermarketManager1.Duy
                     var adminAccounts = _accountService.GetAccountsByRole(newRole.RoleId);
                     if (adminAccounts.Count > 0)
                     {
-                        MessageBox.Show("Hệ thống chỉ cho phép có 1 Admin duy nhất!\nKhông thể đổi vai trò thành Admin.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("System only allows 1 Admin!\nCannot change role to Admin.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         RoleComboBox.Focus();
                         return false;
                     }
@@ -441,7 +451,7 @@ namespace SupermarketManager1.Duy
             {
                 if (WarehouseComboBox.SelectedItem == null)
                 {
-                    MessageBox.Show("Vui lòng chọn Store cho " + role.RoleName + "!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Please select Store for " + role.RoleName + "!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     WarehouseComboBox.Focus();
                     return false;
                 }
@@ -452,7 +462,7 @@ namespace SupermarketManager1.Duy
             // Khi edit: phải chọn trạng thái
             if (IsEditMode && StatusComboBox.SelectedItem == null)
             {
-                MessageBox.Show("Vui lòng chọn Trạng thái!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please select Status!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 StatusComboBox.Focus();
                 return false;
             }

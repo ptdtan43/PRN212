@@ -12,7 +12,7 @@
         FontFamily="{materialDesign:MaterialDesignFont}"
         
         mc:Ignorable="d"
-        Title="Chi tiết Tài khoản" 
+        Title="Account Details" 
         Height="762" Width="600" 
         SizeToContent="Height" Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen">
@@ -27,7 +27,7 @@
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,25">
                 
-                <TextBlock x:Name="TitleLabel" Text="Tạo tài khoản mới" 
+                <TextBlock x:Name="TitleLabel" Text="Create New Account" 
                            FontSize="22" FontWeight="Bold" 
                            VerticalAlignment="Center"
                            Foreground="{DynamicResource PrimaryHueMidBrush}"/>
@@ -46,7 +46,7 @@
                              Margin="0,0,0,15"/>
 
                 <TextBox x:Name="FullNameTextBox" 
-                         materialDesign:HintAssist.Hint="Họ tên *"
+                         materialDesign:HintAssist.Hint="Full Name *"
                          Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          Margin="0,0,0,15"/>
 
@@ -56,17 +56,17 @@
                          Margin="0,0,0,15"/>
 
                 <TextBox x:Name="PhoneNumberTextBox"
-                         materialDesign:HintAssist.Hint="Số điện thoại"
+                         materialDesign:HintAssist.Hint="Phone Number"
                          Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          Margin="0,0,0,15"/>
 
                 <DatePicker x:Name="DateOfBirthDatePicker"
-                            materialDesign:HintAssist.Hint="Ngày sinh"
+                            materialDesign:HintAssist.Hint="Date of Birth"
                             Style="{StaticResource MaterialDesignOutlinedDatePicker}"
                             Margin="0,0,0,15"/>
 
                 <ComboBox x:Name="RoleComboBox"
-                          materialDesign:HintAssist.Hint="Vai trò *"
+                          materialDesign:HintAssist.Hint="Role *"
                           Style="{StaticResource MaterialDesignOutlinedComboBox}"
                           DisplayMemberPath="RoleName" SelectedValuePath="RoleId"
                           SelectionChanged="RoleComboBox_SelectionChanged"
@@ -79,7 +79,7 @@
                           Visibility="Collapsed" Margin="0,0,0,15"/>
 
                 <ComboBox x:Name="StatusComboBox"
-                          materialDesign:HintAssist.Hint="Trạng thái"
+                          materialDesign:HintAssist.Hint="Status"
                           Style="{StaticResource MaterialDesignOutlinedComboBox}"
                           Margin="0,0,0,15">
                     <ComboBoxItem Content="Active" IsSelected="True"/>
@@ -89,11 +89,11 @@
             </StackPanel>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-                <Button Content="Hủy" Width="100" Height="40" Margin="0,0,10,0" 
+                <Button Content="Cancel" Width="100" Height="40" Margin="0,0,10,0" 
                         Style="{StaticResource MaterialDesignOutlinedButton}"
                         Click="CancelButton_Click"/>
 
-                <Button Content="Lưu" Width="100" Height="40" 
+                <Button Content="Save" Width="100" Height="40" 
                         Style="{StaticResource MaterialDesignRaisedButton}"
                         Click="SaveButton_Click"/>
             </StackPanel>

@@ -102,7 +102,7 @@ namespace SupermarketManager1.Duy
                 }
                 else
                 {
-                    MessageBox.Show("Không thể giảm! Tồn kho đã bằng 0.", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Cannot decrease! Stock is already 0.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
         }
