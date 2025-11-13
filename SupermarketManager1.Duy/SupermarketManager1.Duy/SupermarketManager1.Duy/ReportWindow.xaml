@@ -12,7 +12,7 @@
         FontFamily="{materialDesign:MaterialDesignFont}"
         
         mc:Ignorable="d"
-        Title="Báo cáo Doanh thu" Height="751" Width="1200" Loaded="Window_Loaded"
+        Title="Revenue Report" Height="751" Width="1200" Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen">
 
     <materialDesign:Card Padding="20" Margin="10">
@@ -26,14 +26,14 @@
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
                 
-                <TextBlock Text="BÁO CÁO DOANH THU" 
+                <TextBlock Text="REVENUE REPORT" 
                            FontSize="24" FontWeight="Bold" 
                            VerticalAlignment="Center"
                            Foreground="{DynamicResource PrimaryHueMidBrush}"/>
             </StackPanel>
 
 
-            <GroupBox Header="Lọc báo cáo" Grid.Row="1" Margin="0,0,0,10"
+            <GroupBox Header="Filter Report" Grid.Row="1" Margin="0,0,0,10"
                       Style="{StaticResource MaterialDesignGroupBox}"
                       materialDesign:ColorZoneAssist.Mode="Standard">
                 <Grid Margin="10">
@@ -44,20 +44,20 @@
                     </Grid.ColumnDefinitions>
 
                     <ComboBox x:Name="WarehouseFilterComboBox" Grid.Column="0" Margin="0,0,20,0"
-                              materialDesign:HintAssist.Hint="Lọc theo kho"
+                              materialDesign:HintAssist.Hint="Filter by Warehouse"
                               Style="{StaticResource MaterialDesignOutlinedComboBox}"
                               DisplayMemberPath="WarehouseName" SelectedValuePath="WarehouseId"
                               SelectionChanged="FilterComboBox_SelectionChanged">
-                        <ComboBoxItem Content="Tất cả" Tag="0" IsSelected="True"/>
+                        <ComboBoxItem Content="All" Tag="0" IsSelected="True"/>
                     </ComboBox>
 
                     <DatePicker x:Name="FromDatePicker" Grid.Column="1" Margin="0,0,20,0"
-                                materialDesign:HintAssist.Hint="Từ ngày"
+                                materialDesign:HintAssist.Hint="From Date"
                                 Style="{StaticResource MaterialDesignOutlinedDatePicker}"
                                 SelectedDateChanged="DatePicker_SelectedDateChanged"/>
 
                     <DatePicker x:Name="ToDatePicker" Grid.Column="2"
-                                materialDesign:HintAssist.Hint="Đến ngày"
+                                materialDesign:HintAssist.Hint="To Date"
                                 Style="{StaticResource MaterialDesignOutlinedDatePicker}"
                                 SelectedDateChanged="DatePicker_SelectedDateChanged"/>
                 </Grid>
@@ -71,11 +71,11 @@
 
                 <materialDesign:Card Grid.Row="0" Padding="15" Margin="0,5,0,10">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBlock Text="Tổng doanh thu:" FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
+                        <TextBlock Text="Total Revenue:" FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
                         <TextBlock x:Name="TotalRevenueLabel" Text="0 VNĐ" FontSize="18" FontWeight="Bold" 
                                    Foreground="Red" Margin="10,0,30,0" VerticalAlignment="Center"/>
 
-                        <TextBlock Text="Tổng số đơn:" FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
+                        <TextBlock Text="Total Orders:" FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
                         <TextBlock x:Name="TotalOrdersLabel" Text="0" FontSize="18" FontWeight="Bold" 
                                    Foreground="Blue" Margin="10,0,0,0" VerticalAlignment="Center"/>
                     </StackPanel>
@@ -89,13 +89,13 @@
                           RowHeaderWidth="0"
                           AutoGenerateColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Ngày bán" Binding="{Binding SaleDate, StringFormat={}{0:dd/MM/yyyy HH:mm}}" Width="150"/>
-                        <DataGridTextColumn Header="Kho" Binding="{Binding Warehouse.WarehouseName}" Width="*"/>
-                        <DataGridTextColumn Header="Mã SP" Binding="{Binding ProductCode}" Width="100"/>
-                        <DataGridTextColumn Header="Tên sản phẩm" Binding="{Binding ProductCodeNavigation.NameP}" Width="*"/>
-                        <DataGridTextColumn Header="SL" Binding="{Binding QuantitySold}" Width="60"/>
-                        <DataGridTextColumn Header="Đơn giá" Binding="{Binding UnitPrice, StringFormat={}{0:N0}}" Width="120"/>
-                        <DataGridTextColumn Header="Thành tiền" Binding="{Binding TotalAmount, StringFormat={}{0:N0} VNĐ}" Width="150">
+                        <DataGridTextColumn Header="Sale Date" Binding="{Binding SaleDate, StringFormat={}{0:dd/MM/yyyy HH:mm}}" Width="150"/>
+                        <DataGridTextColumn Header="Warehouse" Binding="{Binding Warehouse.WarehouseName}" Width="*"/>
+                        <DataGridTextColumn Header="Product Code" Binding="{Binding ProductCode}" Width="100"/>
+                        <DataGridTextColumn Header="Product Name" Binding="{Binding ProductCodeNavigation.NameP}" Width="*"/>
+                        <DataGridTextColumn Header="Qty" Binding="{Binding QuantitySold}" Width="60"/>
+                        <DataGridTextColumn Header="Unit Price" Binding="{Binding UnitPrice, StringFormat={}{0:N0}}" Width="120"/>
+                        <DataGridTextColumn Header="Total Amount" Binding="{Binding TotalAmount, StringFormat={}{0:N0} VNĐ}" Width="150">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="FontWeight" Value="Bold"/>
@@ -103,13 +103,13 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Nhân viên" Binding="{Binding Account.FullName}" Width="*"/>
+                        <DataGridTextColumn Header="Staff" Binding="{Binding Account.FullName}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
 
             <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-                <Button Content="Đóng" Width="100" Height="40" 
+                <Button Content="Close" Width="100" Height="40" 
                         Style="{StaticResource MaterialDesignOutlinedButton}"
                         Click="CloseButton_Click"/>
             </StackPanel>

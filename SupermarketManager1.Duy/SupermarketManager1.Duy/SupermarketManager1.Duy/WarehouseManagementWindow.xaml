@@ -12,7 +12,7 @@
         FontFamily="{materialDesign:MaterialDesignFont}"
         
         mc:Ignorable="d"
-        Title="Quản lý Kho hàng" Height="604" Width="900" Loaded="Window_Loaded"
+        Title="Warehouse Management" Height="604" Width="900" Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen">
 
     <materialDesign:Card Padding="20" Margin="10">
@@ -25,14 +25,14 @@
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
                 
-                <TextBlock Text="QUẢN LÝ KHO HÀNG" 
+                <TextBlock Text="WAREHOUSE MANAGEMENT" 
                            FontSize="24" FontWeight="Bold" 
                            VerticalAlignment="Center"
                            Foreground="{DynamicResource PrimaryHueMidBrush}"/>
             </StackPanel>
 
             <ComboBox x:Name="WarehouseComboBox" Grid.Row="1" Margin="0,0,0,20"
-                      materialDesign:HintAssist.Hint="Chọn kho để quản lý"
+                      materialDesign:HintAssist.Hint="Select warehouse to manage"
                       Style="{StaticResource MaterialDesignOutlinedComboBox}"
                       FontSize="16" 
                       SelectionChanged="WarehouseComboBox_SelectionChanged"
@@ -52,10 +52,10 @@
                           GridLinesVisibility="None" RowHeaderWidth="0"
                           AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Mã SP" Binding="{Binding ProductCode}" Width="100"/>
-                    <DataGridTextColumn Header="Tên sản phẩm" Binding="{Binding Product.NameP}" Width="*"/>
-                    <DataGridTextColumn Header="Giá" Binding="{Binding Product.Price, StringFormat={}{0:N0}}" Width="100"/>
-                    <DataGridTextColumn Header="Tồn kho" Binding="{Binding Quantity}" Width="80">
+                    <DataGridTextColumn Header="Product Code" Binding="{Binding ProductCode}" Width="100"/>
+                    <DataGridTextColumn Header="Product Name" Binding="{Binding Product.NameP}" Width="*"/>
+                    <DataGridTextColumn Header="Price" Binding="{Binding Product.Price, StringFormat={}{0:N0}}" Width="100"/>
+                    <DataGridTextColumn Header="Stock" Binding="{Binding Quantity}" Width="80">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="FontWeight" Value="Bold"/>
@@ -65,26 +65,26 @@
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
 
-                    <DataGridTemplateColumn Header="Hành động" Width="300">
+                    <DataGridTemplateColumn Header="Action" Width="300">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Button Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                                            ToolTip="Giảm" Background="Red" BorderBrush="Red"
+                                            ToolTip="Decrease" Background="Red" BorderBrush="Red"
                                             Click="DecreaseButton_Click" Tag="{Binding ProductCode}"
                                             Margin="2">
                                         <materialDesign:PackIcon Kind="Minus" />
                                     </Button>
 
                                     <Button Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                                            ToolTip="Tăng" Background="Green" BorderBrush="Green"
+                                            ToolTip="Increase" Background="Green" BorderBrush="Green"
                                             Click="IncreaseButton_Click" Tag="{Binding ProductCode}"
                                             Margin="2">
                                         <materialDesign:PackIcon Kind="Plus" />
                                     </Button>
 
                                     <Button Style="{StaticResource MaterialDesignRaisedButton}"
-                                            Content="Điều chỉnh"
+                                            Content="Adjust"
                                             Width="150" Height="30" Margin="10,2,2,2" 
                                             Click="AdjustButton_Click" Tag="{Binding ProductCode}"/>
                                 </StackPanel>
@@ -95,7 +95,7 @@
                 </DataGrid>
 
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
-                    <Button Content="Đóng" Width="100" Height="40" 
+                    <Button Content="Close" Width="100" Height="40" 
                             Style="{StaticResource MaterialDesignOutlinedButton}"
                             Click="CloseButton_Click"/>
                 </StackPanel>

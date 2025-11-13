@@ -60,7 +60,7 @@ namespace SupermarketManager1.Duy
             else
             {
                 // Staff không có quyền xem báo cáo
-                MessageBox.Show("Bạn không có quyền xem báo cáo!", "Lỗi", 
+                MessageBox.Show("You do not have permission to view reports!", "Error", 
                     MessageBoxButton.OK, MessageBoxImage.Error);
                 this.Close();
                 return;
@@ -112,6 +112,12 @@ namespace SupermarketManager1.Duy
                     warehouseId = id;
                 }
                 // Nếu Tag = 0 hoặc null thì warehouseId = null (hiển thị tất cả)
+            }
+
+            // Manager chỉ được xem sales của Store của mình
+            if (CurrentUser.IsManager && CurrentUser.WarehouseId.HasValue)
+            {
+                warehouseId = CurrentUser.WarehouseId.Value;
             }
 
             // Lọc theo ngày
@@ -190,7 +196,7 @@ namespace SupermarketManager1.Duy
                 SaveFileDialog saveDialog = new SaveFileDialog
                 {
                     Filter = "Excel Files|*.xlsx",
-                    Title = "Chọn nơi lưu file Excel",
+                    Title = "Choose where to save Excel file",
                     FileName = "DoanhThu.xlsx"
                 };
 
@@ -198,13 +204,13 @@ namespace SupermarketManager1.Duy
                 {
                     string filePath = saveDialog.FileName;
                     service.ExportSalesToExcel(filePath);
-                    MessageBox.Show("Xuất file Excel thành công!\n" + filePath, "Thành công",
+                    MessageBox.Show("Excel file exported successfully!\n" + filePath, "Success",
                                     MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi xuất Excel: " + ex.Message, "Lỗi",
+                MessageBox.Show("Error exporting Excel: " + ex.Message, "Error",
                                 MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

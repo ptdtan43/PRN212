@@ -12,7 +12,7 @@
         FontFamily="{materialDesign:MaterialDesignFont}"
         
         mc:Ignorable="d"
-        Title="Bán hàng" Height="719" Width="1200" Loaded="Window_Loaded"
+        Title="Sales" Height="719" Width="1200" Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen">
     
     <Grid Margin="10">
@@ -24,7 +24,7 @@
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
             
-            <TextBlock Text="BÁN HÀNG" 
+            <TextBlock Text="SALES" 
                        FontSize="24" FontWeight="Bold" 
                        VerticalAlignment="Center"
                        Foreground="{DynamicResource PrimaryHueMidBrush}"/>
@@ -44,7 +44,7 @@
                     </Grid.RowDefinitions>
 
                     <TextBox x:Name="SearchTextBox" Grid.Row="0" Margin="0,0,0,10"
-                             materialDesign:HintAssist.Hint="Tìm kiếm sản phẩm..."
+                             materialDesign:HintAssist.Hint="Search products..."
                              materialDesign:HintAssist.IsFloating="False"
                              Style="{StaticResource MaterialDesignOutlinedTextBox}"
                              TextChanged="SearchTextBox_TextChanged"/>
@@ -57,10 +57,10 @@
                               AutoGenerateColumns="False"
                               GridLinesVisibility="None" RowHeaderWidth="0">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Mã SP" Binding="{Binding ProductCode}" Width="100"/>
-                            <DataGridTextColumn Header="Tên sản phẩm" Binding="{Binding Product.NameP}" Width="*"/>
-                            <DataGridTextColumn Header="Giá" Binding="{Binding Product.Price, StringFormat={}{0:N0} VNĐ}" Width="120"/>
-                            <DataGridTextColumn Header="Tồn kho" Binding="{Binding Quantity}" Width="80">
+                            <DataGridTextColumn Header="Product Code" Binding="{Binding ProductCode}" Width="100"/>
+                            <DataGridTextColumn Header="Product Name" Binding="{Binding Product.NameP}" Width="*"/>
+                            <DataGridTextColumn Header="Price" Binding="{Binding Product.Price, StringFormat={}{0:N0} VNĐ}" Width="120"/>
+                            <DataGridTextColumn Header="Stock" Binding="{Binding Quantity}" Width="80">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="FontWeight" Value="Bold"/>
@@ -85,7 +85,7 @@
                     </Grid.RowDefinitions>
 
                     <TextBox x:Name="SelectedProductTextBox" Grid.Row="0"
-                             materialDesign:HintAssist.Hint="Sản phẩm đã chọn"
+                             materialDesign:HintAssist.Hint="Selected Product"
                              Style="{StaticResource MaterialDesignOutlinedTextBox}"
                              IsReadOnly="True" Margin="0,0,0,10"/>
 
@@ -95,17 +95,17 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="QuantityTextBox" Grid.Column="0" Text="1"
-                                 materialDesign:HintAssist.Hint="Số lượng"
+                                 materialDesign:HintAssist.Hint="Quantity"
                                  Style="{StaticResource MaterialDesignOutlinedTextBox}"
                                  PreviewTextInput="QuantityTextBox_PreviewTextInput"/>
-                        <Button Content="Thêm vào giỏ" Grid.Column="1" Width="120" Margin="10,0,0,0" 
+                        <Button Content="Add to Cart" Grid.Column="1" Width="120" Margin="10,0,0,0" 
                                 Style="{StaticResource MaterialDesignRaisedButton}"
                                 Click="AddToCartButton_Click"/>
                     </Grid>
 
                     <Separator Grid.Row="2" Margin="0,5,0,10"/>
 
-                    <TextBlock Text="Giỏ hàng:" Grid.Row="3" FontWeight="Bold" Margin="0,0,0,5" FontSize="16"/>
+                    <TextBlock Text="Cart:" Grid.Row="3" FontWeight="Bold" Margin="0,0,0,5" FontSize="16"/>
                     <DataGrid x:Name="CartDataGrid" Grid.Row="4" 
                               Style="{StaticResource MaterialDesignDataGrid}"
                               HeadersVisibility="Column"
@@ -114,18 +114,18 @@
                               AutoGenerateColumns="False"
                               GridLinesVisibility="None" RowHeaderWidth="0">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Mã SP" Binding="{Binding ProductCode}" Width="80"/>
-                            <DataGridTextColumn Header="Tên" Binding="{Binding ProductName}" Width="*"/>
-                            <DataGridTextColumn Header="SL" Binding="{Binding Quantity}" Width="50"/>
-                            <DataGridTextColumn Header="Đơn giá" Binding="{Binding UnitPrice, StringFormat={}{0:N0}}" Width="*"/>
-                            <DataGridTextColumn Header="Thành tiền" Binding="{Binding TotalAmount, StringFormat={}{0:N0}}" Width="*"/>
-                            <DataGridTemplateColumn Header="Xóa" Width="Auto">
+                            <DataGridTextColumn Header="Product Code" Binding="{Binding ProductCode}" Width="80"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding ProductName}" Width="*"/>
+                            <DataGridTextColumn Header="Qty" Binding="{Binding Quantity}" Width="50"/>
+                            <DataGridTextColumn Header="Unit Price" Binding="{Binding UnitPrice, StringFormat={}{0:N0}}" Width="*"/>
+                            <DataGridTextColumn Header="Total" Binding="{Binding TotalAmount, StringFormat={}{0:N0}}" Width="*"/>
+                            <DataGridTemplateColumn Header="Remove" Width="Auto">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button Style="{StaticResource MaterialDesignIconForegroundButton}"
                                                 Click="RemoveFromCartButton_Click" 
                                                 Tag="{Binding ProductCode}"
-                                                ToolTip="Xóa khỏi giỏ">
+                                                ToolTip="Remove from cart">
                                             <materialDesign:PackIcon Kind="Close" Foreground="Red"/>
                                         </Button>
                                     </DataTemplate>
@@ -144,19 +144,19 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                <TextBlock Text="Tổng tiền:" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                <TextBlock Text="Total Amount:" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
                 <TextBlock x:Name="TotalAmountLabel" Text="0 VNĐ" FontSize="20" FontWeight="Bold" 
                            Foreground="Red" Margin="10,0,0,0" VerticalAlignment="Center"/>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <Button Content="Xóa giỏ hàng" Width="120" Height="40" Margin="0,0,10,0" 
+                <Button Content="Clear Cart" Width="120" Height="40" Margin="0,0,10,0" 
                         Style="{StaticResource MaterialDesignOutlinedButton}"
                         Click="ClearCartButton_Click"/>
-                <Button Content="Đóng" Width="100" Height="40" Margin="0,0,10,0"
+                <Button Content="Close" Width="100" Height="40" Margin="0,0,10,0"
                         Style="{StaticResource MaterialDesignOutlinedButton}"
                         Click="CloseButton_Click"/>
-                <Button Content="Thanh toán" Width="120" Height="40" 
+                <Button Content="Checkout" Width="120" Height="40" 
                         Style="{StaticResource MaterialDesignRaisedButton}"
                         Click="CheckoutButton_Click" 
                         FontWeight="Bold" FontSize="14"/>

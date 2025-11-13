@@ -13,7 +13,7 @@
         FontFamily="{materialDesign:MaterialDesignFont}"
         
         mc:Ignorable="d"
-        Title="Quản lý Tài khoản" Height="682" Width="1200" Loaded="Window_Loaded"
+        Title="Account Management" Height="682" Width="1200" Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen">
 
     <materialDesign:Card Padding="20" Margin="10,10,10,50">
@@ -27,7 +27,7 @@
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
                
-                <TextBlock Text="QUẢN LÝ TÀI KHOẢN" FontSize="24" FontWeight="Bold" 
+                <TextBlock Text="ACCOUNT MANAGEMENT" FontSize="24" FontWeight="Bold" 
                            VerticalAlignment="Center"
                            Foreground="{DynamicResource PrimaryHueMidBrush}"/>
             </StackPanel>
@@ -40,10 +40,10 @@
                 </Grid.ColumnDefinitions>
 
                 <ComboBox x:Name="RoleFilterComboBox" Grid.Column="0"
-                          materialDesign:HintAssist.Hint="Lọc theo Role"
+                          materialDesign:HintAssist.Hint="Filter by Role"
                           Style="{StaticResource MaterialDesignOutlinedComboBox}"
                           Width="200" SelectionChanged="RoleFilterComboBox_SelectionChanged">
-                    <ComboBoxItem Content="Tất cả" Tag="0" IsSelected="True"/>
+                    <ComboBoxItem Content="All" Tag="0" IsSelected="True"/>
                     <ComboBoxItem Content="Admin" Tag="1"/>
                     <ComboBoxItem Content="Manager" Tag="2"/>
                     <ComboBoxItem Content="Staff" Tag="3"/>
@@ -54,7 +54,7 @@
                             Click="CreateButton_Click" Width="120" Height="40" Margin="0,0,10,0">
                         <StackPanel Orientation="Horizontal">
                             
-                            <TextBlock Text="Tạo mới"/>
+                            <TextBlock Text="Create"/>
                         </StackPanel>
                     </Button>
 
@@ -62,7 +62,7 @@
                             Click="UpdateButton_Click" Width="100" Height="40" Margin="0,0,10,0">
                         <StackPanel Orientation="Horizontal">
                             
-                            <TextBlock Text="Sửa"/>
+                            <TextBlock Text="Edit"/>
                         </StackPanel>
                     </Button>
 
@@ -71,7 +71,7 @@
                             Background="Red" BorderBrush="Red">
                         <StackPanel Orientation="Horizontal">
                             
-                            <TextBlock Text="Xóa"/>
+                            <TextBlock Text="Delete"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -89,14 +89,14 @@
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding AccountId}" Width="50"/>
-                    <DataGridTextColumn Header="Tên đăng nhập" Binding="{Binding Username}" Width="120"/>
-                    <DataGridTextColumn Header="Họ tên" Binding="{Binding FullName}" Width="*"/>
+                    <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="120"/>
+                    <DataGridTextColumn Header="Full Name" Binding="{Binding FullName}" Width="*"/>
                     <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="200"/>
-                    <DataGridTextColumn Header="SĐT" Binding="{Binding PhoneNumber}" Width="120"/>
-                    <DataGridTextColumn Header="Vai trò" Binding="{Binding Role.RoleName}" Width="100"/>
-                    <DataGridTextColumn Header="Cửa hàng" Binding="{Binding Warehouse.WarehouseName}" Width="*"/>
+                    <DataGridTextColumn Header="Phone" Binding="{Binding PhoneNumber}" Width="120"/>
+                    <DataGridTextColumn Header="Role" Binding="{Binding Role.RoleName}" Width="100"/>
+                    <DataGridTextColumn Header="Store" Binding="{Binding Warehouse.WarehouseName}" Width="*"/>
 
-                    <DataGridTextColumn Header="Trạng thái" Binding="{Binding Status}" Width="100">
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="100">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Style.Triggers>
@@ -116,12 +116,12 @@
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
 
-                    <DataGridTextColumn Header="Ngày tạo" Binding="{Binding CreatedAt, StringFormat={}{0:dd/MM/yyyy}}" Width="120"/>
+                    <DataGridTextColumn Header="Created Date" Binding="{Binding CreatedAt, StringFormat={}{0:dd/MM/yyyy}}" Width="120"/>
                 </DataGrid.Columns>
             </DataGrid>
 
             <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
-                <Button Content="Đóng" Width="100" Height="40" 
+                <Button Content="Close" Width="100" Height="40" 
                         Style="{StaticResource MaterialDesignOutlinedButton}"
                         Click="CloseButton_Click"/>
             </StackPanel>

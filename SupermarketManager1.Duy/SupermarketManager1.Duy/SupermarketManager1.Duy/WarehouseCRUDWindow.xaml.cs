@@ -41,7 +41,7 @@ namespace SupermarketManager1.Duy
             Warehouse? selected = WarehouseDataGrid.SelectedItem as Warehouse;
             if (selected == null)
             {
-                MessageBox.Show("Vui lòng chọn kho cần sửa!", "Thông báo", 
+                MessageBox.Show("Please select a warehouse to edit!", "Notification", 
                     MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
@@ -59,7 +59,7 @@ namespace SupermarketManager1.Duy
             Warehouse? selected = WarehouseDataGrid.SelectedItem as Warehouse;
             if (selected == null)
             {
-                MessageBox.Show("Vui lòng chọn kho cần xóa!", "Thông báo", 
+                MessageBox.Show("Please select a warehouse to delete!", "Notification", 
                     MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
@@ -67,7 +67,7 @@ namespace SupermarketManager1.Duy
             // Không cho xóa Kho Trung Tâm
             if (selected.Type == "Central")
             {
-                MessageBox.Show("Không thể xóa Kho Trung Tâm!", "Lỗi", 
+                MessageBox.Show("Cannot delete Central Warehouse!", "Error", 
                     MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
@@ -77,16 +77,16 @@ namespace SupermarketManager1.Duy
             if (accountsInWarehouse.Count > 0)
             {
                 MessageBox.Show(
-                    $"Không thể xóa kho này!\n\nCó {accountsInWarehouse.Count} tài khoản đang sử dụng kho này.\nVui lòng chuyển họ sang kho khác trước.",
-                    "Lỗi",
+                    $"Cannot delete this warehouse!\n\nThere are {accountsInWarehouse.Count} accounts using this warehouse.\nPlease transfer them to another warehouse first.",
+                    "Error",
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
                 return;
             }
 
             MessageBoxResult confirm = MessageBox.Show(
-                $"Bạn có chắc muốn xóa kho:\n\nTên: {selected.WarehouseName}\nLoại: {selected.Type}?",
-                "Xác nhận xóa",
+                $"Are you sure you want to delete the warehouse:\n\nName: {selected.WarehouseName}\nType: {selected.Type}?",
+                "Confirm Delete",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Question);
 
@@ -95,13 +95,13 @@ namespace SupermarketManager1.Duy
                 try
                 {
                     _warehouseService.DeleteWarehouse(selected);
-                    MessageBox.Show("Xóa kho thành công!", "Thành công", 
+                    MessageBox.Show("Warehouse deleted successfully!", "Success", 
                         MessageBoxButton.OK, MessageBoxImage.Information);
                     LoadWarehouses();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Lỗi khi xóa kho: {ex.Message}", "Lỗi", 
+                    MessageBox.Show($"Error deleting warehouse: {ex.Message}", "Error", 
                         MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }

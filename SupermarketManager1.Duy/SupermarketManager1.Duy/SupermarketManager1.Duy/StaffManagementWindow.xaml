@@ -13,7 +13,7 @@
         
         xmlns:local="clr-namespace:SupermarketManager1.Duy"
         mc:Ignorable="d"
-        Title="Quản lý Nhân viên" Height="608" Width="1000" Loaded="Window_Loaded"
+        Title="Staff Management" Height="608" Width="1000" Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen">
 
     <materialDesign:Card Padding="20" Margin="10">
@@ -27,7 +27,7 @@
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
                
-                <TextBlock Text="QUẢN LÝ NHÂN VIÊN" 
+                <TextBlock Text="STAFF MANAGEMENT" 
                            FontSize="24" FontWeight="Bold" 
                            VerticalAlignment="Center"
                            Foreground="{DynamicResource PrimaryHueMidBrush}"/>
@@ -38,7 +38,7 @@
                         Click="CreateButton_Click" Width="120" Height="40" Margin="0,0,10,0">
                     <StackPanel Orientation="Horizontal">
                         
-                        <TextBlock Text="Tạo mới"/>
+                        <TextBlock Text="Create"/>
                     </StackPanel>
                 </Button>
 
@@ -46,7 +46,7 @@
                         Click="UpdateButton_Click" Width="100" Height="40" Margin="0,0,10,0">
                     <StackPanel Orientation="Horizontal">
                         
-                        <TextBlock Text="Sửa"/>
+                        <TextBlock Text="Edit"/>
                     </StackPanel>
                 </Button>
 
@@ -55,7 +55,7 @@
                         Background="Red" BorderBrush="Red">
                     <StackPanel Orientation="Horizontal">
                        
-                        <TextBlock Text="Xóa"/>
+                        <TextBlock Text="Delete"/>
                     </StackPanel>
                 </Button>
             </StackPanel>
@@ -70,11 +70,11 @@
                       AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding AccountId}" Width="50"/>
-                    <DataGridTextColumn Header="Tên đăng nhập" Binding="{Binding Username}" Width="120"/>
-                    <DataGridTextColumn Header="Họ tên" Binding="{Binding FullName}" Width="*"/>
+                    <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="120"/>
+                    <DataGridTextColumn Header="Full Name" Binding="{Binding FullName}" Width="*"/>
                     <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="200"/>
-                    <DataGridTextColumn Header="SĐT" Binding="{Binding PhoneNumber}" Width="120"/>
-                    <DataGridTextColumn Header="Trạng thái" Binding="{Binding Status}" Width="100">
+                    <DataGridTextColumn Header="Phone" Binding="{Binding PhoneNumber}" Width="120"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="100">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Style.Triggers>
@@ -93,12 +93,12 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Ngày tạo" Binding="{Binding CreatedAt, StringFormat={}{0:dd/MM/yyyy}}" Width="120"/>
+                    <DataGridTextColumn Header="Created Date" Binding="{Binding CreatedAt, StringFormat={}{0:dd/MM/yyyy}}" Width="120"/>
                 </DataGrid.Columns>
             </DataGrid>
 
             <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
-                <Button Content="Đóng" Width="100" Height="40" 
+                <Button Content="Close" Width="100" Height="40" 
                         Style="{StaticResource MaterialDesignOutlinedButton}"
                         Click="CloseButton_Click"/>
             </StackPanel>

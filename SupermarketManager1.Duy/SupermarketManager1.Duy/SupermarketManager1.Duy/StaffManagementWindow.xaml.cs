@@ -48,7 +48,7 @@ namespace SupermarketManager1.Duy
             Account? selected = StaffDataGrid.SelectedItem as Account;
             if (selected == null)
             {
-                MessageBox.Show("Vui lòng chọn nhân viên cần sửa!", "Thông báo", 
+                MessageBox.Show("Please select a staff member to edit!", "Notification", 
                     MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
@@ -66,14 +66,14 @@ namespace SupermarketManager1.Duy
             Account? selected = StaffDataGrid.SelectedItem as Account;
             if (selected == null)
             {
-                MessageBox.Show("Vui lòng chọn nhân viên cần xóa!", "Thông báo", 
+                MessageBox.Show("Please select a staff member to delete!", "Notification", 
                     MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             MessageBoxResult confirm = MessageBox.Show(
-                $"Bạn có chắc muốn xóa nhân viên:\n\nUsername: {selected.Username}\nHọ tên: {selected.FullName}?",
-                "Xác nhận xóa",
+                $"Are you sure you want to delete the staff member:\n\nUsername: {selected.Username}\nFull Name: {selected.FullName}?",
+                "Confirm Delete",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Question);
 
@@ -82,13 +82,13 @@ namespace SupermarketManager1.Duy
                 try
                 {
                     _accountService.DeleteAccount(selected);
-                    MessageBox.Show("Xóa nhân viên thành công!", "Thành công", 
+                    MessageBox.Show("Staff member deleted successfully!", "Success", 
                         MessageBoxButton.OK, MessageBoxImage.Information);
                     LoadStaff();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Lỗi khi xóa nhân viên: {ex.Message}", "Lỗi", 
+                    MessageBox.Show($"Error deleting staff member: {ex.Message}", "Error", 
                         MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }

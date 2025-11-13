@@ -35,14 +35,14 @@ namespace SupermarketManager1.Duy
             // Validation
             if (string.IsNullOrWhiteSpace(username))
             {
-                MessageBox.Show("Vui lòng nhập Username!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please enter Username!", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 EmailTextBox.Focus();
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(password))
             {
-                MessageBox.Show("Vui lòng nhập Password!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please enter Password!", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 PasswordTextBox.Focus();
                 return;
             }
@@ -52,8 +52,8 @@ namespace SupermarketManager1.Duy
 
             if (account == null)
             {
-                MessageBox.Show("Username hoặc Password không đúng!\nHoặc tài khoản đã bị khóa.", 
-                    "Đăng nhập thất bại", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Username or Password is incorrect!\nOr the account has been locked.", 
+                    "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
                 PasswordTextBox.Clear();
                 PasswordTextBox.Focus();
                 return;
@@ -76,8 +76,8 @@ namespace SupermarketManager1.Duy
 
             if (mainWindow == null)
             {
-                MessageBox.Show("Vai trò không hợp lệ! Vui lòng liên hệ quản trị viên.", 
-                    "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Invalid role! Please contact administrator.", 
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -87,8 +87,8 @@ namespace SupermarketManager1.Duy
 
         private void QuitButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Bạn có chắc muốn thoát?", 
-                "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to quit?", 
+                "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question);
             
             if (result == MessageBoxResult.Yes)
             {

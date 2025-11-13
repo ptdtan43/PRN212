@@ -43,7 +43,7 @@ namespace SupermarketManager1.Duy
         {
             if (!CurrentUser.WarehouseId.HasValue)
             {
-                MessageBox.Show("Không xác định được Store!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Cannot determine Store!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 this.Close();
                 return;
             }
@@ -97,13 +97,13 @@ namespace SupermarketManager1.Duy
         {
             if (ProductDataGrid.SelectedItem is not Inventory selected)
             {
-                MessageBox.Show("Vui lòng chọn sản phẩm!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please select a product!", "Notification", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (!int.TryParse(QuantityTextBox.Text, out int quantity) || quantity <= 0)
             {
-                MessageBox.Show("Vui lòng nhập số lượng hợp lệ!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please enter a valid quantity!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 QuantityTextBox.Focus();
                 return;
             }
@@ -111,7 +111,7 @@ namespace SupermarketManager1.Duy
             // Kiểm tra tồn kho
             if (quantity > selected.Quantity)
             {
-                MessageBox.Show($"Không đủ hàng! Tồn kho: {selected.Quantity}", "Lỗi", 
+                MessageBox.Show($"Insufficient stock! Stock: {selected.Quantity}", "Error", 
                     MessageBoxButton.OK, MessageBoxImage.Error);
                 QuantityTextBox.Focus();
                 QuantityTextBox.SelectAll();
@@ -125,8 +125,8 @@ namespace SupermarketManager1.Duy
                 int newQuantity = existingItem.Quantity + quantity;
                 if (newQuantity > selected.Quantity)
                 {
-                    MessageBox.Show($"Tổng số lượng vượt quá tồn kho! Tồn kho: {selected.Quantity}", 
-                        "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Total quantity exceeds stock! Stock: {selected.Quantity}",
+                        "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 existingItem.Quantity = newQuantity;
@@ -167,8 +167,8 @@ namespace SupermarketManager1.Duy
         {
             if (_cart.Count == 0) return;
 
-            MessageBoxResult result = MessageBox.Show("Bạn có chắc muốn xóa toàn bộ giỏ hàng?", 
-                "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to clear the entire cart?",
+                "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Yes)
             {
@@ -193,21 +193,21 @@ namespace SupermarketManager1.Duy
         {
             if (_cart.Count == 0)
             {
-                MessageBox.Show("Giỏ hàng trống!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Cart is empty!", "Notification", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (!CurrentUser.IsLoggedIn || !CurrentUser.WarehouseId.HasValue)
             {
-                MessageBox.Show("Lỗi xác thực người dùng!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("User authentication error!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             // Xác nhận thanh toán
             decimal total = _cart.Sum(c => c.TotalAmount);
             MessageBoxResult confirm = MessageBox.Show(
-                $"Tổng tiền: {total:N0} VNĐ\n\nXác nhận thanh toán?",
-                "Xác nhận thanh toán",
+                $"Total Amount: {total:N0} VNĐ\n\nConfirm payment?",
+                "Confirm Payment",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Question);
 
@@ -243,8 +243,8 @@ namespace SupermarketManager1.Duy
             if (failCount == 0)
             {
                 MessageBox.Show(
-                    $"Thanh toán thành công!\n\nĐã bán {successCount} sản phẩm\nTổng tiền: {total:N0} VNĐ",
-                    "Thành công",
+                    $"Payment successful!\n\nSold {successCount} products\nTotal Amount: {total:N0} VNĐ",
+                    "Success",
                     MessageBoxButton.OK,
                     MessageBoxImage.Information);
 
@@ -257,8 +257,8 @@ namespace SupermarketManager1.Duy
             {
                 string errorDetails = string.Join("\n", errors);
                 MessageBox.Show(
-                    $"Có lỗi xảy ra!\n\nThành công: {successCount}\nThất bại: {failCount}\n\nChi tiết lỗi:\n{errorDetails}",
-                    "Cảnh báo",
+                    $"An error occurred!\n\nSuccess: {successCount}\nFailed: {failCount}\n\nError details:\n{errorDetails}",
+                    "Warning",
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning);
 
@@ -273,8 +273,8 @@ namespace SupermarketManager1.Duy
             if (_cart.Count > 0)
             {
                 MessageBoxResult result = MessageBox.Show(
-                    "Bạn có sản phẩm trong giỏ hàng.\nBạn có chắc muốn đóng cửa sổ này?",
-                    "Xác nhận",
+                    "You have products in your cart.\nAre you sure you want to close this window?",
+                    "Confirm",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Question);
 

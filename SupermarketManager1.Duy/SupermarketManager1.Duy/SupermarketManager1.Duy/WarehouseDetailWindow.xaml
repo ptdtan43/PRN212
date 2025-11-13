@@ -12,7 +12,7 @@
         FontFamily="{materialDesign:MaterialDesignFont}"
         
         mc:Ignorable="d"
-        Title="Chi tiết Kho/Cửa hàng" 
+        Title="Warehouse/Store Details" 
         Height="490" Width="600" 
         SizeToContent="Height"
         Loaded="Window_Loaded"
@@ -28,7 +28,7 @@
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,25">
                
-                <TextBlock x:Name="TitleLabel" Text="Tạo kho/cửa hàng mới" 
+                <TextBlock x:Name="TitleLabel" Text="Create New Warehouse/Store" 
                            FontSize="22" FontWeight="Bold" 
                            VerticalAlignment="Center"
                            Foreground="{DynamicResource PrimaryHueMidBrush}"/>
@@ -36,21 +36,21 @@
 
             <StackPanel Grid.Row="1">
                 <TextBox x:Name="WarehouseNameTextBox" 
-                         materialDesign:HintAssist.Hint="Tên kho/cửa hàng *"
+                         materialDesign:HintAssist.Hint="Warehouse/Store Name *"
                          Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          Margin="0,0,0,15"/>
 
                 <ComboBox x:Name="TypeComboBox" 
-                          materialDesign:HintAssist.Hint="Loại *"
+                          materialDesign:HintAssist.Hint="Type *"
                           Style="{StaticResource MaterialDesignOutlinedComboBox}"
                           SelectionChanged="TypeComboBox_SelectionChanged"
                           Margin="0,0,0,15">
-                    <ComboBoxItem Content="Kho Trung Tâm" Tag="Central"/>
-                    <ComboBoxItem Content="Cửa hàng" Tag="Store" IsSelected="True"/>
+                    <ComboBoxItem Content="Central Warehouse" Tag="Central"/>
+                    <ComboBoxItem Content="Store" Tag="Store" IsSelected="True"/>
                 </ComboBox>
 
                 <TextBox x:Name="AddressTextBox" 
-                         materialDesign:HintAssist.Hint="Địa chỉ"
+                         materialDesign:HintAssist.Hint="Address"
                          Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          Margin="0,0,0,15" TextWrapping="Wrap" Height="80"
                          VerticalScrollBarVisibility="Auto"/>
@@ -64,10 +64,10 @@
             </StackPanel>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-                <Button Content="Hủy" Width="100" Height="40" Margin="0,0,10,0" 
+                <Button Content="Cancel" Width="100" Height="40" Margin="0,0,10,0" 
                         Style="{StaticResource MaterialDesignOutlinedButton}"
                         Click="CancelButton_Click"/>
-                <Button Content="Lưu" Width="100" Height="40" 
+                <Button Content="Save" Width="100" Height="40" 
                         Style="{StaticResource MaterialDesignRaisedButton}"
                         Click="SaveButton_Click"/>
             </StackPanel>

@@ -13,7 +13,7 @@
         
         xmlns:local="clr-namespace:SupermarketManager1.Duy"
         mc:Ignorable="d"
-        Title="Bảng điều khiển Quản lý" Height="632" Width="1000" Loaded="Window_Loaded"
+        Title="Manager Dashboard" Height="632" Width="1000" Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen">
 
     <Grid Margin="10">
@@ -31,18 +31,18 @@
 
                 <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
                     
-                    <TextBlock Text="Bảng điều khiển Quản lý" 
+                    <TextBlock Text="Manager Dashboard" 
                               FontSize="24" FontWeight="Bold"
                               VerticalAlignment="Center"
                               Foreground="{DynamicResource PrimaryHueMidBrush}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                    <TextBlock x:Name="WelcomeLabel" Text="Xin chào, " 
+                    <TextBlock x:Name="WelcomeLabel" Text="Hello, " 
                               FontSize="16" 
                               VerticalAlignment="Center"
                               Margin="0,0,15,0"/>
-                    <Button Content="Đăng xuất" 
+                    <Button Content="Logout" 
                             Style="{StaticResource MaterialDesignOutlinedButton}"
                             Width="100" Height="35" 
                             Click="LogoutButton_Click"/>
@@ -54,7 +54,7 @@
 
             <materialDesign:Card Padding="30" Width="450">
                 <StackPanel>
-                    <TextBlock Text="Quản lý cửa hàng" 
+                    <TextBlock Text="Store Management" 
                                FontSize="18" FontWeight="Bold" Margin="0,0,0,20"
                                HorizontalAlignment="Center"
                                Foreground="{DynamicResource PrimaryHueMidBrush}"/>
@@ -65,7 +65,7 @@
                             FontSize="16" FontWeight="Bold" Margin="0,5">
                         <StackPanel Orientation="Horizontal">
                             
-                            <TextBlock Text="Quản lý Tồn kho"/>
+                            <TextBlock Text="Manage Inventory"/>
                         </StackPanel>
                     </Button>
 
@@ -75,7 +75,7 @@
                             FontSize="16" FontWeight="Bold" Margin="0,5">
                         <StackPanel Orientation="Horizontal">
                             
-                            <TextBlock Text="Yêu cầu chuyển kho"/>
+                            <TextBlock Text="Transfer Stock Request"/>
                         </StackPanel>
                     </Button>
 
@@ -85,7 +85,7 @@
                             FontSize="16" FontWeight="Bold" Margin="0,5">
                         <StackPanel Orientation="Horizontal">
                             
-                            <TextBlock Text="Quản lý Nhân viên"/>
+                            <TextBlock Text="Manage Staff"/>
                         </StackPanel>
                     </Button>
 
@@ -95,7 +95,7 @@
                             FontSize="16" FontWeight="Bold" Margin="0,5">
                         <StackPanel Orientation="Horizontal">
                             
-                            <TextBlock Text="Báo cáo Doanh thu"/>
+                            <TextBlock Text="Revenue Report"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>

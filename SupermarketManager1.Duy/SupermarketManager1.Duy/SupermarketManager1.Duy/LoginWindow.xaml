@@ -6,7 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:SupermarketManager1.Duy"
         mc:Ignorable="d"
-        Title="Đăng nhập - Supermarket Management System" 
+        Title="Login - Supermarket Management System" 
         Height="538" Width="600" 
         WindowStartupLocation="CenterScreen"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -18,20 +18,22 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         Loaded="Window_Loaded">
     <Grid>
-        <materialDesign:Card Padding="40" VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="500" Height="467">
+        <materialDesign:Card Padding="40" VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="520" Height="467">
             <StackPanel >
                 <!-- Logo/Icon -->
                 
 
                 <!-- Title -->
-                <TextBlock Text="Hệ thống Quản lý Siêu thị" 
-                          FontSize="24" 
+                <TextBlock Text="Supermarket Management System" 
+                          FontSize="22" 
                           FontWeight="Bold"
                           HorizontalAlignment="Center"
+                          TextWrapping="Wrap"
+                          TextAlignment="Center"
                           Margin="0,0,0,10"
                           Foreground="{DynamicResource PrimaryHueMidBrush}"/>
 
-                <TextBlock Text="Đăng nhập vào hệ thống" 
+                <TextBlock Text="Login to system" 
                           FontSize="14" 
                           HorizontalAlignment="Center"
                           Margin="0,0,0,30"
@@ -39,7 +41,7 @@
 
                 <!-- Username/Email Field -->
                 <TextBox x:Name="EmailTextBox" 
-                        materialDesign:HintAssist.Hint="Username hoặc Email"
+                        materialDesign:HintAssist.Hint="Username or Email"
                         materialDesign:HintAssist.IsFloating="True"
                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
                         FontSize="16"
@@ -64,7 +66,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Button x:Name="LoginButton" 
-                           Content="ĐĂNG NHẬP"
+                           Content="LOGIN"
                            Grid.Column="0"
                            Style="{StaticResource MaterialDesignRaisedButton}"
                            Height="45"
@@ -75,7 +77,7 @@
                            materialDesign:ButtonProgressAssist.Value="0"/>
 
                     <Button x:Name="QuitButton" 
-                           Content="THOÁT"
+                           Content="QUIT"
                            Grid.Column="2"
                            Style="{StaticResource MaterialDesignOutlinedButton}"
                            Height="45"
