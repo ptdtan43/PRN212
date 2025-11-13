@@ -82,9 +82,6 @@
                                         <Setter Property="Foreground" Value="Green"/>
                                         <Setter Property="FontWeight" Value="Bold"/>
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding Status}" Value="Inactive">
-                                        <Setter Property="Foreground" Value="Gray"/>
-                                    </DataTrigger>
                                     <DataTrigger Binding="{Binding Status}" Value="Locked">
                                         <Setter Property="Foreground" Value="Red"/>
                                         <Setter Property="FontWeight" Value="Bold"/>

@@ -68,6 +68,14 @@ namespace SupermarketManager1.Duy
             {
                 ManagerComboBox.SelectedValue = EditedWarehouse.ManagerId.Value;
             }
+
+            // Nếu đang edit Central Warehouse, khóa Type và Manager, chỉ cho sửa Name và Address
+            if (EditedWarehouse.Type == "Central")
+            {
+                TypeComboBox.IsEnabled = false; // Không cho đổi type
+                ManagerComboBox.Visibility = Visibility.Collapsed; // Ẩn Manager (Central không có Manager)
+                // Chỉ cho phép sửa: WarehouseName và Address
+            }
         }
 
         private void TypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -115,20 +123,32 @@ namespace SupermarketManager1.Duy
                 warehouse.WarehouseName = WarehouseNameTextBox.Text.Trim();
                 warehouse.Address = string.IsNullOrWhiteSpace(AddressTextBox.Text) ? null : AddressTextBox.Text.Trim();
 
-                // Type
-                if (TypeComboBox.SelectedItem is ComboBoxItem typeItem && typeItem.Tag is string type)
+                // ⭐ Nếu đang edit Central Warehouse, giữ nguyên Type
+                bool isEditingCentral = IsEditMode && EditedWarehouse?.Type == "Central";
+                
+                if (isEditingCentral)
                 {
-                    warehouse.Type = type;
+                    // Giữ nguyên Type của Central Warehouse
+                    warehouse.Type = EditedWarehouse!.Type;
+                    warehouse.ManagerId = null; // Central không có Manager
                 }
+                else
+                {
+                    // Type
+                    if (TypeComboBox.SelectedItem is ComboBoxItem typeItem && typeItem.Tag is string type)
+                    {
+                        warehouse.Type = type;
+                    }
 
-                // ManagerId: NULL cho Central, có giá trị cho Store
-                if (warehouse.Type == "Store")
-                {
-                    warehouse.ManagerId = ManagerComboBox.SelectedValue as int?;
-                }
-                else // Central
-                {
-                    warehouse.ManagerId = null;
+                    // ManagerId: NULL cho Central, có giá trị cho Store
+                    if (warehouse.Type == "Store")
+                    {
+                        warehouse.ManagerId = ManagerComboBox.SelectedValue as int?;
+                    }
+                    else // Central
+                    {
+                        warehouse.ManagerId = null;
+                    }
                 }
 
                 if (IsEditMode)

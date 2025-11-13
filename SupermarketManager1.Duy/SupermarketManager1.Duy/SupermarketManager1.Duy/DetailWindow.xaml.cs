@@ -138,7 +138,7 @@ namespace SupermarketManager1.Duy
                 return false;
             }
 
-            // BỎ validation cho Quantity
+    
 
             return true;
         }

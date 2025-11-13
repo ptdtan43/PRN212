@@ -79,7 +79,7 @@ namespace SupermarketManager1.Duy
             InventoryDataGrid.ItemsSource = inventoryList;
         }
 
-        // Button ➕
+        // Button +
         private void IncreaseButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button btn && btn.Tag is string productCode)
@@ -89,7 +89,7 @@ namespace SupermarketManager1.Duy
             }
         }
 
-        // Button ➖
+        // Button -
         private void DecreaseButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button btn && btn.Tag is string productCode)
@@ -107,7 +107,7 @@ namespace SupermarketManager1.Duy
             }
         }
 
-        // Button 📝 Điều chỉnh
+        // Button Điều chỉnh
         private void AdjustButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button btn && btn.Tag is string productCode)

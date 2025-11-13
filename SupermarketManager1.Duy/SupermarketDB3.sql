@@ -3,10 +3,10 @@
 -- Supermarket Management System v3
 -- Cải thiện để phù hợp với Flow Diagram
 -- ===================================
-DROP DATABASE IF EXISTS SupermarketDB3;
-CREATE DATABASE SupermarketDB3;
+DROP DATABASE IF EXISTS SupermarketDB2;
+CREATE DATABASE SupermarketDB2;
 GO
-USE SupermarketDB3;
+USE SupermarketDB2;
 GO
 
 -- 1. Bảng Category (Danh mục sản phẩm)
@@ -56,7 +56,7 @@ CREATE TABLE Accounts (
     RoleId INT NOT NULL,
     WarehouseId INT NULL,  -- ⭐ MỚI: Staff/Manager thuộc Store nào (NULL cho Admin)
     CreatedAt DATETIME DEFAULT GETDATE(),
-    Status NVARCHAR(50) DEFAULT N'Active' CHECK (Status IN ('Active', 'Inactive', 'Locked')),  -- ⭐ Cải thiện: CHECK constraint
+    Status NVARCHAR(50) DEFAULT N'Active' CHECK (Status IN ('Active', 'Locked')),  -- ⭐ Cải thiện: CHECK constraint (đã bỏ Inactive)
     CONSTRAINT FK_Account_Role FOREIGN KEY (RoleId) REFERENCES Roles(RoleId),
     CONSTRAINT FK_Account_Warehouse FOREIGN KEY (WarehouseId) REFERENCES Warehouses(WarehouseId)
 );
@@ -237,6 +237,13 @@ GO
 -- TRIGGER: Tự động trừ tồn kho khi bán hàng
 -- ===================================
 GO
+
+-- Xóa trigger cũ nếu có
+IF EXISTS (SELECT * FROM sys.triggers WHERE name = 'trg_AfterSale_UpdateInventory')
+    DROP TRIGGER trg_AfterSale_UpdateInventory;
+GO
+
+-- Tạo trigger mới với logic cải thiện
 CREATE TRIGGER trg_AfterSale_UpdateInventory
 ON Sales
 AFTER INSERT
@@ -245,16 +252,8 @@ BEGIN
     SET NOCOUNT ON;
     
     BEGIN TRY
-        -- Trừ tồn kho khi bán hàng
-        UPDATE inv
-        SET inv.Quantity = inv.Quantity - i.QuantitySold
-        FROM Inventories inv
-        INNER JOIN inserted i 
-            ON inv.WarehouseId = i.WarehouseId 
-            AND inv.ProductCode = i.ProductCode
-        WHERE inv.Quantity >= i.QuantitySold;  -- Kiểm tra đủ hàng
-        
-        -- Nếu không đủ hàng, rollback (sẽ throw error)
+        -- ⭐ CẢI THIỆN: Check tồn kho TRƯỚC khi UPDATE
+        -- Kiểm tra xem có record nào không đủ hàng không
         IF EXISTS (
             SELECT 1 
             FROM inserted i
@@ -264,10 +263,20 @@ BEGIN
             WHERE inv.Quantity IS NULL OR inv.Quantity < i.QuantitySold
         )
         BEGIN
+            -- Nếu không đủ hàng, rollback và throw error
             RAISERROR(N'Không đủ hàng trong kho để bán', 16, 1);
             ROLLBACK TRANSACTION;
             RETURN;
         END
+        
+        -- ⭐ Nếu đủ hàng, mới UPDATE tồn kho
+        UPDATE inv
+        SET inv.Quantity = inv.Quantity - i.QuantitySold
+        FROM Inventories inv
+        INNER JOIN inserted i 
+            ON inv.WarehouseId = i.WarehouseId 
+            AND inv.ProductCode = i.ProductCode;
+        
     END TRY
     BEGIN CATCH
         -- Nếu có lỗi, rollback transaction

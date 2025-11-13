@@ -36,10 +36,26 @@ namespace SupermarketManager1.Duy
                 // Manager chỉ thấy Manager và Staff
                 availableRoles = allRoles.Where(r => r.RoleName == "Manager" || r.RoleName == "Staff").ToList();
             }
+            else if (CurrentUser.IsAdmin)
+            {
+                // Admin: 
+                // - Khi create: không thấy Admin (chỉ có 1 Admin)
+                // - Khi edit: nếu edit Admin thì thấy tất cả (nhưng sẽ bị disable), nếu edit tài khoản khác thì không thấy Admin
+                if (IsEditMode && EditedAccount?.Role?.RoleName == "Admin")
+                {
+                    // Edit Admin: hiển thị tất cả (nhưng sẽ bị disable trong LoadAccountData)
+                    availableRoles = allRoles;
+                }
+                else
+                {
+                    // Create hoặc edit tài khoản khác: không cho chọn Admin
+                    availableRoles = allRoles.Where(r => r.RoleName != "Admin").ToList();
+                }
+            }
             else
             {
-                // Admin: khi edit thấy tất cả, khi create không thấy Admin
-                availableRoles = IsEditMode ? allRoles : allRoles.Where(r => r.RoleName != "Admin").ToList();
+                // Staff không có quyền tạo/sửa tài khoản
+                availableRoles = new List<Role>();
             }
             
             if (IsEditMode)
@@ -47,8 +63,7 @@ namespace SupermarketManager1.Duy
                 RoleComboBox.ItemsSource = availableRoles;
                 TitleLabel.Text = "Edit Account Information";
                 LoadAccountData();
-                // Cho phép sửa trạng thái khi edit
-                StatusComboBox.IsEnabled = true;
+                // Status sẽ được enable/disable trong LoadAccountData tùy theo tài khoản
             }
             else
             {
@@ -56,7 +71,7 @@ namespace SupermarketManager1.Duy
                 
                 TitleLabel.Text = "Create New Account";
                 
-                // ⭐ Set trạng thái mặc định là "Active" và disable khi tạo mới
+                // Set trạng thái mặc định là "Active" và disable khi tạo mới
                 foreach (ComboBoxItem item in StatusComboBox.Items)
                 {
                     if (item.Content.ToString() == "Active")
@@ -122,6 +137,36 @@ namespace SupermarketManager1.Duy
                     break;
                 }
             }
+
+            // Nếu đang edit tài khoản Admin, khóa Role và Status, chỉ cho sửa thông tin cá nhân
+            if (EditedAccount.Role?.RoleName == "Admin")
+            {
+                RoleComboBox.IsEnabled = false; // Không cho đổi role
+                StatusComboBox.IsEnabled = false; // Không cho đổi status
+                PasswordTextBox.IsEnabled = false; // Không cho đổi password
+                
+                // Đảm bảo Status là Active
+                foreach (ComboBoxItem item in StatusComboBox.Items)
+                {
+                    if (item.Content.ToString() == "Active")
+                    {
+                        StatusComboBox.SelectedItem = item;
+                        break;
+                    }
+                }
+                
+                // Chỉ cho phép sửa: FullName, Email, PhoneNumber, DateOfBirth
+                // (Các field khác đã được disable ở trên)
+            }
+            // Nếu Admin đang edit tài khoản khác (Manager/Staff)
+            else if (CurrentUser.IsAdmin)
+            {
+                // Không cho Admin sửa mật khẩu của tài khoản khác
+                PasswordTextBox.IsEnabled = false;
+                
+                // Status vẫn cho phép sửa (có thể lock/unlock tài khoản)
+                StatusComboBox.IsEnabled = true;
+            }
         }
 
         private void RoleComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -162,16 +207,20 @@ namespace SupermarketManager1.Duy
                 }
 
                 // Cập nhật thông tin
+                bool isEditingAdmin = IsEditMode && EditedAccount?.Role?.RoleName == "Admin";
+                bool isAdminEditingOther = IsEditMode && CurrentUser.IsAdmin && !isEditingAdmin;
+                
                 if (!IsEditMode)
                 {
                     account.Username = UsernameTextBox.Text.Trim();
                     account.Password = PasswordTextBox.Password;
                 }
-                else if (!string.IsNullOrWhiteSpace(PasswordTextBox.Password))
+                else if (!isEditingAdmin && !isAdminEditingOther && !string.IsNullOrWhiteSpace(PasswordTextBox.Password))
                 {
-                    // Cho phép đổi password khi edit
+                    // Cho phép đổi password khi edit (trừ Admin edit Admin và Admin edit tài khoản khác)
                     account.Password = PasswordTextBox.Password;
                 }
+                // Nếu Admin edit Admin hoặc Admin edit tài khoản khác, không đổi password (giữ nguyên password cũ)
 
                 account.FullName = FullNameTextBox.Text.Trim();
                 account.Email = string.IsNullOrWhiteSpace(EmailTextBox.Text) ? null : EmailTextBox.Text.Trim();
@@ -196,22 +245,33 @@ namespace SupermarketManager1.Duy
                     account.DateOfBirth = null;
                 }
 
-                account.RoleId = (int)RoleComboBox.SelectedValue!;
-
-                // WarehouseId: NULL cho Admin, có giá trị cho Manager/Staff
-                if (RoleComboBox.SelectedItem is Role role && (role.RoleName == "Manager" || role.RoleName == "Staff"))
+                // Nếu đang edit Admin, giữ nguyên RoleId và Status
+                if (isEditingAdmin)
                 {
-                    account.WarehouseId = WarehouseComboBox.SelectedValue as int?;
+                    // Giữ nguyên RoleId và Status của Admin
+                    account.RoleId = EditedAccount!.RoleId;
+                    account.Status = "Active"; // Luôn là Active
+                    account.WarehouseId = null; // Admin không có Warehouse
                 }
                 else
                 {
-                    account.WarehouseId = null;
-                }
+                    account.RoleId = (int)RoleComboBox.SelectedValue!;
 
-                // Status
-                if (StatusComboBox.SelectedItem is ComboBoxItem statusItem)
-                {
-                    account.Status = statusItem.Content.ToString();
+                    // WarehouseId: NULL cho Admin, có giá trị cho Manager/Staff
+                    if (RoleComboBox.SelectedItem is Role role && (role.RoleName == "Manager" || role.RoleName == "Staff"))
+                    {
+                        account.WarehouseId = WarehouseComboBox.SelectedValue as int?;
+                    }
+                    else
+                    {
+                        account.WarehouseId = null;
+                    }
+
+                    // Status
+                    if (StatusComboBox.SelectedItem is ComboBoxItem statusItem)
+                    {
+                        account.Status = statusItem.Content.ToString();
+                    }
                 }
 
                 if (IsEditMode)
@@ -421,7 +481,7 @@ namespace SupermarketManager1.Duy
                 return false;
             }
 
-            // ⭐ QUAN TRỌNG: Không cho phép tạo thêm Admin
+            // Không cho phép tạo thêm Admin
             if (!IsEditMode && RoleComboBox.SelectedItem is Role selectedRole && selectedRole.RoleName == "Admin")
             {
                 MessageBox.Show("System only allows 1 Admin!\nCannot create additional Admin accounts.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -435,14 +495,10 @@ namespace SupermarketManager1.Duy
                 // Kiểm tra xem tài khoản hiện tại có phải Admin không
                 if (EditedAccount != null && EditedAccount.RoleId != newRole.RoleId)
                 {
-                    // Đang cố gắng đổi role thành Admin
-                    var adminAccounts = _accountService.GetAccountsByRole(newRole.RoleId);
-                    if (adminAccounts.Count > 0)
-                    {
-                        MessageBox.Show("System only allows 1 Admin!\nCannot change role to Admin.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        RoleComboBox.Focus();
-                        return false;
-                    }
+                    // Đang cố gắng đổi role thành Admin - KHÔNG CHO PHÉP (chỉ có 1 Admin duy nhất)
+                    MessageBox.Show("System only allows 1 Admin!\nCannot change role to Admin.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    RoleComboBox.Focus();
+                    return false;
                 }
             }
 
