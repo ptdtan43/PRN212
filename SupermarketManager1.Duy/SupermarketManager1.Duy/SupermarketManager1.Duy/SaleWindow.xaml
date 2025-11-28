@@ -1,0 +1,166 @@
+<Window x:Class="SupermarketManager1.Duy.SaleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="{materialDesign:MaterialDesignFont}"
+        
+        mc:Ignorable="d"
+        Title="Sales" Height="719" Width="1200" Loaded="Window_Loaded"
+        WindowStartupLocation="CenterScreen">
+    
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+            
+            <TextBlock Text="SALES" 
+                       FontSize="24" FontWeight="Bold" 
+                       VerticalAlignment="Center"
+                       Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+        </StackPanel>
+        
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <materialDesign:Card Grid.Column="0" Margin="0,0,10,0" Padding="15">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBox x:Name="SearchTextBox" Grid.Row="0" Margin="0,0,0,10"
+                             materialDesign:HintAssist.Hint="Search products..."
+                             materialDesign:HintAssist.IsFloating="False"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             TextChanged="SearchTextBox_TextChanged"/>
+
+                    <DataGrid x:Name="ProductDataGrid" Grid.Row="1" 
+                              Style="{StaticResource MaterialDesignDataGrid}"
+                              HeadersVisibility="Column"
+                              IsReadOnly="True" SelectionMode="Single" 
+                              SelectionChanged="ProductDataGrid_SelectionChanged"
+                              AutoGenerateColumns="False"
+                              GridLinesVisibility="None" RowHeaderWidth="0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Product Code" Binding="{Binding ProductCode}" Width="100"/>
+                            <DataGridTextColumn Header="Product Name" Binding="{Binding Product.NameP}" Width="*"/>
+                            <DataGridTextColumn Header="Price" Binding="{Binding Product.Price, StringFormat={}{0:N0} VNĐ}" Width="120"/>
+                            <DataGridTextColumn Header="Stock" Binding="{Binding Quantity}" Width="80">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                        <Setter Property="Foreground" Value="Green"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </materialDesign:Card>
+
+            <materialDesign:Card Grid.Column="1" Padding="15">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBox x:Name="SelectedProductTextBox" Grid.Row="0"
+                             materialDesign:HintAssist.Hint="Selected Product"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             IsReadOnly="True" Margin="0,0,0,10"/>
+
+                    <Grid Grid.Row="1" Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="QuantityTextBox" Grid.Column="0" Text="1"
+                                 materialDesign:HintAssist.Hint="Quantity"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 PreviewTextInput="QuantityTextBox_PreviewTextInput"/>
+                        <Button Content="Add to Cart" Grid.Column="1" Width="120" Margin="10,0,0,0" 
+                                Style="{StaticResource MaterialDesignRaisedButton}"
+                                Click="AddToCartButton_Click"/>
+                    </Grid>
+
+                    <Separator Grid.Row="2" Margin="0,5,0,10"/>
+
+                    <TextBlock Text="Cart:" Grid.Row="3" FontWeight="Bold" Margin="0,0,0,5" FontSize="16"/>
+                    <DataGrid x:Name="CartDataGrid" Grid.Row="4" 
+                              Style="{StaticResource MaterialDesignDataGrid}"
+                              HeadersVisibility="Column"
+                              IsReadOnly="True" CanUserAddRows="False" 
+                              MaxHeight="300"
+                              AutoGenerateColumns="False"
+                              GridLinesVisibility="None" RowHeaderWidth="0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Product Code" Binding="{Binding ProductCode}" Width="80"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding ProductName}" Width="*"/>
+                            <DataGridTextColumn Header="Qty" Binding="{Binding Quantity}" Width="50"/>
+                            <DataGridTextColumn Header="Unit Price" Binding="{Binding UnitPrice, StringFormat={}{0:N0}}" Width="*"/>
+                            <DataGridTextColumn Header="Total" Binding="{Binding TotalAmount, StringFormat={}{0:N0}}" Width="*"/>
+                            <DataGridTemplateColumn Header="Remove" Width="Auto">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                                Click="RemoveFromCartButton_Click" 
+                                                Tag="{Binding ProductCode}"
+                                                ToolTip="Remove from cart">
+                                            <materialDesign:PackIcon Kind="Close" Foreground="Red"/>
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </materialDesign:Card>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="Total Amount:" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                <TextBlock x:Name="TotalAmountLabel" Text="0 VNĐ" FontSize="20" FontWeight="Bold" 
+                           Foreground="Red" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button Content="Clear Cart" Width="120" Height="40" Margin="0,0,10,0" 
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        Click="ClearCartButton_Click"/>
+                <Button Content="Close" Width="100" Height="40" Margin="0,0,10,0"
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        Click="CloseButton_Click"/>
+                <Button Content="Checkout" Width="120" Height="40" 
+                        Style="{StaticResource MaterialDesignRaisedButton}"
+                        Click="CheckoutButton_Click" 
+                        FontWeight="Bold" FontSize="14"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

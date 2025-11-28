@@ -1,0 +1,208 @@
+<Window x:Class="SupermarketManager1.Duy.AdminMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:SupermarketManager1.Duy"
+        mc:Ignorable="d"
+        Title="Admin Dashboard - Product Management" 
+        Height="862" Width="1200" 
+        WindowStartupLocation="CenterScreen"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Loaded="Window_Loaded"
+        >
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header Card -->
+        <materialDesign:Card Grid.Row="0" Padding="20" Margin="0,0,0,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Admin Dashboard" 
+                              FontSize="24" 
+                              FontWeight="Bold"
+                              Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                    <TextBlock Text="Product Management" 
+                              FontSize="14" 
+                              Foreground="{DynamicResource MaterialDesignBodyLight}"
+                              Margin="0,5,0,0"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock x:Name="WelcomeLabel" 
+                              Text="Welcome, " 
+                              FontSize="16" 
+                              VerticalAlignment="Center"
+                              Margin="0,0,10,0"/>
+                    <Button Content="LOGOUT" 
+                           Style="{StaticResource MaterialDesignOutlinedButton}"
+                           Width="120" 
+                           Height="35" 
+                           Click="LogoutButton_Click"/>
+                </StackPanel>
+            </Grid>
+        </materialDesign:Card>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Search Bar -->
+            <materialDesign:Card Grid.Row="0" Padding="15" Margin="0,0,0,10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <materialDesign:PackIcon Kind="Magnify" 
+                                            Width="24" 
+                                            Height="24" 
+                                            VerticalAlignment="Center" 
+                                            Margin="0,0,10,0"
+                                            Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                    
+                    <TextBox x:Name="SearchTextBox" 
+                            Grid.Column="1"
+                            materialDesign:HintAssist.Hint="Search products (Code, Name, Category)..."
+                            materialDesign:HintAssist.IsFloating="False"
+                            Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                            FontSize="14"
+                            TextChanged="SearchTextBox_TextChanged"
+                            Height="60"/>
+                </Grid>
+            </materialDesign:Card>
+
+            <!-- Data Grid and Buttons -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- DataGrid -->
+                <materialDesign:Card Grid.Column="0" Padding="0" Margin="0,0,10,0">
+                    <DataGrid x:Name="ProductListDataGrid" 
+                             AutoGenerateColumns="False"
+                             Style="{StaticResource MaterialDesignDataGrid}"
+                             HeadersVisibility="Column"
+                             IsReadOnly="True"
+                             SelectionMode="Single"
+                             GridLinesVisibility="None"
+                             RowHeaderWidth="0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Product Code" Binding="{Binding ProductCode}" Width="100"/>
+                            <DataGridTextColumn Header="Product Name" Binding="{Binding NameP}" Width="*"/>
+                            <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat={}{0:N0} VNĐ}" Width="120"/>
+                            <DataGridTextColumn Header="Warranty" Binding="{Binding Warranty}" Width="100"/>
+                            <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
+                            <DataGridTextColumn Header="Publication Date" Binding="{Binding PublicationDay, StringFormat={}{0:dd/MM/yyyy}}" Width="120"/>
+                            <DataGridTextColumn Header="Supplier" Binding="{Binding SupplierName}" Width="150"/>
+                            <DataGridTextColumn Header="Category" Binding="{Binding Cate.CategoryName}" Width="120"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </materialDesign:Card>
+
+                <!-- Action Buttons -->
+                <materialDesign:Card Grid.Column="1" Padding="10" Width="220">
+                    <StackPanel>
+                        <TextBlock Text="Product" 
+                                  FontSize="16" 
+                                  FontWeight="Bold"
+                                  Margin="0,0,0,10"
+                                  Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                        
+                        <Button x:Name="CreateButton" 
+                               Content="Create" 
+                               Style="{StaticResource MaterialDesignRaisedButton}"
+                               Height="45" 
+                               Margin="0,0,0,8" 
+                               Click="CreateButton_Click"
+                               FontWeight="SemiBold"/>
+                        
+                        <Button x:Name="UpdateButton" 
+                               Content="Edit" 
+                               Style="{StaticResource MaterialDesignOutlinedButton}"
+                               Height="45" 
+                               Margin="0,0,0,8" 
+                               Click="UpdateButton_Click"/>
+                        
+                        <Button x:Name="DeleteButton" 
+                               Content="Delete" 
+                               Style="{StaticResource MaterialDesignOutlinedButton}"
+                               Height="45" 
+                               Margin="0,0,0,15" 
+                               Click="DeleteButton_Click"
+                               Foreground="Red"/>
+                        
+                        <Separator Margin="0,0,0,10"/>
+                        
+                        <TextBlock Text="Management" 
+                                  FontSize="16" 
+                                  FontWeight="Bold"
+                                  Margin="0,0,0,10"
+                                  Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                        
+                        <Button x:Name="ManageWarehouseButton" 
+                               Content="Inventory" 
+                               Style="{StaticResource MaterialDesignRaisedButton}"
+                               Height="45" 
+                               Margin="0,0,0,8" 
+                               Click="ManageWarehouseButton_Click"
+                               Background="#FF9800"/>
+                        
+                        <Button x:Name="TransferStockButton" 
+                               Content="Transfer Stock" 
+                               Style="{StaticResource MaterialDesignRaisedButton}"
+                               Height="45" 
+                               Margin="0,0,0,8" 
+                               Click="TransferStockButton_Click"
+                               Background="#FF5722"/>
+                        
+                        <Button x:Name="ManageWarehouseCRUDButton" 
+                               Content="Warehouse/Store" 
+                               Style="{StaticResource MaterialDesignRaisedButton}"
+                               Height="45" 
+                               Margin="0,0,0,8" 
+                               Click="ManageWarehouseCRUDButton_Click"
+                               Background="#9C27B0"/>
+                        
+                        <Button x:Name="ManageAccountButton" 
+                               Content="Account" 
+                               Style="{StaticResource MaterialDesignRaisedButton}"
+                               Height="45" 
+                               Margin="0,0,0,8" 
+                               Click="ManageAccountButton_Click"
+                               Background="#2196F3"/>
+                        
+                        <Button x:Name="ReportButton" 
+                               Content="Report" 
+                               Style="{StaticResource MaterialDesignRaisedButton}"
+                               Height="45" 
+                               Margin="0,0,0,0" 
+                               Click="ReportButton_Click"
+                               Background="#607D8B"/>
+                    </StackPanel>
+                </materialDesign:Card>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

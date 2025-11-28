@@ -1,0 +1,112 @@
+<Window x:Class="SupermarketManager1.Duy.WarehouseCRUDWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="{materialDesign:MaterialDesignFont}"
+        
+        mc:Ignorable="d"
+        Title="Warehouse/Store Management" Height="711" Width="1200" Loaded="Window_Loaded"
+        WindowStartupLocation="CenterScreen">
+
+    <materialDesign:Card Padding="20" Margin="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+                
+                <TextBlock Text="WAREHOUSE/STORE MANAGEMENT" 
+                           FontSize="24" FontWeight="Bold" 
+                           VerticalAlignment="Center"
+                           Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
+                <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                        Click="CreateButton_Click" Width="120" Height="40" Margin="0,0,10,0">
+                    <StackPanel Orientation="Horizontal">
+                        
+                        <TextBlock Text="Create"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource MaterialDesignOutlinedButton}"
+                        Click="UpdateButton_Click" Width="100" Height="40" Margin="0,0,10,0">
+                    <StackPanel Orientation="Horizontal">
+                        
+                        <TextBlock Text="Edit"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                        Click="DeleteButton_Click" Width="100" Height="40" 
+                        Background="Red" BorderBrush="Red">
+                    <StackPanel Orientation="Horizontal">
+                        
+                        <TextBlock Text="Delete"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+            <DataGrid x:Name="WarehouseDataGrid" Grid.Row="2" 
+                      Style="{StaticResource MaterialDesignDataGrid}"
+                      HeadersVisibility="Column"
+                      IsReadOnly="True"
+                      SelectionMode="Single"
+                      GridLinesVisibility="None"
+                      RowHeaderWidth="0"
+                      AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding WarehouseId}" Width="50"/>
+                    <DataGridTextColumn Header="Warehouse Name" Binding="{Binding WarehouseName}" Width="*"/>
+                    <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="100">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Type}" Value="Central">
+                                        <Setter Property="Foreground" Value="Blue"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Type}" Value="Store">
+                                        <Setter Property="Foreground" Value="Green"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="*"/>
+                    <DataGridTextColumn Header="Manager" Binding="{Binding Manager.FullName}" Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="FontStyle" Value="Italic"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Manager}" Value="{x:Null}">
+                                        <Setter Property="Text" Value="(Not assigned)"/>
+                                        <Setter Property="Foreground" Value="Gray"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+                <Button Content="Close" Width="100" Height="40" 
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        Click="CloseButton_Click"/>
+            </StackPanel>
+        </Grid>
+    </materialDesign:Card>
+</Window>

@@ -1,0 +1,92 @@
+CREATE DATABASE Supermarket2;
+GO
+
+USE Supermarket2;
+GO
+
+-- Bảng CATEGORY (Danh mục sản phẩm)
+CREATE TABLE CATEGORY (
+    cateID INT IDENTITY(1,1) PRIMARY KEY,
+    cateName NVARCHAR(100) NOT NULL
+);
+GO
+
+-- Bảng PRODUCT (Sản phẩm)
+CREATE TABLE PRODUCT (
+    productID INT IDENTITY(1,1) PRIMARY KEY,
+    name NVARCHAR(100) NOT NULL,
+    quantity INT NOT NULL,
+    warranty NVARCHAR(50),
+    description NVARCHAR(255),
+    cateID INT,
+    FOREIGN KEY (cateID) REFERENCES CATEGORY(cateID)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
+);
+GO
+
+-- Bảng ACCOUNT (Tài khoản)
+CREATE TABLE ACCOUNT (
+    accountID INT IDENTITY(1,1) PRIMARY KEY,
+    fullName NVARCHAR(100) NOT NULL,
+    username NVARCHAR(50) UNIQUE NOT NULL,
+    password NVARCHAR(255) NOT NULL,
+    role NVARCHAR(20) CHECK (role IN ('STAFF', 'MANAGER', 'ADMIN')) NOT NULL
+);
+GO
+
+-- Bảng STORE (Cửa hàng)
+CREATE TABLE STORE (
+    storeID INT IDENTITY(1,1) PRIMARY KEY,
+    storeName NVARCHAR(100) NOT NULL,
+    location NVARCHAR(255),
+    productID INT,
+    FOREIGN KEY (productID) REFERENCES PRODUCT(productID)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
+);
+GO
+
+-- =============================
+-- 2️⃣ THÊM 10 DANH MỤC
+-- =============================
+INSERT INTO CATEGORY (cateName)
+VALUES 
+(N'Đồ uống'),
+(N'Thực phẩm'),
+(N'Gia dụng'),
+(N'Điện tử'),
+(N'Đồ dùng học tập'),
+(N'Mỹ phẩm'),
+(N'Quần áo'),
+(N'Giày dép'),
+(N'Thú cưng'),
+(N'Thực phẩm chức năng');
+GO
+
+-- =============================
+-- 3️⃣ THÊM 100 SẢN PHẨM MẪU
+-- =============================
+INSERT INTO PRODUCT (name, quantity, warranty, description, cateID)
+VALUES
+(N'Coca Cola Lon 330ml', 200, N'6 tháng', N'Nước giải khát có gas Coca Cola vị truyền thống', 1),
+(N'Bánh Oreo 137g', 150, N'12 tháng', N'Bánh quy kem socola Oreo', 2),
+(N'Nồi cơm điện Philips 1.8L', 50, N'24 tháng', N'Nồi cơm điện dung tích 1.8 lít, công suất 700W', 3),
+(N'Tivi Samsung 43 inch', 30, N'36 tháng', N'Tivi LED Samsung độ phân giải Full HD', 4),
+(N'Bút bi Thiên Long TL-08', 500, N'Không bảo hành', N'Bút bi màu xanh thương hiệu Thiên Long', 5),
+(N'Sữa rửa mặt Hada Labo 100g', 120, N'24 tháng', N'Sữa rửa mặt dưỡng ẩm Hada Labo của Nhật', 6),
+(N'Áo thun nam cổ tròn', 80, N'Không bảo hành', N'Áo thun cotton 100% nam', 7),
+(N'Giày sneaker nữ trắng', 60, N'12 tháng', N'Giày sneaker nữ màu trắng phong cách Hàn Quốc', 8),
+(N'Thức ăn cho mèo Whiskas 1.2kg', 90, N'6 tháng', N'Thức ăn hạt dinh dưỡng cho mèo trưởng thành', 9),
+(N'Vitamin C 500mg', 110, N'24 tháng', N'Thực phẩm chức năng bổ sung Vitamin C', 10);
+GO
+
+-- =============================
+-- 4️⃣ THÊM 3 CỬA HÀNG MẪU
+-- =============================
+INSERT INTO STORE (storeName, location, productID)
+VALUES 
+(N'Store Hà Nội', N'123 Trần Duy Hưng, Hà Nội', 1),
+(N'Store TP.HCM', N'45 Lê Lợi, Quận 1, TP.HCM', 2),
+(N'Store Đà Nẵng', N'99 Nguyễn Văn Linh, Đà Nẵng', 3);
+GO

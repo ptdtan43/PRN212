@@ -1,0 +1,89 @@
+﻿<Window x:Class="SupermarketManager1.Duy.DetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="{materialDesign:MaterialDesignFont}"
+        
+        mc:Ignorable="d"
+        Title="Product Details" 
+        Height="821" Width="700" 
+        SizeToContent="Height"
+        Loaded="Window_Loaded"
+        WindowStartupLocation="CenterScreen">
+
+    <materialDesign:Card Padding="25" Margin="15">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="DetailWindowModeLabel" Text="Product Details" Grid.Row="0" 
+                       FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,25"
+                       Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+
+            <StackPanel Grid.Row="1">
+                <TextBox x:Name="ProductIdTextBox" 
+                         materialDesign:HintAssist.Hint="Product Code *"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Margin="0,0,0,15"/>
+
+                <TextBox x:Name="ProductNameTextBox"
+                         materialDesign:HintAssist.Hint="Product Name"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Margin="0,0,0,15"/>
+
+                <TextBox x:Name="ProductPriceTextBox"
+                         materialDesign:HintAssist.Hint="Price"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Margin="0,0,0,15"/>
+
+                <TextBox x:Name="ProductWarrantyTextBox"
+                         materialDesign:HintAssist.Hint="Warranty"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Margin="0,0,0,15"/>
+
+                <TextBox x:Name="ProductDescriptionTextBox"
+                         materialDesign:HintAssist.Hint="Description"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Margin="0,0,0,15" 
+                         Height="100" TextWrapping="Wrap" AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Auto"/>
+
+                <DatePicker x:Name="ProductPublicationDayDatePicker"
+                           materialDesign:HintAssist.Hint="Publication Date"
+                           Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                           Margin="0,0,0,15"/>
+
+                <TextBox x:Name="ProductSupplierNameTextBox"
+                         materialDesign:HintAssist.Hint="Supplier"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Margin="0,0,0,15"/>
+
+                <ComboBox x:Name="CategoryComboBox"
+                          materialDesign:HintAssist.Hint="Category"
+                          Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                          Margin="0,0,0,15"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+                <Button x:Name="QuitButton" Content="Cancel" 
+                        Width="100" Height="40" Margin="0,0,10,0" 
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        Click="QuitButton_Click"/>
+                <Button x:Name="DetailWindowButton" Content="Save" 
+                        Width="100" Height="40" 
+                        Style="{StaticResource MaterialDesignRaisedButton}"
+                        Click="DetailWindowButton_Click"/>
+            </StackPanel>
+        </Grid>
+    </materialDesign:Card>
+</Window>
